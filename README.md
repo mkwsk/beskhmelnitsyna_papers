@@ -80,7 +80,7 @@ copy .env.example .env
 cp .env.example .env
 ```
 
-Заполнить `.env` токеном и идентификатором организации. Краткие заметки по API лежат в [`forms/yandex/docs/yandex_forms_api_notes.md`](forms/yandex/docs/yandex_forms_api_notes.md).
+Заполнить `.env` токеном и идентификатором организации. Подробная инструкция по переменным лежит в [`forms/yandex/docs/env_variables.md`](forms/yandex/docs/env_variables.md), краткие заметки по API - в [`forms/yandex/docs/yandex_forms_api_notes.md`](forms/yandex/docs/yandex_forms_api_notes.md).
 
 Проверить JSON формы:
 
