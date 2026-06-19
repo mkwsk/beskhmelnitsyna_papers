@@ -1,0 +1,11 @@
+method_id,scale_code,item_number,item_code,variable,response_format,scoring_direction,reverse_min,reverse_max,weight,scoring_status,source_note
+rosenberg_self_esteem_scale_ru,total,1,q01,rses_q01,likert_1_4,direct,,,1,complete,source
+rosenberg_self_esteem_scale_ru,total,2,q02,rses_q02,likert_1_4,reverse,1,4,1,complete,source
+rosenberg_self_esteem_scale_ru,total,3,q03,rses_q03,likert_1_4,direct,,,1,complete,source
+rosenberg_self_esteem_scale_ru,total,4,q04,rses_q04,likert_1_4,direct,,,1,complete,source
+rosenberg_self_esteem_scale_ru,total,5,q05,rses_q05,likert_1_4,reverse,1,4,1,complete,source
+rosenberg_self_esteem_scale_ru,total,6,q06,rses_q06,likert_1_4,reverse,1,4,1,complete,source
+rosenberg_self_esteem_scale_ru,total,7,q07,rses_q07,likert_1_4,direct,,,1,complete,source
+rosenberg_self_esteem_scale_ru,total,8,q08,rses_q08,likert_1_4,reverse,1,4,1,complete,source
+rosenberg_self_esteem_scale_ru,total,9,q09,rses_q09,likert_1_4,reverse,1,4,1,complete,source
+rosenberg_self_esteem_scale_ru,total,10,q10,rses_q10,likert_1_4,direct,,,1,complete,source
