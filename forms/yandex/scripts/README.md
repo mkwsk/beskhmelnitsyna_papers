@@ -8,24 +8,6 @@
 forms\yandex
 ```
 
-На Windows можно запускать так:
-
-```bat
-python scripts\validate_definition.py form_definition\vkr_main_form.json
-```
-
-Если используется виртуальное окружение в `.venv`, то так:
-
-```bat
-.venv\Scripts\python.exe scripts\validate_definition.py form_definition\vkr_main_form.json
-```
-
-На Linux / macOS можно запускать так:
-
-```bash
-python scripts/validate_definition.py form_definition/vkr_main_form.json
-```
-
 ## Перед запуском
 
 Установить зависимости:
@@ -74,8 +56,6 @@ python scripts\validate_definition.py form_definition\vkr_main_form.json
 Definition looks OK
 ```
 
-Если есть ошибки, скрипт выведет список проблем и завершится с кодом `1`.
-
 ## `create_form.py`
 
 Создает форму в Яндекс.Формах из локального JSON-описания.
@@ -111,10 +91,6 @@ Created survey <survey_id>
 Mapping saved to exports\form_mapping.json
 ```
 
-Файл `exports/form_mapping.json` нужен для связи локальных кодов вопросов с вопросами, созданными в Яндекс.Формах. Его полезно сохранить рядом с выгрузками. В этом же файле хранится `survey_id` формы.
-
-Перед реальной публикацией нужно вручную открыть форму в интерфейсе Яндекс.Форм и проверить страницы, обязательность вопросов, тексты шкал и отсутствие `TODO`.
-
 ## Где брать `survey_id`
 
 `survey_id` - это идентификатор формы в API Яндекс.Форм. Он нужен для команд публикации, снятия с публикации и выгрузки ответов.
@@ -127,22 +103,10 @@ Mapping saved to exports\form_mapping.json
 Created survey 12345678
 ```
 
-В этом примере `12345678` и есть `survey_id`.
-
 Второй способ - открыть файл `exports\form_mapping.json`, который создает `create_form.py`:
 
 ```bat
 type exports\form_mapping.json
-```
-
-В начале файла будет поле:
-
-```json
-{
-  "survey_id": "12345678",
-  "published": false,
-  "questions": []
-}
 ```
 
 Быстро вывести только `survey_id` можно так:
@@ -151,35 +115,20 @@ type exports\form_mapping.json
 python -c "import json; print(json.load(open('exports/form_mapping.json', encoding='utf-8'))['survey_id'])"
 ```
 
-Если форма была создана вручную в интерфейсе Яндекс.Форм, а не через `create_form.py`, идентификатор нужно взять из адресной строки редактора формы. Обычно это числовой или строковый идентификатор формы в URL. В интерфейсе Яндекса адрес может меняться, поэтому ориентир простой: нужен именно ID формы, который API подставляет в путь `/surveys/<survey_id>/...`.
-
-Если файл `exports\form_mapping.json` потерян, но форма создавалась через скрипт, проще всего найти `survey_id` в консольном выводе запуска, в истории терминала или в URL формы в браузере. В текущем наборе скриптов отдельной команды для поиска уже созданных форм пока нет.
+Если форма была создана вручную в интерфейсе Яндекс.Форм, идентификатор нужно взять из адресной строки редактора формы. Нужен именно ID формы, который API подставляет в путь `/surveys/<survey_id>/...`.
 
 ## `publish_form.py`
 
 Публикует или снимает с публикации уже созданную форму.
 
-Что делает:
-
-- принимает `survey_id` формы;
-- выполняет действие `publish` или `unpublish`;
-- отправляет соответствующий запрос в API.
-
-Требует заполненный `.env`.
-
-Опубликовать форму:
+Примеры:
 
 ```bat
 python scripts\publish_form.py <survey_id> publish
-```
-
-Снять форму с публикации:
-
-```bat
 python scripts\publish_form.py <survey_id> unpublish
 ```
 
-Где `<survey_id>` - идентификатор формы. Его можно взять из вывода `create_form.py`, из файла `exports/form_mapping.json` или из URL формы в интерфейсе Яндекс.Форм.
+Требует заполненный `.env`.
 
 ## `export_answers.py`
 
@@ -193,39 +142,25 @@ python scripts\publish_form.py <survey_id> unpublish
 - может сохранить плоскую таблицу в CSV;
 - если не указаны `--json` и `--csv`, печатает JSON в консоль.
 
-Требует заполненный `.env`.
-
-Выгрузить ответы в JSON и CSV:
+Пример:
 
 ```bat
 python scripts\export_answers.py <survey_id> --json exports\answers.json --csv exports\answers.csv
 ```
 
-Изменить размер страницы API-запроса:
-
-```bat
-python scripts\export_answers.py <survey_id> --page-size 50 --json exports\answers.json --csv exports\answers.csv
-```
-
-Вывести JSON прямо в консоль:
-
-```bat
-python scripts\export_answers.py <survey_id>
-```
-
-CSV сохраняется в кодировке `utf-8-sig`, чтобы его проще было открыть в Excel.
+Требует заполненный `.env`.
 
 ## `score_export_template.py`
 
 Шаблон для подсчета баллов по CSV-выгрузке.
 
-Что делает:
+Что делает для актуальной батареи:
 
-- читает CSV;
 - считает `gse_total` по 10 пунктам GSE;
+- считает `cse_positive`, `cse_negative` и `cse_total` по 10 пунктам CSEs(Ru);
 - считает `rses_total` по 10 пунктам RSES с учетом обратных пунктов;
-- считает черновой `gav_total_raw_all_items` как сумму всех 51 пунктов Гавриловой;
-- сохраняет новый CSV с добавленными колонками.
+- добавляет `samoal_answered_count`;
+- оставляет `samoal_total` пустым до переноса ключа САМОАЛ.
 
 Этот скрипт не обращается к API и не требует `.env`.
 
@@ -238,12 +173,10 @@ python scripts\score_export_template.py exports\answers.csv exports\answers_scor
 Важное ограничение: скрипт ожидает, что колонки в CSV называются локальными кодами вопросов, например:
 
 ```text
-gse_q01, rses_q01, gav_q01
+samoal_q001, gse_q01, cse_q01, rses_q01
 ```
 
 После выгрузки из API Яндекс.Формы могут дать колонкам названия по текстам вопросов. В этом случае перед подсчетом нужно переименовать колонки по `exports/form_mapping.json` или доработать скрипт импорта.
-
-Для методики Гавриловой сейчас заполнен только общий черновой подсчет по всем пунктам. Ключи по компонентам `goal`, `resource`, `phenomenological` нужно добавить после сверки с первоисточником.
 
 ## `yf_client.py`
 
@@ -256,13 +189,7 @@ gse_q01, rses_q01, gav_q01
 - отправляет HTTP-запросы к API;
 - предоставляет методы для создания формы, добавления вопросов, перемещения вопросов, публикации, снятия с публикации и выгрузки ответов.
 
-Напрямую обычно не запускается. Его используют скрипты:
-
-```text
-create_form.py
-publish_form.py
-export_answers.py
-```
+Напрямую обычно не запускается. Его используют `create_form.py`, `publish_form.py` и `export_answers.py`.
 
 ## Типовой порядок работы
 
