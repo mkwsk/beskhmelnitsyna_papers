@@ -1,152 +1,65 @@
 # Заготовка Яндекс.Форм для ВКР
 
-Эта директория содержит JSON-заготовку формы и Python-скрипты для работы с API Яндекс Форм.
+Директория работает в два этапа.
 
-PowerShell-скриптов и `.cmd`-оберток в текущей версии нет. Рабочий интерфейс управления - Python-скрипты из папки `scripts/`.
+1. `form_definition/vkr_main_form.json` хранит только нетестовую часть анкеты: приветствие, критерии участия, социально-демографические данные и финальную благодарность.
+2. `scripts/compile_form_json.py` берет методики из `methods/` по списку `methods_manifest.json` и собирает один JSON-бандл.
 
-## Основная форма
+Тесты больше не лежат в `form_definition`. Набор методик меняется через `methods_manifest.json`.
 
-Главный файл: `form_definition/vkr_main_form.json`.
-
-Актуальная батарея тестов в основной форме:
-
-| Порядок | Блок | Файл секции |
-|---:|---|---|
-| 1 | Самоактуализация - САМОАЛ, Лазукин-Калина | `reserve/80_samoal_placeholder.json` |
-| 2 | Самоэффективность - GSE Шварцера-Ерусалема, адаптация Ромека | `sections/10_gse_schwarzer_jerusalem_ru.json` |
-| 3 | Самооценивание - CSEs(Ru), Шкала базового самооценивания | `reserve/50_core_self_evaluation_scale_ru.json` |
-| 4 | Самоуважение / самооценка - Шкала Розенберга | `sections/20_rosenberg_self_esteem_scale_ru.json` |
-
-Полный порядок секций, которые реально загружаются скриптом `create_form.py`, задается полем `section_files` в `form_definition/vkr_main_form.json`.
-
-## Оформление формы
-
-Форма оформляется как последовательность страниц-блоков, похожая на обычную опубликованную Яндекс.Форму: короткое название, приветствие, затем блоки вопросов с визуальными разделителями.
-
-Оформление задается в `form_definition/vkr_main_form.json` через поле `section_layout`. Там можно:
-
-- переопределить вступительный `comment` для каждой секции;
-- добавить разделитель вида `──────────────── ✦ ────────────────`;
-- разделить длинную секцию на несколько страниц через `answerable_items_per_page`.
-
-Сейчас САМОАЛ автоматически делится на 4 страницы по 25 пунктов. Остальные методики идут отдельными страницами. Все реальные вопросы при создании формы через API становятся обязательными, а информационные `comment`-блоки остаются необязательными.
-
-Ожидаемый порядок страниц после создания формы:
-
-| Страница | Содержание |
-|---:|---|
-| 1 | Приветствие и согласие |
-| 2 | Критерии участия |
-| 3 | Социально-демографические данные |
-| 4 | САМОАЛ, часть 1 из 4 |
-| 5 | САМОАЛ, часть 2 из 4 |
-| 6 | САМОАЛ, часть 3 из 4 |
-| 7 | САМОАЛ, часть 4 из 4 |
-| 8 | GSE |
-| 9 | CSEs(Ru) |
-| 10 | Шкала Розенберга |
-| 11 | Завершение |
-
-После загрузки через API нужно открыть форму в интерфейсе Яндекс.Форм и проверить внешний вид вручную. API управляет структурой, страницами и вопросами, но часть настроек темы может быть доступна только через интерфейс.
-
-## Важное ограничение по пунктам методик
-
-Точные формулировки пунктов методик с неясным статусом распространения не внесены в JSON. Вместо них стоят `TODO`-плейсхолдеры.
-
-Перед публикацией формы нужно:
-
-1. заменить все `TODO` на точные пункты из выбранных первоисточников;
-2. проверить правовой статус использования методик;
-3. открыть форму в интерфейсе Яндекс.Форм и проверить страницы, шкалы и обязательность вопросов.
-
-## Подготовка Python
-
-Текущая версия предполагает, что команда `python` уже доступна в среде запуска. Встроенный/portable Python в репозиторий пока не добавлен.
-
-Создание окружения:
-
-```bash
-python -m venv .venv
-```
-
-Установка зависимостей на Windows через `cmd.exe`:
-
-```bat
-.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-## Настройка `.env`
-
-Скопировать пример:
-
-```bat
-copy .env.example .env
-```
-
-Заполнить `.env`:
+## Основные файлы
 
 ```text
-FORMS_TOKEN=...
-ORG_ID=...
-ORG_HEADER=X-Org-Id
-AUTH_SCHEME=OAuth
-FORMS_PUBLIC_API=https://api.forms.yandex.net/v1
+form_definition/vkr_main_form.json
+methods_manifest.json
+scripts/compile_form_json.py
+scripts/create_form.py
+scripts/interpret_results.py
+output/
+exports/
 ```
 
-Подробная инструкция, откуда брать `FORMS_TOKEN`, `ORG_ID`, `ORG_HEADER`, `AUTH_SCHEME` и `FORMS_PUBLIC_API`, лежит в `docs/env_variables.md`.
+## Актуальная батарея
 
-## Скрипты
+Сейчас подключены:
 
-Подробное описание всех скриптов, их назначения и примеры запуска лежат в `scripts/README.md`.
+1. САМОАЛ.
+2. GSE Шварцера-Ерусалема.
+3. CSEs(Ru).
+4. Шкала самооценки Розенберга.
 
-Кратко:
+## Быстрый запуск
 
-| Скрипт | Назначение |
-|---|---|
-| `scripts/validate_definition.py` | Проверяет локальную JSON-заготовку формы. |
-| `scripts/create_form.py` | Создает форму через API из локального JSON-описания. |
-| `scripts/publish_form.py` | Публикует или снимает с публикации уже созданную форму. |
-| `scripts/export_answers.py` | Выгружает ответы из Яндекс.Форм в JSON и/или CSV. |
-| `scripts/score_export_template.py` | Шаблон подсчета баллов по CSV-выгрузке. |
-| `scripts/yf_client.py` | Служебный клиент API, напрямую обычно не запускается. |
-
-## Проверка JSON
+Команды выполнять из `forms/yandex`.
 
 ```bash
 python scripts/validate_definition.py form_definition/vkr_main_form.json
+python scripts/compile_form_json.py --out output/compiled_form_bundle.json
+python scripts/validate_definition.py output/compiled_form_bundle.json
 ```
 
-## Создание формы через API
+## Создание формы
 
 ```bash
-python scripts/create_form.py form_definition/vkr_main_form.json --output exports/form_mapping.json
+python scripts/create_form.py output/compiled_form_bundle.json --output exports/form_mapping.json
 ```
 
-Создать и сразу опубликовать:
+С публикацией:
 
 ```bash
-python scripts/create_form.py form_definition/vkr_main_form.json --publish --output exports/form_mapping.json
+python scripts/create_form.py output/compiled_form_bundle.json --publish --output exports/form_mapping.json
 ```
 
-После загрузки обязательно открыть форму в Яндекс.Формах вручную и проверить порядок страниц, обязательность вопросов, ветвление, отсутствие `TODO`-плейсхолдеров и корректность шкал.
+Для обращения к API нужен локальный `.env`. Подробности лежат в `docs/env_variables.md`.
 
-## Публикация и снятие с публикации
+## Подсчет результатов
 
 ```bash
-python scripts/publish_form.py <survey_id> publish
-python scripts/publish_form.py <survey_id> unpublish
+python scripts/interpret_results.py --bundle output/compiled_form_bundle.json --answers exports/answers.csv --out output/interpreted_results.csv
 ```
 
-## Выгрузка ответов
+## Ограничения
 
-```bash
-python scripts/export_answers.py <survey_id> --json exports/answers.json --csv exports/answers.csv
-```
-
-## Подсчет баллов по выгрузке
-
-```bash
-python scripts/score_export_template.py exports/answers.csv exports/answers_scored.csv
-```
-
-Скрипт подсчета является шаблоном. Перед использованием его нужно сверить с финальными ключами методик и с тем, как именно Яндекс.Формы выгружают названия колонок.
+- `compiled_form_bundle.json` является локальным описанием формы. Скрипт создает форму и добавляет вопросы последовательно.
+- Если в `methods/items/*.csv` нет полного текста пункта, компилятор создаст предупреждение.
+- Перед публикацией нужно вручную проверить форму в интерфейсе Яндекс.Форм.
