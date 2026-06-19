@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
@@ -11,8 +12,34 @@ TRUTHY = {"1", "true", "yes", "y", "да"}
 FALSY = {"0", "false", "no", "n", "нет"}
 
 
-def load_json(path: Path) -> Dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+class CliError(Exception):
+    """User-facing command line error without a Python traceback."""
+
+
+
+def require_file(path: Path, description: str, *, missing_hint: str | None = None) -> None:
+    if not path.exists():
+        message = f"{description} not found: {path}"
+        if missing_hint:
+            message += f"\n{missing_hint}"
+        raise CliError(message)
+    if not path.is_file():
+        raise CliError(f"{description} is not a file: {path}")
+
+
+
+def load_json(path: Path, *, description: str, missing_hint: str | None = None) -> Dict[str, Any]:
+    require_file(path, description, missing_hint=missing_hint)
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except json.JSONDecodeError as error:
+        raise CliError(
+            f"{description} is not valid JSON: {path}\n"
+            f"{error.msg} at line {error.lineno}, column {error.colno}"
+        ) from error
+    except OSError as error:
+        raise CliError(f"Cannot read {description}: {path}\n{error}") from error
+
 
 
 def bool_flag(value: Any, *, default: bool = False) -> bool:
@@ -30,13 +57,16 @@ def bool_flag(value: Any, *, default: bool = False) -> bool:
     return default
 
 
+
 def is_answerable(question: Dict[str, Any]) -> bool:
     payload = question.get("payload", {})
     return question.get("kind") != "comment" and payload.get("type") != "comment"
 
 
+
 def required_value(question: Dict[str, Any]) -> bool:
     return bool_flag(question.get("required"), default=True)
+
 
 
 def prepare_payload(question: Dict[str, Any], *, strict_required: bool = True) -> Dict[str, Any]:
@@ -57,10 +87,12 @@ def prepare_payload(question: Dict[str, Any], *, strict_required: bool = True) -
     return payload
 
 
+
 def legacy_required_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
     fallback = dict(payload)
     fallback.pop("validation", None)
     return fallback
+
 
 
 def add_question(
@@ -83,19 +115,24 @@ def add_question(
         return client.add_question(survey_id, fallback), fallback
 
 
+
 def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int:
-    bundle = load_json(bundle_path)
+    bundle = load_json(
+        bundle_path,
+        description="compiled form bundle",
+        missing_hint="Run first: python scripts/compile_form_json.py --out output/compiled_form_bundle.json",
+    )
     if bundle.get("schema_version") != "vkr-yandex-forms-bundle-v1":
-        raise SystemExit(
-            "Input file is not a compiled bundle. Run: "
-            "python scripts/compile_form_json.py --out output/compiled_form_bundle.json"
+        raise CliError(
+            "Input file is not a compiled bundle.\n"
+            "Run: python scripts/compile_form_json.py --out output/compiled_form_bundle.json"
         )
 
     api = bundle.get("api") or {}
     survey_payload = api.get("survey") or {}
     questions: List[Dict[str, Any]] = api.get("questions") or []
     if not questions:
-        raise SystemExit("Compiled bundle has no api.questions")
+        raise CliError("Compiled bundle has no api.questions")
 
     client = YandexFormsClient()
     survey_id = client.create_survey(survey_payload)
@@ -145,13 +182,22 @@ def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int
     return 0
 
 
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Create Yandex Form from compiled bundle")
     parser.add_argument("bundle", type=Path, help="Path to output/compiled_form_bundle.json")
     parser.add_argument("--publish", action="store_true", help="Publish form after creation")
     parser.add_argument("--output", type=Path, default=Path("exports/form_mapping.json"), help="Where to save local-to-Yandex mapping")
     args = parser.parse_args()
-    return create_from_bundle(args.bundle, publish=args.publish, output=args.output)
+    try:
+        return create_from_bundle(args.bundle, publish=args.publish, output=args.output)
+    except CliError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
+    except YandexFormsError as error:
+        print(f"ERROR: Yandex Forms API request failed: {error}", file=sys.stderr)
+        return 1
+
 
 
 if __name__ == "__main__":
