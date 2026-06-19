@@ -16,11 +16,24 @@ def iter_sections(definition_path: Path) -> List[Dict[str, Any]]:
     definition = load_json(definition_path)
     base = definition_path.parent
     sections = []
-    for rel in definition.get("section_files", []):
+    for page_index, rel in enumerate(definition.get("section_files", []), start=1):
         section = load_json(base / rel)
         section["_source_file"] = rel
+        section["_resolved_page"] = page_index
         sections.append(section)
     return sections
+
+
+def is_answerable_item(item: Dict[str, Any]) -> bool:
+    payload = item.get("payload", {})
+    return item.get("kind") != "comment" and payload.get("type") != "comment"
+
+
+def prepare_payload(item: Dict[str, Any]) -> Dict[str, Any]:
+    payload = dict(item["payload"])
+    if is_answerable_item(item):
+        payload["required"] = True
+    return payload
 
 
 def main() -> int:
@@ -40,21 +53,20 @@ def main() -> int:
     created = []
     for section in sections:
         for item in section.get("questions", []):
-            payload = item["payload"]
+            payload = prepare_payload(item)
             question_id = client.add_question(survey_id, payload)
             print(f"Added {item.get('qid')} -> {question_id}")
             created.append({
                 "local_qid": item.get("qid"),
                 "yandex_question_id": question_id,
-                "page": section.get("page", 1),
+                "page": section.get("_resolved_page"),
                 "section_id": section.get("section_id"),
                 "title": section.get("title"),
                 "payload": payload,
-                "required": item.get("required"),
+                "required": bool(payload.get("required", False)),
                 "scoring": item.get("scoring"),
             })
 
-    # Move questions to pages. First page stays as is; for every new page the first item creates a page.
     seen_pages = {1}
     positions: Dict[int, int] = {}
     for item in created:
