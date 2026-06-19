@@ -1,17 +1,20 @@
 ---
 schema_version: "2.0"
 id: moscow_authenticity_scale
-title: "MAS"
+title: "Московская шкала аутентичности, MAS"
 short_title: "MAS"
-aliases: []
-construct: "authenticity"
-domain: "authenticity"
+aliases:
+  - "Moscow Authenticity Scale"
+construct: "Аутентичность"
+domain: "аутентичность"
 status_in_research: "reserve"
 priority: "reserve"
-recommended_use: "reserve"
+recommended_use: "короткий скрининг или дополнительная методика"
 language: "ru"
-version: "todo"
-authors_original: []
+version: "Нартова-Бочавер и соавт., 2021"
+authors_original:
+  - "С.К. Нартова-Бочавер"
+  - "соавторы"
 authors_adaptation: []
 year_original: 2021
 year_adaptation: 2021
@@ -33,13 +36,32 @@ response_options:
   - {value: 4}
   - {value: 5}
 scale_codes:
-  - {code: total, title: "total"}
-source_primary: "todo"
+  - {code: total, title: "Общая аутентичность"}
+source_primary: "Nartova-Bochaver et al. Moscow Authenticity Scale. Psychology in Russia: State of the Art. 2021."
 source_secondary: []
-notes_for_vkr: "reserve"
+notes_for_vkr: "Очень короткая шкала; как полная замена самоактуализации слишком узкая."
 ---
 
-# MAS
+# Московская шкала аутентичности, MAS
 
-Items: `items/moscow_authenticity_scale_items.csv`.
-Key: `keys/moscow_authenticity_scale_keys.csv`.
+## Назначение
+
+MAS сохранена как короткий резервный скрининг аутентичности.
+
+## Пункты и ключ
+
+- Пункты: `items/moscow_authenticity_scale_items.csv`.
+- Ключ: `keys/moscow_authenticity_scale_keys.csv`.
+
+## Подсчет
+
+Предполагается общий показатель по 5 пунктам, но точный ключ и возможность реверсирования нужно сверить по статье перед автоматическим расчетом.
+
+```text
+if scoring_status != "complete": skip_auto_scoring(moscow_authenticity_scale)
+```
+
+## Ограничения
+
+- Не входит в актуальную батарею.
+- Требуется сверка текста пунктов и ключа.
