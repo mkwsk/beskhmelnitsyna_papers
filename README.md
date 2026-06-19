@@ -9,6 +9,17 @@
 
 PowerShell-оберток в текущей версии нет. Скрипты управления формой написаны на Python.
 
+## Актуальная батарея тестов
+
+В основной форме сейчас используется такая батарея:
+
+1. Самоактуализация - САМОАЛ, адаптация А.В. Лазукина и Н.Ф. Калиной.
+2. Самоэффективность - Шкала общей самоэффективности Шварцера-Ерусалема, адаптация В.Г. Ромека.
+3. Самооценивание - CSEs(Ru), Шкала базового самооценивания.
+4. Самоуважение / самооценка - Шкала Розенберга.
+
+Главный JSON формы: [`forms/yandex/form_definition/vkr_main_form.json`](forms/yandex/form_definition/vkr_main_form.json).
+
 ## Структура репозитория
 
 ```text
@@ -30,10 +41,8 @@ PowerShell-оберток в текущей версии нет. Скрипты 
 - [`methods/00_index.md`](methods/00_index.md) - быстрый навигатор по методикам;
 - [`methods/metodiki_vkr_katalog_full.md`](methods/metodiki_vkr_katalog_full.md) - полный объединенный каталог;
 - [`methods/template.md`](methods/template.md) - шаблон карточки методики;
-- [`methods/91_decision_for_supervisor.md`](methods/91_decision_for_supervisor.md) - краткое решение для согласования с куратором;
+- [`methods/91_decision_for_supervisor.md`](methods/91_decision_for_supervisor.md) - краткое решение по батарее;
 - [`methods/92_sources.md`](methods/92_sources.md) - список основных источников.
-
-В каталоге есть как основные, так и резервные методики. Часть пунктов не хранится в репозитории полностью, если статус распространения методики неясен.
 
 ## Блок `forms/yandex/`
 
@@ -41,7 +50,7 @@ PowerShell-оберток в текущей версии нет. Скрипты 
 
 Главный файл формы: [`forms/yandex/form_definition/vkr_main_form.json`](forms/yandex/form_definition/vkr_main_form.json).
 
-Секции формы лежат в [`forms/yandex/form_definition/sections/`](forms/yandex/form_definition/sections/). Резервные методики лежат в [`forms/yandex/form_definition/reserve/`](forms/yandex/form_definition/reserve/) и по умолчанию не входят в основную форму.
+Секции формы лежат в [`forms/yandex/form_definition/sections/`](forms/yandex/form_definition/sections/), часть подключенных блоков может лежать в [`forms/yandex/form_definition/reserve/`](forms/yandex/form_definition/reserve/). В форму попадают только секции, перечисленные в поле `section_files` главного JSON.
 
 Python-скрипты лежат в [`forms/yandex/scripts/`](forms/yandex/scripts/):
 
@@ -72,12 +81,6 @@ python -m venv .venv
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 copy .env.example .env
-```
-
-На Linux / macOS:
-
-```bash
-cp .env.example .env
 ```
 
 Заполнить `.env` токеном и идентификатором организации. Подробная инструкция по переменным лежит в [`forms/yandex/docs/env_variables.md`](forms/yandex/docs/env_variables.md), краткие заметки по API - в [`forms/yandex/docs/yandex_forms_api_notes.md`](forms/yandex/docs/yandex_forms_api_notes.md).
