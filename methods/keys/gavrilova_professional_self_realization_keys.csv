@@ -1,0 +1,5 @@
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
+gavrilova_professional_self_realization,goal,Ценностно-целевой компонент,,,,yes_partial_no,,,1,"external key required",external_key_required,verify with primary source
+gavrilova_professional_self_realization,resource,Ресурсный компонент,,,,yes_partial_no,,,1,"external key required",external_key_required,verify with primary source
+gavrilova_professional_self_realization,phenomenological,Феноменологический компонент,,,,yes_partial_no,,,1,"external key required",external_key_required,verify with primary source
+gavrilova_professional_self_realization,total,Общий уровень,,,,yes_partial_no,,,1,"derived after verified scales",external_key_required,verify with primary source
