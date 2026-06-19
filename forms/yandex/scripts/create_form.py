@@ -77,21 +77,14 @@ def prepare_payload(question: Dict[str, Any], *, strict_required: bool = True) -
     required = required_value(question)
     payload["required"] = required
 
-    if strict_required:
+    if strict_required and required:
         validation = payload.get("validation")
         if not isinstance(validation, dict):
             validation = {}
-        validation["required"] = required
+        validation["required"] = True
         payload["validation"] = validation
 
     return payload
-
-
-
-def legacy_required_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
-    fallback = dict(payload)
-    fallback.pop("validation", None)
-    return fallback
 
 
 
@@ -104,15 +97,13 @@ def add_question(
     try:
         return client.add_question(survey_id, payload), payload
     except YandexFormsError as error:
-        if not is_answerable(question) or "validation" not in payload:
-            raise
-        fallback = legacy_required_payload(payload)
-        print(
-            "WARNING: API rejected validation.required for "
-            f"{question.get('code')}. Retrying with legacy required only. "
-            f"Original error: {error}"
-        )
-        return client.add_question(survey_id, fallback), fallback
+        if is_answerable(question) and required_value(question) and "validation" in payload:
+            raise CliError(
+                "Yandex Forms API rejected strict required validation for "
+                f"{question.get('code')}. Form was not published because "
+                "required=yes must block moving to the next page."
+            ) from error
+        raise
 
 
 
@@ -197,7 +188,6 @@ def main() -> int:
     except YandexFormsError as error:
         print(f"ERROR: Yandex Forms API request failed: {error}", file=sys.stderr)
         return 1
-
 
 
 if __name__ == "__main__":
