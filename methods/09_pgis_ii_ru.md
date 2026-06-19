@@ -4,7 +4,6 @@ id: pgis_ii_ru
 title: "PGIS-II, русскоязычная модификация"
 short_title: "PGIS-II"
 aliases:
-  - "Personal Growth Initiative Scale-II"
   - "Инициатива личностного роста"
 construct: "Инициатива личностного роста"
 domain: "самоактуализация"
@@ -27,7 +26,7 @@ license_status: "unclear"
 full_items_stored: false
 items_text_policy: "source_required"
 items_file: "items/pgis_ii_ru_items.csv"
-key_file: "items/pgis_ii_ru_key.csv"
+key_file: "keys/pgis_ii_ru_keys.csv"
 scoring_status: "external_key_required"
 form_variable_prefix: "pgis"
 response_options: []
@@ -35,7 +34,7 @@ scale_codes:
   - {code: awareness, title: "Осознанность саморазвития"}
   - {code: intentional_behavior, title: "Преднамеренное поведение"}
   - {code: total, title: "Инициатива личностного роста"}
-source_primary: "Robitschek C. Personal Growth Initiative Scale-II."
+source_primary: "Robitschek, 2012."
 source_secondary:
   - "Скворцова: русскоязычная модификация PGIS-II"
 notes_for_vkr: "Резервная альтернатива, если фокус на саморазвитии и субъектности."
@@ -45,11 +44,16 @@ notes_for_vkr: "Резервная альтернатива, если фокус
 
 ## Назначение
 
-PGIS-II сохранена как резервная альтернатива самоактуализации через саморазвитие, субъектность и активное участие человека в собственном росте.
+PGIS-II сохранена как резервная альтернатива самоактуализации через саморазвитие и субъектность.
+
+## Пункты и ключ
+
+- Пункты: `items/pgis_ii_ru_items.csv`.
+- Ключ: `keys/pgis_ii_ru_keys.csv`.
 
 ## Подсчет
 
-В рабочем каталоге зафиксированы 2 субшкалы русскоязычной модификации: осознанность саморазвития и преднамеренное поведение. Точные пункты, формат ответа и ключ нужно сверить по выбранной публикации.
+Точные пункты, формат ответа и ключ нужно сверить по выбранной публикации.
 
 ```text
 if scoring_status != "complete": skip_auto_scoring(pgis_ii_ru)
@@ -58,5 +62,4 @@ if scoring_status != "complete": skip_auto_scoring(pgis_ii_ru)
 ## Ограничения
 
 - Не входит в актуальную батарею.
-- Не равна самоактуализации в классическом смысле Маслоу-Шострома.
 - Требуется сверка полного текста, ключа и шкалы ответа.

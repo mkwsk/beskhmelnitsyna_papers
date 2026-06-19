@@ -28,7 +28,7 @@ license_status: "unclear"
 full_items_stored: false
 items_text_policy: "source_required"
 items_file: "items/authenticity_scale_ru_items.csv"
-key_file: "items/authenticity_scale_ru_key.csv"
+key_file: "keys/authenticity_scale_ru_keys.csv"
 scoring_status: "external_key_required"
 form_variable_prefix: "auth"
 response_options:
@@ -53,7 +53,12 @@ notes_for_vkr: "Резервная альтернатива, если самоа
 
 ## Назначение
 
-Шкала сохранена как резервная альтернатива: она может быть полезна, если самоактуализация операционализируется через аутентичность, жизнь в согласии с собой и меньшую зависимость от внешнего давления.
+Шкала сохранена как резервная альтернатива: она может быть полезна, если самоактуализация операционализируется через аутентичность.
+
+## Пункты и ключ
+
+- Пункты: `items/authenticity_scale_ru_items.csv`.
+- Ключ: `keys/authenticity_scale_ru_keys.csv`.
 
 ## Подсчет
 
@@ -66,5 +71,4 @@ if scoring_status != "complete": skip_auto_scoring(authenticity_scale_ru)
 ## Ограничения
 
 - Не входит в актуальную батарею.
-- Измеряет аутентичность, а не весь комплекс самоактуализации.
 - Требуется сверка полного текста и ключа.

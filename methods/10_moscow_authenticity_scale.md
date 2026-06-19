@@ -26,7 +26,7 @@ license_status: "unclear"
 full_items_stored: false
 items_text_policy: "source_required"
 items_file: "items/moscow_authenticity_scale_items.csv"
-key_file: "items/moscow_authenticity_scale_key.csv"
+key_file: "keys/moscow_authenticity_scale_keys.csv"
 scoring_status: "external_key_required"
 form_variable_prefix: "mas"
 response_options:
@@ -46,7 +46,12 @@ notes_for_vkr: "Очень короткая шкала; как полная за
 
 ## Назначение
 
-MAS сохранена как короткий резервный скрининг аутентичности. Она может быть полезна как дополнительная шкала, но слишком узкая для полной замены самоактуализации.
+MAS сохранена как короткий резервный скрининг аутентичности.
+
+## Пункты и ключ
+
+- Пункты: `items/moscow_authenticity_scale_items.csv`.
+- Ключ: `keys/moscow_authenticity_scale_keys.csv`.
 
 ## Подсчет
 
@@ -59,5 +64,4 @@ if scoring_status != "complete": skip_auto_scoring(moscow_authenticity_scale)
 ## Ограничения
 
 - Не входит в актуальную батарею.
-- Очень короткая и узкая шкала.
 - Требуется сверка текста пунктов и ключа.

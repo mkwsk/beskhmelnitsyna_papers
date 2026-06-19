@@ -30,7 +30,7 @@ license_status: "unclear"
 full_items_stored: false
 items_text_policy: "source_required"
 items_file: "items/sat_self_actualization_test_ru_items.csv"
-key_file: "items/sat_self_actualization_test_ru_key.csv"
+key_file: "keys/self_actualization_test_ru_keys.csv"
 scoring_status: "external_key_required"
 form_variable_prefix: "sat"
 response_options:
@@ -51,11 +51,16 @@ notes_for_vkr: "Родственный POI-инструмент; слишком 
 
 ## Назначение
 
-САТ сохранен в архиве как родственный инструмент POI-традиции. В актуальную батарею не включен, потому что длинный и требует сильного обоснования.
+САТ сохранен в архиве как родственный инструмент POI-традиции. В актуальную батарею не включен.
+
+## Пункты и ключ
+
+- Пункты: `items/sat_self_actualization_test_ru_items.csv`.
+- Ключ: `keys/self_actualization_test_ru_keys.csv`.
 
 ## Подсчет
 
-Формат ответов - forced choice A/B. Каждый ответ, совпадающий с ключом шкалы, дает 1 балл. Полный ключ и текст пунктов нужно сверить с руководством или выбранным источником.
+Формат ответов - forced choice A/B. Полный ключ нужно сверить с выбранным источником.
 
 ```text
 if scoring_status != "complete": skip_auto_scoring(sat_self_actualization_test_ru)
@@ -64,5 +69,4 @@ if scoring_status != "complete": skip_auto_scoring(sat_self_actualization_test_r
 ## Ограничения
 
 - 126 пунктов, высокий риск утомления в онлайн-опросе.
-- Измеряет общую, а не профессиональную самоактуализацию.
-- Ключ и правовой статус требуют сверки.
+- Ключ требует сверки.

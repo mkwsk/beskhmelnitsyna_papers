@@ -1,0 +1,2 @@
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
+gse_schwarzer_jerusalem_ru,total,Общая самоэффективность,"1 2 3 4 5 6 7 8 9 10",,,likert_1_4,,,1,"sum(q01:q10)",complete,source

@@ -1,0 +1,4 @@
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
+core_self_evaluation_scale_ru,positive,Позитивное базовое самооценивание,"1 3 5 7 9",,,likert_1_5,,,1,"sum direct items",complete,source
+core_self_evaluation_scale_ru,neg_rev,Обратная субшкала после реверса,,"2 4 6 8 10",,likert_1_5,1,5,1,"sum reversed items",complete,source
+core_self_evaluation_scale_ru,total,Общий балл,"1 3 5 7 9","2 4 6 8 10",,likert_1_5,1,5,1,"positive + neg_rev",complete,source
