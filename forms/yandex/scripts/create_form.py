@@ -16,7 +16,6 @@ class CliError(Exception):
     """User-facing command line error without a Python traceback."""
 
 
-
 def require_file(path: Path, description: str, *, missing_hint: str | None = None) -> None:
     if not path.exists():
         message = f"{description} not found: {path}"
@@ -25,7 +24,6 @@ def require_file(path: Path, description: str, *, missing_hint: str | None = Non
         raise CliError(message)
     if not path.is_file():
         raise CliError(f"{description} is not a file: {path}")
-
 
 
 def load_json(path: Path, *, description: str, missing_hint: str | None = None) -> Dict[str, Any]:
@@ -39,7 +37,6 @@ def load_json(path: Path, *, description: str, missing_hint: str | None = None) 
         ) from error
     except OSError as error:
         raise CliError(f"Cannot read {description}: {path}\n{error}") from error
-
 
 
 def bool_flag(value: Any, *, default: bool = False) -> bool:
@@ -57,35 +54,56 @@ def bool_flag(value: Any, *, default: bool = False) -> bool:
     return default
 
 
-
 def is_answerable(question: Dict[str, Any]) -> bool:
     payload = question.get("payload", {})
     return question.get("kind") != "comment" and payload.get("type") != "comment"
-
 
 
 def required_value(question: Dict[str, Any]) -> bool:
     return bool_flag(question.get("required"), default=True)
 
 
+def with_required_flags(payload: Dict[str, Any], required: bool, *, strict_required: bool = True) -> Dict[str, Any]:
+    result = dict(payload)
+    result["required"] = required
+
+    if strict_required and required:
+        validation = result.get("validation")
+        if not isinstance(validation, dict):
+            validation = {}
+        validation["required"] = True
+        result["validation"] = validation
+    elif "validation" in result and isinstance(result["validation"], dict):
+        validation = dict(result["validation"])
+        validation.pop("required", None)
+        if validation:
+            result["validation"] = validation
+        else:
+            result.pop("validation", None)
+
+    return result
+
 
 def prepare_payload(question: Dict[str, Any], *, strict_required: bool = True) -> Dict[str, Any]:
     payload = dict(question["payload"])
     if not is_answerable(question):
         return payload
+    return with_required_flags(payload, required_value(question), strict_required=strict_required)
 
-    required = required_value(question)
-    payload["required"] = required
 
-    if strict_required and required:
-        validation = payload.get("validation")
-        if not isinstance(validation, dict):
-            validation = {}
-        validation["required"] = True
-        payload["validation"] = validation
+def required_repair_payload(item: Dict[str, Any]) -> Dict[str, Any]:
+    """Build the payload used to re-apply required flags after page moves.
 
-    return payload
+    The Yandex Forms API accepts question movement as a separate operation. In practice,
+    required flags may not start blocking navigation after a question is moved to another
+    page, so we PATCH the final question payload after all move operations.
+    """
 
+    return with_required_flags(
+        dict(item.get("payload") or {}),
+        bool(item.get("required", False)),
+        strict_required=True,
+    )
 
 
 def add_question(
@@ -105,6 +123,34 @@ def add_question(
             ) from error
         raise
 
+
+def repair_required_after_moves(
+    client: YandexFormsClient,
+    survey_id: str,
+    created: List[Dict[str, Any]],
+) -> None:
+    """Re-apply required flags after all questions have reached their final pages."""
+
+    for item in created:
+        if not is_answerable(item):
+            continue
+        if not item.get("required"):
+            continue
+        payload = required_repair_payload(item)
+        try:
+            client.update_question(survey_id, item["question_id"], payload)
+        except YandexFormsError as error:
+            raise CliError(
+                "Could not re-apply required=yes after moving question "
+                f"{item.get('code')} to page {item.get('page')}. Form was not published because "
+                "required questions must block moving to the next page."
+            ) from error
+        item["payload"] = payload
+        item["required_repaired_after_move"] = True
+        item["strict_required"] = bool(
+            (payload.get("validation") or {}).get("required", False)
+        ) if isinstance(payload.get("validation"), dict) else False
+        print(f"Re-applied required flag for {item['code']}")
 
 
 def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int:
@@ -141,6 +187,7 @@ def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int
             "method_id": question.get("method_id"),
             "payload": payload,
             "required": bool(payload.get("required", False)),
+            "required_repaired_after_move": False,
             "strict_required": bool((payload.get("validation") or {}).get("required", False)) if isinstance(payload.get("validation"), dict) else False,
             "scoring": question.get("scoring"),
         })
@@ -159,6 +206,8 @@ def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int
         client.move_question(survey_id, item["question_id"], move_payload)
         print(f"Moved {item['code']} to page {page}, position {positions[page]}")
 
+    repair_required_after_moves(client, survey_id, created)
+
     if publish:
         client.publish(survey_id)
         print(f"Published survey {survey_id}")
@@ -171,7 +220,6 @@ def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Mapping saved to {output}")
     return 0
-
 
 
 def main() -> int:
