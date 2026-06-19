@@ -1,11 +1,2 @@
-method_id,scale_code,item_number,item_code,variable,response_format,scoring_direction,reverse_min,reverse_max,weight,scoring_status,source_note
-gse_schwarzer_jerusalem_ru,total,1,q01,gse_q01,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,2,q02,gse_q02,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,3,q03,gse_q03,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,4,q04,gse_q04,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,5,q05,gse_q05,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,6,q06,gse_q06,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,7,q07,gse_q07,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,8,q08,gse_q08,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,9,q09,gse_q09,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
-gse_schwarzer_jerusalem_ru,total,10,q10,gse_q10,likert_1_4,direct,,,1,complete,Schwarzer-Jerusalem-Romek
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
+gse_schwarzer_jerusalem_ru,total,Общая самоэффективность,"1 2 3 4 5 6 7 8 9 10",,,likert_1_4,,,1,"sum(q01:q10)",complete,source
