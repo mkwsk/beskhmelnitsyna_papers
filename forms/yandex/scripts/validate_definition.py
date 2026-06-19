@@ -15,6 +15,11 @@ def load_json(path: Path) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def is_answerable_item(item: Dict[str, Any]) -> bool:
+    payload = item.get("payload", {})
+    return item.get("kind") != "comment" and payload.get("type") != "comment"
+
+
 def validate(definition_path: Path) -> List[str]:
     errors: List[str] = []
     root = definition_path.parent
@@ -53,6 +58,8 @@ def validate(definition_path: Path) -> List[str]:
                 errors.append(f"Question {qid} has unknown payload keys: {sorted(extra)}")
             if item.get("placeholder_item_text") and "TODO" not in payload.get("label", ""):
                 errors.append(f"Question {qid} marked as placeholder but label has no TODO")
+            if is_answerable_item(item) and item.get("required") is not True:
+                errors.append(f"Question {qid} must have required=true")
     return errors
 
 
