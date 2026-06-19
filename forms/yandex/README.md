@@ -13,7 +13,8 @@ forms/yandex/
 │   ├── sections/                # секции основной формы
 │   └── reserve/                 # резервные методики
 ├── scripts/                     # Python-скрипты управления
-├── docs/                        # заметки по API
+│   └── README.md                # описание каждого скрипта и примеры запуска
+├── docs/                        # заметки по API и настройке окружения
 ├── exports/                     # локальные выгрузки, не хранить в Git
 ├── .env.example                 # пример настроек API
 ├── requirements.txt             # зависимости Python
@@ -105,6 +106,21 @@ ORG_HEADER=X-Cloud-Org-Id
 Подробная инструкция, откуда брать `FORMS_TOKEN`, `ORG_ID`, `ORG_HEADER`, `AUTH_SCHEME` и `FORMS_PUBLIC_API`, лежит в `docs/env_variables.md`.
 
 Краткие заметки по заголовкам API лежат в `docs/yandex_forms_api_notes.md`.
+
+## Скрипты
+
+Подробное описание всех скриптов, их назначения и примеры запуска лежат в `scripts/README.md`.
+
+Кратко:
+
+| Скрипт | Назначение |
+|---|---|
+| `scripts/validate_definition.py` | Проверяет локальную JSON-заготовку формы. |
+| `scripts/create_form.py` | Создает форму через API из локального JSON-описания. |
+| `scripts/publish_form.py` | Публикует или снимает с публикации уже созданную форму. |
+| `scripts/export_answers.py` | Выгружает ответы из Яндекс.Форм в JSON и/или CSV. |
+| `scripts/score_export_template.py` | Шаблон подсчета баллов по CSV-выгрузке. |
+| `scripts/yf_client.py` | Служебный клиент API, напрямую обычно не запускается. |
 
 ## Проверка JSON
 
