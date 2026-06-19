@@ -6,7 +6,6 @@ short_title: "CSEs(Ru)"
 aliases:
   - "Core Self-Evaluation Scale"
   - "ШБСО"
-  - "Шкала базового самооценивания"
 construct: "Базовое самооценивание как интегральный личностный ресурс"
 domain: "самооценка"
 status_in_research: "included"
@@ -33,7 +32,7 @@ license_status: "open"
 full_items_stored: false
 items_text_policy: "source_required"
 items_file: "items/core_self_evaluation_scale_ru_items.csv"
-key_file: ""
+key_file: "keys/core_self_evaluation_scale_ru_keys.csv"
 scoring_status: "complete"
 form_variable_prefix: "cse"
 response_options:
@@ -44,41 +43,32 @@ response_options:
   - {value: 5, label: "полностью согласна", score_direct: 5, score_reverse: 1}
 scale_codes:
   - {code: positive, title: "Позитивное базовое самооценивание", score_type: sum, item_count: 5, range_raw: "5-25"}
-  - {code: negative_reversed, title: "Негативное базовое самооценивание после реверса", score_type: sum, item_count: 5, range_raw: "5-25"}
+  - {code: neg_rev, title: "Обратная субшкала после реверса", score_type: sum, item_count: 5, range_raw: "5-25"}
   - {code: total, title: "Общий балл БСО", score_type: sum, item_count: 10, range_raw: "10-50"}
 source_primary: "Judge et al. The Core Self-Evaluations Scale, 2003."
 source_secondary:
-  - "Маничев С.А., Лепехин Н.Н., Ильина О.Н. Русскоязычная версия Шкалы базового самооценивания (Core Self-Evaluation Scale): психометрическая проверка и перспективы использования // Вестник СПбГУ. Психология. 2022. Т. 12. Вып. 3. С. 285-308."
-notes_for_vkr: "Широкий интегральный показатель; в интерпретации разводить с GSE и RSES."
+  - "Маничев С.А., Лепехин Н.Н., Ильина О.Н., 2022."
+notes_for_vkr: "Широкий интегральный показатель."
 ---
 
 # Шкала базового самооценивания Core Self-Evaluation Scale, CSEs(Ru)
 
 ## Назначение в ВКР
 
-Методика используется для оценки базового самооценивания как интегрального личностного ресурса. В актуальной батарее ее нужно интерпретировать не как простую самооценку, а как более широкий конструкт.
+Методика используется для оценки базового самооценивания как интегрального личностного ресурса.
 
-## Теоретическое основание
+## Пункты и ключ
 
-Конструкт Core Self-Evaluations включает самооценку, обобщенную самоэффективность, эмоциональную стабильность и локус контроля. В теме ВКР показатель может быть связан с предпринимательской устойчивостью и проактивностью, но требует разведения с GSE и RSES.
-
-## Источники и психометрия
-
-Русскоязычная проверка: Маничев, Лепехин, Ильина, 2022. Выборка N = 917 работников организаций 18-60 лет. Зафиксирована двухфакторная структура: позитивное и негативное базовое самооценивание; показана удовлетворительная надежность и связи с самооценкой, субъективным контролем, самоэффективностью, нейротизмом и вовлеченностью.
-
-## Пункты
-
-Машиночитаемая карта пунктов: `items/core_self_evaluation_scale_ru_items.csv`.
-
-Тексты пунктов брать из статьи/приложения русской версии или из разрешенного источника.
+- Пункты: `items/core_self_evaluation_scale_ru_items.csv`.
+- Ключ: `keys/core_self_evaluation_scale_ru_keys.csv`.
 
 ## Подсчет баллов
 
 ```text
 reverse_score = 6 - raw_answer
-cse_positive = q01 + q03 + q05 + q07 + q09
-cse_negative_reversed = reverse(q02) + reverse(q04) + reverse(q06) + reverse(q08) + reverse(q10)
-cse_total = cse_positive + cse_negative_reversed
+cse_positive = sum(q01 q03 q05 q07 q09)
+cse_neg_rev = sum(reverse(q02 q04 q06 q08 q10))
+cse_total = cse_positive + cse_neg_rev
 ```
 
 ## Интерпретация
@@ -88,5 +78,4 @@ cse_total = cse_positive + cse_negative_reversed
 ## Ограничения
 
 - Частично пересекается с GSE и RSES.
-- Не следует использовать как полную замену классической самооценки без пояснения.
 - Не является клинической диагностикой.
