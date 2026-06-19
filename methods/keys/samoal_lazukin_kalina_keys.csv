@@ -1,0 +1,12 @@
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
+samoal_lazukin_kalina,time,Ориентация во времени,,,"1b 11a 17b 24b 27a 36b 54b 63b 73a 80a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
+samoal_lazukin_kalina,values,Ценности,,,"2a 16b 18a 25a 28a 37b 45a 55b 61a 64b 72a 81b 85a 96b 98b",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
+samoal_lazukin_kalina,human_nature,Взгляд на природу человека,,,"7a 15a 23b 41a 50b 59a 69a 76a 82b 86a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
+samoal_lazukin_kalina,cognition,Потребность в познании,,,"8b 24b 29b 33b 42a 51b 53a 54b 60b 70b",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
+samoal_lazukin_kalina,creativity,Креативность,,,"9a 13a 16b 25a 28a 33b 34b 43b 52a 55b 61a 64b 70b 71b 77b",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
+samoal_lazukin_kalina,autonomy,Автономность,,,"5b 9a 10a 26b 31b 32a 37b 44a 56b 66b 68b 74b 75a 87b 92a",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
+samoal_lazukin_kalina,spontaneity,Спонтанность,,,"5b 21a 31b 38b 39a 48a 57b 67b 74b 83b 87b 89b 91a 92a 94a",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
+samoal_lazukin_kalina,self_understanding,Самопонимание,,,"4b 13a 20b 30a 31b 38b 47a 66b 79b 93a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
+samoal_lazukin_kalina,autosympathy,Аутосимпатия,,,"6b 14b 21a 22b 32a 40b 49b 58a 67b 68b 79b 84a 89b 95a 97b",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
+samoal_lazukin_kalina,contact,Контактность,,,"10a 29b 35a 46b 48a 53a 62b 78b 90a 92a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
+samoal_lazukin_kalina,communication_flexibility,Гибкость в общении,,,"3b 10a 12b 19b 29b 32a 46b 48a 65b 99a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
