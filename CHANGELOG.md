@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-06-19 - документация по `.env` для Яндекс.Форм
+
+- Добавлен отдельный документ `forms/yandex/docs/env_variables.md`.
+- Описано, откуда брать `FORMS_TOKEN`, `ORG_ID`, `ORG_HEADER`, `AUTH_SCHEME` и `FORMS_PUBLIC_API`.
+- Добавлены примеры `.env` для Яндекс 360, Yandex Cloud Organization с OAuth и Yandex Cloud Organization с IAM.
+- Добавлены команды проверки доступа к API через `curl` в `cmd.exe`.
+- В корневой `README.md` и `forms/yandex/README.md` добавлены ссылки на новый документ.
+
 ## 2026-06-19 - актуализация документации
 
 - Переписан корневой `README.md` под фактическую структуру репозитория.
