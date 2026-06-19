@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-06-19 - документация по скриптам Яндекс.Форм
+
+- Добавлен файл `forms/yandex/scripts/README.md`.
+- Для каждого Python-скрипта описано назначение и пример запуска.
+- Описаны `validate_definition.py`, `create_form.py`, `publish_form.py`, `export_answers.py`, `score_export_template.py` и служебный модуль `yf_client.py`.
+- В `forms/yandex/README.md` добавлена ссылка на документацию по скриптам и краткая таблица назначения скриптов.
+
 ## 2026-06-19 - документация по `.env` для Яндекс.Форм
 
 - Добавлен отдельный документ `forms/yandex/docs/env_variables.md`.
