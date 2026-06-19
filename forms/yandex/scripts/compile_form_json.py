@@ -172,8 +172,21 @@ def load_method(root: Path, entry: Dict[str, Any]) -> Dict[str, Any]:
     return meta
 
 
-def comment(code: str, label: str, page: int) -> Dict[str, Any]:
-    return {"code": code, "page": page, "kind": "comment", "payload": {"type": "comment", "label": label, "header": True}}
+def text_block(code: str, label: str, page: int, *, header: bool = False, kind: str = "comment") -> Dict[str, Any]:
+    return {
+        "code": code,
+        "page": page,
+        "kind": kind,
+        "payload": {"type": "comment", "label": label, "header": header},
+    }
+
+
+def comment(code: str, label: str, page: int, *, header: bool = True) -> Dict[str, Any]:
+    return text_block(code, label, page, header=header)
+
+
+def separator(code: str, page: int) -> Dict[str, Any]:
+    return text_block(code, DIVIDER, page, header=False, kind="separator")
 
 
 def field_question(field: Dict[str, Any], page: int) -> Dict[str, Any]:
@@ -207,7 +220,8 @@ def build_questions(definition: Dict[str, Any], methods: List[Dict[str, Any]]) -
     for field in definition.get("screening", []):
         questions.append(field_question(field, page))
     page += 1
-    questions.append(comment("demographics_header", f"{DIVIDER}\n\nСоциально-демографические данные", page))
+    questions.append(separator("demographics_separator", page))
+    questions.append(comment("demographics_header", "Социально-демографические данные", page))
     for field in definition.get("demographics", []):
         questions.append(field_question(field, page))
     for method in methods:
@@ -219,7 +233,8 @@ def build_questions(definition: Dict[str, Any], methods: List[Dict[str, Any]]) -
             continue
         page += 1
         title = method.get("short_title") or method.get("title") or method.get("id")
-        questions.append(comment(f"{method['id']}_header", f"{DIVIDER}\n\n{title}\n\nВыберите один вариант ответа для каждого пункта.", page))
+        questions.append(separator(f"{method['id']}_separator", page))
+        questions.append(comment(f"{method['id']}_header", f"{title}\n\nВыберите один вариант ответа для каждого пункта.", page))
         split = int(method.get("answerable_items_per_page") or 0)
         count = 0
         part = 1
@@ -228,7 +243,8 @@ def build_questions(definition: Dict[str, Any], methods: List[Dict[str, Any]]) -
                 page += 1
                 part += 1
                 count = 0
-                questions.append(comment(f"{method['id']}_part_{part:02d}_header", f"{DIVIDER}\n\n{title}. Продолжение, часть {part}.", page))
+                questions.append(separator(f"{method['id']}_part_{part:02d}_separator", page))
+                questions.append(comment(f"{method['id']}_part_{part:02d}_header", f"{title}. Продолжение, часть {part}.", page))
             q = method_question(method, row, page)
             if "TODO" in q["payload"].get("label", ""):
                 warnings.append(f"{method['id']}:{q['code']}: нет полного текста пункта")
@@ -236,7 +252,8 @@ def build_questions(definition: Dict[str, Any], methods: List[Dict[str, Any]]) -
             count += 1
     page += 1
     closing = definition.get("closing", {})
-    questions.append(comment("closing_header", f"{DIVIDER}\n\n" + (closing.get("title", "") + "\n\n" + "\n\n".join(closing.get("body", []))).strip(), page))
+    questions.append(separator("closing_separator", page))
+    questions.append(comment("closing_header", (closing.get("title", "") + "\n\n" + "\n\n".join(closing.get("body", []))).strip(), page))
     return questions, warnings
 
 
