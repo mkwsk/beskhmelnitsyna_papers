@@ -138,7 +138,12 @@ def repair_required_after_moves(
             continue
         payload = required_repair_payload(item)
         try:
-            client.update_question(survey_id, item["question_id"], payload)
+            client._request(
+                "PATCH",
+                f"/surveys/{survey_id}/questions/{item['question_id']}/",
+                json=payload,
+                expected=(200,),
+            )
         except YandexFormsError as error:
             raise CliError(
                 "Could not re-apply required=yes after moving question "
