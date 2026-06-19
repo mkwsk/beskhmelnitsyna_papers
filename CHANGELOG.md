@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-06-19 - обновление батареи тестов
+
+- Основная батарея тестов обновлена по решению куратора.
+- В `forms/yandex/form_definition/vkr_main_form.json` подключены активные блоки: САМОАЛ, GSE, CSEs(Ru), RSES.
+- В основную форму подключен существующий блок `forms/yandex/form_definition/reserve/80_samoal_placeholder.json`.
+- В основную форму подключен существующий блок `forms/yandex/form_definition/reserve/50_core_self_evaluation_scale_ru.json`.
+- Методика Гавриловой убрана из активной формы и оставлена в резерве.
+- Обновлены `methods/README.md`, `methods/00_index.md` и `methods/91_decision_for_supervisor.md`.
+- Обновлен шаблон `forms/yandex/scripts/score_export_template.py`: добавлены CSEs(Ru) и счетчик заполнения САМОАЛ, удален черновой подсчет Гавриловой.
+- Обновлены README для формы и скриптов под новую батарею.
+
 ## 2026-06-19 - пояснение по `survey_id`
 
 - В `forms/yandex/scripts/README.md` добавлен раздел "Где брать `survey_id`".
