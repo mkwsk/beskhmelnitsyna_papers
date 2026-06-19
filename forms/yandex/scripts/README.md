@@ -46,6 +46,8 @@ python scripts/create_form.py output/compiled_form_bundle.json --publish --outpu
 
 Скрипт требует локальные настройки доступа к API в `.env`.
 
+По умолчанию `create_form.py` добавляет в `survey_payload` параметры `access`, `access_type` и `visibility` со значением `public`. Итоговый `survey_payload` сохраняется в `exports/form_mapping.json`.
+
 API Яндекс.Форм не позволяет надежно включить обязательность вопроса. Скрипт не выставляет этот флаг и не сохраняет список обязательных полей. После создания формы нужно вручную включить обязательность для нужных вопросов в редакторе Яндекс.Форм.
 
 ## export_answers.py
