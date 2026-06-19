@@ -1,0 +1,11 @@
+method_id,item_number,item_code,variable,text_a,text_b,text,scale_code,keyed_value,scoring_direction,required,source_note
+gse_schwarzer_jerusalem_ru,1,q01,gse_q01,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,2,q02,gse_q02,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,3,q03,gse_q03,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,4,q04,gse_q04,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,5,q05,gse_q05,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,6,q06,gse_q06,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,7,q07,gse_q07,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,8,q08,gse_q08,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,9,q09,gse_q09,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,10,q10,gse_q10,,,,total,,direct,yes,text_not_stored_public_repo
