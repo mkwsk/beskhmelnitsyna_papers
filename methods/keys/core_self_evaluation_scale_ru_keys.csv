@@ -1,21 +1,4 @@
-method_id,scale_code,item_number,item_code,variable,response_format,scoring_direction,reverse_min,reverse_max,weight,scoring_status,source_note
-core_self_evaluation_scale_ru,positive,1,q01,cse_q01,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,positive,3,q03,cse_q03,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,positive,5,q05,cse_q05,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,positive,7,q07,cse_q07,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,positive,9,q09,cse_q09,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,neg_rev,2,q02,cse_q02,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,neg_rev,4,q04,cse_q04,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,neg_rev,6,q06,cse_q06,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,neg_rev,8,q08,cse_q08,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,neg_rev,10,q10,cse_q10,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,total,1,q01,cse_q01,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,total,2,q02,cse_q02,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,total,3,q03,cse_q03,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,total,4,q04,cse_q04,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,total,5,q05,cse_q05,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,total,6,q06,cse_q06,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,total,7,q07,cse_q07,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,total,8,q08,cse_q08,likert_1_5,reverse,1,5,1,complete,source
-core_self_evaluation_scale_ru,total,9,q09,cse_q09,likert_1_5,direct,,,1,complete,source
-core_self_evaluation_scale_ru,total,10,q10,cse_q10,likert_1_5,reverse,1,5,1,complete,source
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
+core_self_evaluation_scale_ru,positive,Позитивное базовое самооценивание,"1 3 5 7 9",,,likert_1_5,,,1,"sum direct items",complete,source
+core_self_evaluation_scale_ru,neg_rev,Обратная субшкала после реверса,,"2 4 6 8 10",,likert_1_5,1,5,1,"sum reversed items",complete,source
+core_self_evaluation_scale_ru,total,Общий балл,"1 3 5 7 9","2 4 6 8 10",,likert_1_5,1,5,1,"positive + neg_rev",complete,source
