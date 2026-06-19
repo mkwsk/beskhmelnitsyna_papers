@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "name": "ВКР: самооценка и профессиональная самоактуализация женщин-предпринимателей",
-  "description": "Заготовка формы для загрузки через API Яндекс Форм. Тексты пунктов методик с неясным статусом распространения заменены TODO-плейсхолдерами.",
+  "description": "Заготовка формы для загрузки через API Яндекс Форм. Активная батарея: САМОАЛ, GSE, CSEs(Ru), RSES. Тексты пунктов методик с неясным статусом распространения заменены TODO-плейсхолдерами.",
   "survey_payload": {
     "name": "Исследование самооценки и профессиональной самоактуализации женщин-предпринимателей",
     "texts": {
@@ -14,19 +14,20 @@
     "sections/00_welcome.json",
     "sections/01_screening.json",
     "sections/02_demographics.json",
+    "reserve/80_samoal_placeholder.json",
     "sections/10_gse_schwarzer_jerusalem_ru.json",
+    "reserve/50_core_self_evaluation_scale_ru.json",
     "sections/20_rosenberg_self_esteem_scale_ru.json",
-    "sections/30_gavrilova_professional_self_realization.json",
     "sections/99_finish.json"
   ],
   "reserve_section_files": [
+    "sections/30_gavrilova_professional_self_realization.json",
     "reserve/40_pgis_ii_ru.json",
-    "reserve/50_core_self_evaluation_scale_ru.json",
     "reserve/60_sisa_placeholder.json",
-    "reserve/70_sat_placeholder.json",
-    "reserve/80_samoal_placeholder.json"
+    "reserve/70_sat_placeholder.json"
   ],
   "notes": [
+    "Активная батарея сформирована по решению куратора: САМОАЛ, GSE, CSEs(Ru), RSES.",
     "Перед публикацией заменить TODO-плейсхолдеры на точные формулировки из выбранных источников.",
     "После загрузки через API проверить в интерфейсе Форм обязательность вопросов и внешний вид страниц.",
     "reserve_section_files не загружаются create_form.py по умолчанию. Их можно подключить вручную в section_files."
