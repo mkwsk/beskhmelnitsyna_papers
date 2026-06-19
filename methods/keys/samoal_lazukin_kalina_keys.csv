@@ -1,12 +1,12 @@
 method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
-samoal_lazukin_kalina,time,Ориентация во времени,,,"1b 11a 17b 24b 27a 36b 54b 63b 73a 80a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
-samoal_lazukin_kalina,values,Ценности,,,"2a 16b 18a 25a 28a 37b 45a 55b 61a 64b 72a 81b 85a 96b 98b",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
-samoal_lazukin_kalina,human_nature,Взгляд на природу человека,,,"7a 15a 23b 41a 50b 59a 69a 76a 82b 86a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
-samoal_lazukin_kalina,cognition,Потребность в познании,,,"8b 24b 29b 33b 42a 51b 53a 54b 60b 70b",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
-samoal_lazukin_kalina,creativity,Креативность,,,"9a 13a 16b 25a 28a 33b 34b 43b 52a 55b 61a 64b 70b 71b 77b",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
-samoal_lazukin_kalina,autonomy,Автономность,,,"5b 9a 10a 26b 31b 32a 37b 44a 56b 66b 68b 74b 75a 87b 92a",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
-samoal_lazukin_kalina,spontaneity,Спонтанность,,,"5b 21a 31b 38b 39a 48a 57b 67b 74b 83b 87b 89b 91a 92a 94a",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
-samoal_lazukin_kalina,self_understanding,Самопонимание,,,"4b 13a 20b 30a 31b 38b 47a 66b 79b 93a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
-samoal_lazukin_kalina,autosympathy,Аутосимпатия,,,"6b 14b 21a 22b 32a 40b 49b 58a 67b 68b 79b 84a 89b 95a 97b",forced_choice_ab,,,1,"count keyed matches",complete_key_without_item_texts,source
-samoal_lazukin_kalina,contact,Контактность,,,"10a 29b 35a 46b 48a 53a 62b 78b 90a 92a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
-samoal_lazukin_kalina,communication_flexibility,Гибкость в общении,,,"3b 10a 12b 19b 29b 32a 46b 48a 65b 99a",forced_choice_ab,,,1.5,"count keyed matches * 1.5",complete_key_without_item_texts,source
+samoal_lazukin_kalina,time,Ориентация во времени,,,1B 11A 17B 24B 27A 36B 54B 63B 73A 80A,forced_choice_ab,,,1.5,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,values,Ценности,,,2A 16B 18A 25A 28A 37B 45A 55B 61A 64B 72A 81B 85A 96B 98B,forced_choice_ab,,,1,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,human_nature,Взгляд на природу человека,,,7A 15A 23B 41A 50B 59A 69A 76A 82B 86A,forced_choice_ab,,,1.5,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,cognition,Потребность в познании,,,8B 24B 29B 33B 42A 51B 53A 54B 60B 70B,forced_choice_ab,,,1.5,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,creativity,Креативность,,,9A 13A 16B 25A 28A 33B 34B 43B 52A 55B 61A 64B 70B 71B 77B,forced_choice_ab,,,1,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,autonomy,Автономность,,,5B 9A 10A 26B 31B 32A 37B 44A 56B 66B 68B 74B 75A 87B 92A,forced_choice_ab,,,1,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,spontaneity,Спонтанность,,,5B 21A 31B 38B 39A 48A 57B 67B 74B 83B 87B 89B 91A 92A 94A,forced_choice_ab,,,1,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,self_understanding,Самопонимание,,,4B 13A 20B 30A 31B 38B 47A 66B 79B 93A,forced_choice_ab,,,1.5,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,autosympathy,Аутосимпатия,,,6B 14B 21A 22B 32A 40B 49B 58A 67B 68B 79B 84A 89B 95A 97B,forced_choice_ab,,,1,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,contact,Контактность,,,10A 29B 35A 46B 48A 53A 62B 78B 90A 92A,forced_choice_ab,,,1.5,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
+samoal_lazukin_kalina,communication_flexibility,Гибкость в общении,,,3B 10A 12B 19B 29B 32A 46B 48A 65B 99A,forced_choice_ab,,,1.5,count keyed matches * normalize_multiplier,complete,"Калина, Лазукин 1998 / Dip-Psi"
