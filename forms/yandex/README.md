@@ -9,6 +9,8 @@
 
 Разделители между блоками компилируются как отдельные текстовые поля, а не добавляются в текст заголовков разделов. Так их проще двигать и править в интерфейсе Яндекс.Форм.
 
+Пункты методик хранятся в `methods/items/*_items.csv`, ключи подсчета - в `methods/keys/*_keys.csv`. Скрипт обработки результатов использует именно ключи из `key_file`, поэтому forced-choice методики вроде САМОАЛ считаются по шкалам, а не как простая сумма вариантов ответа.
+
 ## Основные файлы
 
 ```text
@@ -59,6 +61,8 @@ python scripts/create_form.py output/compiled_form_bundle.json --publish --outpu
 ```bash
 python scripts/interpret_results.py --bundle output/compiled_form_bundle.json --answers exports/answers.csv --out output/interpreted_results.csv
 ```
+
+Для шкал Лайкерта используются прямые и обратные пункты из `direct_items` и `reverse_items`. Для forced-choice A/B используются пары из `keyed_items`, например `1B 11A`.
 
 ## Ограничения
 
