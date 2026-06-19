@@ -1,0 +1,11 @@
+method_id,item_number,item_code,variable,text_a,text_b,text,scale_code,keyed_value,scoring_direction,required,source_note
+rosenberg_self_esteem_scale_ru,1,q01,rses_q01,,,,total,,direct,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,2,q02,rses_q02,,,,total,,reverse,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,3,q03,rses_q03,,,,total,,direct,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,4,q04,rses_q04,,,,total,,direct,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,5,q05,rses_q05,,,,total,,reverse,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,6,q06,rses_q06,,,,total,,reverse,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,7,q07,rses_q07,,,,total,,direct,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,8,q08,rses_q08,,,,total,,reverse,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,9,q09,rses_q09,,,,total,,reverse,yes,text_not_stored_public_repo
+rosenberg_self_esteem_scale_ru,10,q10,rses_q10,,,,total,,direct,yes,text_not_stored_public_repo
