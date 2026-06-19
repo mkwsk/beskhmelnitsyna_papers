@@ -8,6 +8,12 @@ from typing import Any, Dict, List
 
 from yf_client import YandexFormsClient, YandexFormsError
 
+PUBLIC_ACCESS_DEFAULTS: Dict[str, Any] = {
+    "access": "public",
+    "access_type": "public",
+    "visibility": "public",
+}
+
 
 class CliError(Exception):
     """User-facing command line error without a Python traceback."""
@@ -34,6 +40,17 @@ def load_json(path: Path, *, description: str, missing_hint: str | None = None) 
         ) from error
     except OSError as error:
         raise CliError(f"Cannot read {description}: {path}\n{error}") from error
+
+
+def public_survey_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
+    result = dict(payload)
+    for key, value in PUBLIC_ACCESS_DEFAULTS.items():
+        result.setdefault(key, value)
+    settings = dict(result.get("settings") or {})
+    for key, value in PUBLIC_ACCESS_DEFAULTS.items():
+        settings.setdefault(key, value)
+    result["settings"] = settings
+    return result
 
 
 def prepare_payload(question: Dict[str, Any]) -> Dict[str, Any]:
@@ -67,7 +84,7 @@ def create_from_bundle(
         )
 
     api = bundle.get("api") or {}
-    survey_payload = api.get("survey") or {}
+    survey_payload = public_survey_payload(api.get("survey") or {})
     questions: List[Dict[str, Any]] = api.get("questions") or []
     if not questions:
         raise CliError("Compiled bundle has no api.questions")
@@ -112,6 +129,7 @@ def create_from_bundle(
     output.write_text(json.dumps({
         "survey_id": survey_id,
         "published": publish,
+        "survey_payload": survey_payload,
         "fields": created,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Mapping saved to {output}")
