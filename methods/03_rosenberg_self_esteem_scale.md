@@ -12,11 +12,11 @@ status_in_research: "included"
 priority: "primary"
 recommended_use: "основная методика актуальной батареи"
 language: "ru"
-version: "русскоязычная версия; конкретный источник формулировок уточнить"
+version: "русскоязычная версия по открытому источнику StatBlank"
 authors_original:
   - "Morris Rosenberg"
 authors_adaptation:
-  - "уточнить по выбранному источнику"
+  - "уточнить по выбранному академическому источнику"
 year_original: 1965
 year_adaptation: 0
 item_count: 10
@@ -24,8 +24,8 @@ scale_count: 1
 response_format: "likert_1_4"
 estimated_time_min: "2-4"
 license_status: "unclear"
-full_items_stored: false
-items_text_policy: "not_stored_public_repo"
+full_items_stored: true
+items_text_policy: "stored_in_items_csv"
 items_file: "items/rosenberg_self_esteem_scale_ru_items.csv"
 key_file: ""
 scoring_status: "complete"
@@ -36,10 +36,10 @@ response_options:
   - {value: 3, label: "согласна", score_direct: 3, score_reverse: 2}
   - {value: 4, label: "полностью согласна", score_direct: 4, score_reverse: 1}
 scale_codes:
-  - {code: total, title: "Глобальная самооценка", score_type: sum, item_count: 10, range_raw: "10-40"}
+  - {code: total, title: "Глобальная самооценка / самоуважение", score_type: sum, item_count: 10, range_raw: "10-40"}
 source_primary: "Rosenberg M. Society and the Adolescent Self-image. Princeton University Press, 1965."
 source_secondary:
-  - "StatBlank: Шкала самооценки Розенберга"
+  - "StatBlank: Шкала самоуважения Розенберга"
   - "Исследования русскоязычной версии RSES"
 notes_for_vkr: "Включена для чистого измерения глобальной самооценки / самоуважения; разводить с CSEs(Ru)."
 ---
@@ -56,11 +56,11 @@ notes_for_vkr: "Включена для чистого измерения гло
 
 ## Источники
 
-Основной источник - Rosenberg M., 1965. Для русскоязычной формы нужно выбрать и зафиксировать конкретный источник формулировок. Текст пунктов не хранится в публичном репозитории до проверки источника.
+Основной источник - Rosenberg M., 1965. Для практического переноса в форму использована открытая русскоязычная версия StatBlank; при финальном оформлении ВКР желательно дополнительно сослаться на академическую публикацию русскоязычного использования RSES.
 
 ## Пункты
 
-Машиночитаемая карта пунктов: `items/rosenberg_self_esteem_scale_ru_items.csv`.
+Машиночитаемая карта пунктов с полными формулировками: `items/rosenberg_self_esteem_scale_ru_items.csv`.
 
 ## Подсчет баллов
 
@@ -75,8 +75,9 @@ rses_total = q01 + reverse(q02) + q03 + q04 + reverse(q05) + reverse(q06) + q07 
 
 Более высокий балл означает более позитивное глобальное отношение к себе. Для анализа ВКР предпочтительно использовать сырой общий балл как непрерывную переменную.
 
+Вторичная уровневая интерпретация по открытому источнику: 10-18 - низкое самоуважение; 19-25 - ниже среднего; 26-32 - среднее; 33-40 - высокое.
+
 ## Ограничения
 
-- Нужно выбрать конкретную русскоязычную версию формулировок.
-- Нельзя смешивать интерпретацию RSES и CSEs(Ru).
+- Нужно развести интерпретацию RSES и CSEs(Ru).
 - Не является клинической диагностикой.

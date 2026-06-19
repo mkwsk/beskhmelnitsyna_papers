@@ -1,11 +1,11 @@
 method_id,item_number,item_code,variable,text_a,text_b,text,scale_code,keyed_value,scoring_direction,required,source_note
-gse_schwarzer_jerusalem_ru,1,q01,gse_q01,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,2,q02,gse_q02,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,3,q03,gse_q03,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,4,q04,gse_q04,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,5,q05,gse_q05,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,6,q06,gse_q06,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,7,q07,gse_q07,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,8,q08,gse_q08,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,9,q09,gse_q09,,,,total,,direct,yes,text_not_stored_public_repo
-gse_schwarzer_jerusalem_ru,10,q10,gse_q10,,,,total,,direct,yes,text_not_stored_public_repo
+gse_schwarzer_jerusalem_ru,1,q01,gse_q01,,,"Если я как следует постараюсь, то я всегда найду решение даже сложным проблемам.",total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,2,q02,gse_q02,,,"Если мне что-либо мешает, то я все же нахожу пути достижения своей цели.",total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,3,q03,gse_q03,,,Мне довольно просто удается достичь своих целей.,total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,4,q04,gse_q04,,,"В неожиданных ситуациях я всегда знаю, как я должен(а) себя вести.",total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,5,q05,gse_q05,,,"При непредвиденно возникающих трудностях я верю, что смогу с ними справиться.",total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,6,q06,gse_q06,,,"Если я приложу достаточно усилий, то смогу справиться с большинством проблем.",total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,7,q07,gse_q07,,,"Я готов(а) к любым трудностям, поскольку полагаюсь на собственные способности.",total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,8,q08,gse_q08,,,"Если передо мной встает какая-либо проблема, то я обычно нахожу несколько вариантов ее решения.",total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,9,q09,gse_q09,,,Я могу что-либо придумать даже в безвыходных на первый взгляд ситуациях.,total,,direct,yes,Studfile page: Шкала общей самоэффективности
+gse_schwarzer_jerusalem_ru,10,q10,gse_q10,,,Я обычно способен держать ситуацию под контролем.,total,,direct,yes,Studfile page: Шкала общей самоэффективности
