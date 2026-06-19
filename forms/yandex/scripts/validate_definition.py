@@ -51,6 +51,8 @@ def validate(definition_path: Path) -> List[str]:
             extra = set(payload) - ALLOWED_PAYLOAD_KEYS
             if extra:
                 errors.append(f"Question {qid} has unknown payload keys: {sorted(extra)}")
+            if "TODO" in str(payload.get("label", "")):
+                errors.append(f"Question {qid} still contains TODO placeholder")
             if item.get("placeholder_item_text") and "TODO" not in payload.get("label", ""):
                 errors.append(f"Question {qid} marked as placeholder but label has no TODO")
     return errors
