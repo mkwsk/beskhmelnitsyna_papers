@@ -16,9 +16,11 @@ env/
 *.env
 !*.env.example
 
-# Yandex Forms exports
+# Yandex Forms generated files
 forms/yandex/exports/*
 !forms/yandex/exports/.gitkeep
+forms/yandex/output/*
+!forms/yandex/output/.gitkeep
 
 # OS / editors
 .DS_Store
