@@ -23,7 +23,7 @@ license_status: "open | citation_only | unclear | restricted"
 full_items_stored: false
 items_text_policy: "stored | not_stored_public_repo | stored_private_only | source_required"
 items_file: "items/method_id_items.csv"
-key_file: "items/method_id_key.csv"
+key_file: "keys/method_id_keys.csv"
 scoring_status: "complete | complete_key_without_item_texts | partial | external_key_required | not_applicable"
 form_variable_prefix: "method"
 response_options: []
@@ -47,15 +47,23 @@ notes_for_vkr: "Краткая методическая пометка для В
 
 Машиночитаемый файл пунктов: `items/method_id_items.csv`.
 
-CSV-формат:
+CSV-формат пунктов:
 
 ```csv
-method_id,item_number,item_code,variable,text_a,text_b,text,scale_code,keyed_value,scoring_direction,required,source_note
+method_id,item_number,item_code,variable,text_a,text_b,text,required,source_note
 ```
 
-Если правовой статус полного текста неясен, в публичном репозитории хранится структура пунктов, ключи и ссылка на источник, а формулировки добавляются после проверки источника или в приватной копии.
+Файл пунктов хранит только текст, варианты A/B и переменные формы. Ключи подсчета не должны быть единственным образом спрятаны в файле пунктов.
 
-## Подсчет баллов
+## Ключи и шкалы
+
+Канонический файл ключа: `keys/method_id_keys.csv`.
+
+CSV-формат ключа:
+
+```csv
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
+```
 
 Для шкал Лайкерта:
 
@@ -69,7 +77,7 @@ total = sum(score_q01:score_qNN)
 
 ```text
 score(scale, item) = 1 if answer == keyed_value else 0
-scale_total = sum(score(scale, item_i))
+scale_total = count(keyed_matches)
 ```
 
 ## Интерпретация
