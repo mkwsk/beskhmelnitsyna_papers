@@ -18,10 +18,10 @@ method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response
 
 - `direct_items` - номера прямых пунктов через пробел;
 - `reverse_items` - номера обратных пунктов через пробел;
-- `keyed_items` - пары вида `1b 11a` для forced choice A/B;
+- `keyed_items` - пары вида `1B 11A` для forced-choice A/B;
 - `reverse_min` и `reverse_max` - диапазон реверса для шкал Лайкерта;
 - `normalize_multiplier` - множитель нормирования, если шкалы нужно привести к общему диапазону;
 - `score_expression` - краткое текстовое правило расчета;
-- `scoring_status` - `complete`, `complete_key_without_item_texts` или `external_key_required`.
+- `scoring_status` - `complete`, `needs_review` или `external_key_required`.
 
 Для скриптов канонический ключ находится в `key_file`. Колонки с ключом в `items.csv` считаются устаревшими подсказками и не должны быть единственным источником подсчета.
