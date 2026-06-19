@@ -18,6 +18,7 @@ form_definition/vkr_main_form.json
 methods_manifest.json
 scripts/compile_form_json.py
 scripts/create_form.py
+scripts/export_research_results.py
 scripts/interpret_results.py
 output/
 exports/
@@ -56,10 +57,19 @@ python scripts/create_form.py output/compiled_form_bundle.json --publish --outpu
 
 Для обращения к API нужен локальный `.env`. Подробности лежат в `docs/env_variables.md`.
 
-## Подсчет результатов
+## Выгрузка и подсчет результатов
 
 ```bash
-python scripts/interpret_results.py --bundle output/compiled_form_bundle.json --answers exports/answers.csv --out output/interpreted_results.csv
+python scripts/export_research_results.py
+```
+
+По умолчанию скрипт берет `survey_id` из `exports/form_mapping.json`, выгружает ответы из Яндекс.Форм и сохраняет файлы в `exports/research_results/`:
+
+```text
+answers_raw.json
+answers_by_code.csv
+codebook.csv
+interpreted_results.csv
 ```
 
 Для шкал Лайкерта используются прямые и обратные пункты из `direct_items` и `reverse_items`. Для forced-choice A/B используются пары из `keyed_items`, например `1B 11A`.
