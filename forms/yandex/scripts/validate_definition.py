@@ -7,66 +7,85 @@ from typing import Any, Dict, List
 
 ALLOWED_PAYLOAD_KEYS = {
     "type", "label", "placeholder", "multiline", "widget", "items", "rows", "columns",
-    "data_source", "header",
+    "data_source", "header", "required",
 }
 
 
 def load_json(path: Path) -> Dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
-def validate(definition_path: Path) -> List[str]:
+def validate_payload(code: str, payload: Dict[str, Any], errors: List[str]) -> None:
+    if "type" not in payload:
+        errors.append(f"{code}: payload has no type")
+    if "label" not in payload:
+        errors.append(f"{code}: payload has no label")
+    extra = set(payload) - ALLOWED_PAYLOAD_KEYS
+    if extra:
+        errors.append(f"{code}: unknown payload keys: {sorted(extra)}")
+
+
+def validate_form_definition(data: Dict[str, Any]) -> List[str]:
     errors: List[str] = []
-    root = definition_path.parent
-    definition = load_json(definition_path)
-    if "survey_payload" not in definition:
-        errors.append("Missing survey_payload")
-    if not definition.get("section_files"):
-        errors.append("Missing section_files")
-
-    qids = set()
-    for rel in definition.get("section_files", []):
-        section_path = root / rel
-        if not section_path.exists():
-            errors.append(f"Section file does not exist: {rel}")
+    if data.get("schema_version") != "form-definition-v1":
+        errors.append("schema_version must be form-definition-v1")
+    if "survey_payload" not in data:
+        errors.append("survey_payload is required")
+    if "section_files" in data:
+        errors.append("section_files should not be used here; tests are loaded from methods_manifest.json")
+    for block_name in ("screening", "demographics"):
+        block = data.get(block_name)
+        if not isinstance(block, list):
+            errors.append(f"{block_name} must be a list")
             continue
-        section = load_json(section_path)
-        if "questions" not in section:
-            errors.append(f"No questions in {rel}")
-            continue
-        for item in section["questions"]:
-            qid = item.get("qid")
-            if not qid:
-                errors.append(f"Question without qid in {rel}")
-            elif qid in qids:
-                errors.append(f"Duplicate qid: {qid}")
-            else:
-                qids.add(qid)
-            payload = item.get("payload")
-            if not isinstance(payload, dict):
-                errors.append(f"Question {qid} has no payload")
-                continue
-            if "type" not in payload or "label" not in payload:
-                errors.append(f"Question {qid} payload must contain type and label")
-            extra = set(payload) - ALLOWED_PAYLOAD_KEYS
-            if extra:
-                errors.append(f"Question {qid} has unknown payload keys: {sorted(extra)}")
-            if "TODO" in str(payload.get("label", "")):
-                errors.append(f"Question {qid} still contains TODO placeholder")
-            if item.get("placeholder_item_text") and "TODO" not in payload.get("label", ""):
-                errors.append(f"Question {qid} marked as placeholder but label has no TODO")
+        for item in block:
+            if "code" not in item:
+                errors.append(f"{block_name}: item without code")
+            if "label" not in item:
+                errors.append(f"{block_name}: {item.get('code')} has no label")
     return errors
+
+
+def validate_bundle(data: Dict[str, Any]) -> List[str]:
+    errors: List[str] = []
+    if data.get("schema_version") != "vkr-yandex-forms-bundle-v1":
+        errors.append("schema_version must be vkr-yandex-forms-bundle-v1")
+    questions = data.get("api", {}).get("questions")
+    if not isinstance(questions, list) or not questions:
+        errors.append("api.questions must be a non-empty list")
+        return errors
+    codes = set()
+    for question in questions:
+        code = question.get("code")
+        if not code:
+            errors.append("question without code")
+            continue
+        if code in codes:
+            errors.append(f"duplicate question code: {code}")
+        codes.add(code)
+        validate_payload(code, question.get("payload", {}), errors)
+    return errors
+
+
+def validate(path: Path) -> List[str]:
+    data = load_json(path)
+    schema = data.get("schema_version")
+    if schema == "form-definition-v1":
+        return validate_form_definition(data)
+    if schema == "vkr-yandex-forms-bundle-v1":
+        return validate_bundle(data)
+    return [f"Unknown schema_version: {schema}"]
 
 
 def main() -> int:
     if len(sys.argv) != 2:
-        print("Usage: python scripts/validate_definition.py form_definition/vkr_main_form.json", file=sys.stderr)
+        print("Usage: python scripts/validate_definition.py <form_definition_or_bundle.json>")
         return 2
     errors = validate(Path(sys.argv[1]))
     if errors:
-        print("Definition has errors:", file=sys.stderr)
+        print("Definition has errors:")
         for error in errors:
-            print(f"- {error}", file=sys.stderr)
+            print(f"- {error}")
         return 1
     print("Definition looks OK")
     return 0
