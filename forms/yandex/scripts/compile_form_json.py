@@ -5,6 +5,7 @@ import csv
 import datetime as dt
 import json
 import re
+import sys
 import tempfile
 import zipfile
 from pathlib import Path
@@ -13,13 +14,49 @@ from typing import Any, Dict, Iterable, List
 DIVIDER = "──────────────── ✦ ────────────────"
 
 
-def read_json(path: Path) -> Dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+class CliError(Exception):
+    """User-facing command line error without a Python traceback."""
+
+
+
+def require_file(path: Path, description: str, *, missing_hint: str | None = None) -> None:
+    if not path.exists():
+        message = f"{description} not found: {path}"
+        if missing_hint:
+            message += f"\n{missing_hint}"
+        raise CliError(message)
+    if not path.is_file():
+        raise CliError(f"{description} is not a file: {path}")
+
+
+
+def read_text(path: Path, *, description: str, missing_hint: str | None = None) -> str:
+    require_file(path, description, missing_hint=missing_hint)
+    try:
+        return path.read_text(encoding="utf-8-sig")
+    except OSError as error:
+        raise CliError(f"Cannot read {description}: {path}\n{error}") from error
+
+
+
+def read_json(path: Path, *, description: str = "JSON file", missing_hint: str | None = None) -> Dict[str, Any]:
+    try:
+        return json.loads(read_text(path, description=description, missing_hint=missing_hint))
+    except json.JSONDecodeError as error:
+        raise CliError(
+            f"{description} is not valid JSON: {path}\n"
+            f"{error.msg} at line {error.lineno}, column {error.colno}"
+        ) from error
+
 
 
 def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    try:
+        path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    except OSError as error:
+        raise CliError(f"Cannot write output JSON: {path}\n{error}") from error
+
 
 
 def scalar(value: str) -> Any:
@@ -33,6 +70,7 @@ def scalar(value: str) -> Any:
     if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
         return value[1:-1]
     return value
+
 
 
 def inline_dict(text: str) -> Dict[str, Any]:
@@ -60,6 +98,7 @@ def inline_dict(text: str) -> Dict[str, Any]:
     return result
 
 
+
 def front_matter(text: str) -> Dict[str, Any]:
     match = re.match(r"---\s*\n(.*?)\n---", text, flags=re.S)
     if not match:
@@ -85,11 +124,20 @@ def front_matter(text: str) -> Dict[str, Any]:
     return data
 
 
+
 def csv_rows(path: Path) -> List[Dict[str, str]]:
     if not path.exists():
         return []
-    with path.open("r", encoding="utf-8-sig", newline="") as handle:
-        return [dict(row) for row in csv.DictReader(handle)]
+    if not path.is_file():
+        raise CliError(f"CSV source is not a file: {path}")
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            return [dict(row) for row in csv.DictReader(handle)]
+    except csv.Error as error:
+        raise CliError(f"Cannot parse CSV source: {path}\n{error}") from error
+    except OSError as error:
+        raise CliError(f"Cannot read CSV source: {path}\n{error}") from error
+
 
 
 def expand_range(row: Dict[str, str]) -> List[Dict[str, str]]:
@@ -113,6 +161,7 @@ def expand_range(row: Dict[str, str]) -> List[Dict[str, str]]:
     return result
 
 
+
 def normalize_items(rows: List[Dict[str, str]]) -> List[Dict[str, str]]:
     if len(rows) == 1 and rows[0].get("item_range"):
         return expand_range(rows[0])
@@ -133,6 +182,7 @@ def normalize_items(rows: List[Dict[str, str]]) -> List[Dict[str, str]]:
     return result
 
 
+
 def response_options(meta: Dict[str, Any]) -> List[Dict[str, Any]]:
     if meta.get("response_options"):
         return list(meta["response_options"])
@@ -144,6 +194,7 @@ def response_options(meta: Dict[str, Any]) -> List[Dict[str, Any]]:
         return [{"value": "A", "label": "A"}, {"value": "B", "label": "B"}]
     labels = ["абсолютно неверно", "скорее всего не верно", "скорее всего верно", "совершенно верно"]
     return [{"value": i + 1, "label": label, "score_direct": i + 1} for i, label in enumerate(labels)]
+
 
 
 def option_items(options: Iterable[Dict[str, Any]], row: Dict[str, str]) -> List[Dict[str, str]]:
@@ -159,9 +210,18 @@ def option_items(options: Iterable[Dict[str, Any]], row: Dict[str, str]) -> List
     return result
 
 
+
 def load_method(root: Path, entry: Dict[str, Any]) -> Dict[str, Any]:
+    if "source" not in entry:
+        raise CliError(f"Method manifest entry has no source: {entry}")
     source = root / entry["source"]
-    meta = front_matter(source.read_text(encoding="utf-8-sig"))
+    meta = front_matter(
+        read_text(
+            source,
+            description=f"method source for {entry.get('id') or entry.get('source')}",
+            missing_hint="Check forms/yandex/methods_manifest.json and methods_root.",
+        )
+    )
     meta.setdefault("id", entry.get("id"))
     meta["source_file"] = str(source)
     meta["include_in_form"] = bool(entry.get("include_in_form", True))
@@ -170,6 +230,7 @@ def load_method(root: Path, entry: Dict[str, Any]) -> Dict[str, Any]:
     meta["items"] = normalize_items(csv_rows(root / str(meta.get("items_file", ""))))
     meta["keys"] = csv_rows(root / str(meta.get("key_file", ""))) if meta.get("key_file") else []
     return meta
+
 
 
 def text_block(code: str, label: str, page: int, *, header: bool = False, kind: str = "comment") -> Dict[str, Any]:
@@ -181,12 +242,15 @@ def text_block(code: str, label: str, page: int, *, header: bool = False, kind: 
     }
 
 
+
 def comment(code: str, label: str, page: int, *, header: bool = True) -> Dict[str, Any]:
     return text_block(code, label, page, header=header)
 
 
+
 def separator(code: str, page: int) -> Dict[str, Any]:
     return text_block(code, DIVIDER, page, header=False, kind="separator")
+
 
 
 def field_question(field: Dict[str, Any], page: int) -> Dict[str, Any]:
@@ -195,6 +259,7 @@ def field_question(field: Dict[str, Any], page: int) -> Dict[str, Any]:
         if key in field:
             payload[key] = field[key]
     return {"code": field.get("code"), "page": page, "kind": "question", "required": bool(field.get("required", True)), "payload": payload}
+
 
 
 def method_question(method: Dict[str, Any], row: Dict[str, str], page: int) -> Dict[str, Any]:
@@ -209,6 +274,7 @@ def method_question(method: Dict[str, Any], row: Dict[str, str], page: int) -> D
         "payload": {"type": "enum", "label": text, "widget": "radio", "items": option_items(method["response_options"], row)},
         "scoring": {"scale_code": row.get("scale_code") or "total", "direction": row.get("scoring_direction") or "direct", "keyed_value": row.get("keyed_value") or None},
     }
+
 
 
 def build_questions(definition: Dict[str, Any], methods: List[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], List[str]]:
@@ -257,10 +323,19 @@ def build_questions(definition: Dict[str, Any], methods: List[Dict[str, Any]]) -
     return questions, warnings
 
 
+
 def archive_root(zip_path: Path) -> tuple[tempfile.TemporaryDirectory[str], Path]:
+    require_file(zip_path, "method archive")
     tmp = tempfile.TemporaryDirectory()
-    with zipfile.ZipFile(zip_path) as archive:
-        archive.extractall(tmp.name)
+    try:
+        with zipfile.ZipFile(zip_path) as archive:
+            archive.extractall(tmp.name)
+    except zipfile.BadZipFile as error:
+        tmp.cleanup()
+        raise CliError(f"Method archive is not a valid zip file: {zip_path}") from error
+    except OSError as error:
+        tmp.cleanup()
+        raise CliError(f"Cannot extract method archive: {zip_path}\n{error}") from error
     root = Path(tmp.name)
     if (root / "methods").is_dir():
         return tmp, root / "methods"
@@ -273,9 +348,10 @@ def archive_root(zip_path: Path) -> tuple[tempfile.TemporaryDirectory[str], Path
     return tmp, root
 
 
+
 def compile_bundle(definition_path: Path, manifest_path: Path, out_path: Path, methods_root: Path) -> Dict[str, Any]:
-    definition = read_json(definition_path)
-    manifest = read_json(manifest_path)
+    definition = read_json(definition_path, description="form definition")
+    manifest = read_json(manifest_path, description="methods manifest")
     methods = [load_method(methods_root, item) for item in manifest.get("methods", [])]
     questions, warnings = build_questions(definition, methods)
     bundle = {
@@ -291,6 +367,7 @@ def compile_bundle(definition_path: Path, manifest_path: Path, out_path: Path, m
     return bundle
 
 
+
 def main() -> int:
     base = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description="Compile form definition and method archive into one JSON bundle")
@@ -300,13 +377,16 @@ def main() -> int:
     parser.add_argument("--archive", type=Path, default=None, help="Optional zip archive with method markdown and items/keys directories")
     args = parser.parse_args()
     tmp = None
-    if args.archive:
-        tmp, methods_root = archive_root(args.archive)
-    else:
-        manifest = read_json(args.manifest)
-        methods_root = (args.manifest.parent / manifest.get("methods_root", "../../methods")).resolve()
     try:
+        if args.archive:
+            tmp, methods_root = archive_root(args.archive)
+        else:
+            manifest = read_json(args.manifest, description="methods manifest")
+            methods_root = (args.manifest.parent / manifest.get("methods_root", "../../methods")).resolve()
         bundle = compile_bundle(args.definition, args.manifest, args.out, methods_root)
+    except CliError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
     finally:
         if tmp:
             tmp.cleanup()
@@ -314,6 +394,7 @@ def main() -> int:
     for warning in bundle.get("warnings", []):
         print(f"WARNING: {warning}")
     return 0
+
 
 
 if __name__ == "__main__":
