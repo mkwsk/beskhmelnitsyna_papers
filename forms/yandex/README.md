@@ -93,6 +93,7 @@ FORMS_TOKEN=...
 ORG_ID=...
 ORG_HEADER=X-Org-Id
 AUTH_SCHEME=OAuth
+FORMS_PUBLIC_API=https://api.forms.yandex.net/v1
 ```
 
 Для организации Yandex Cloud вместо `X-Org-Id` может использоваться:
@@ -100,6 +101,8 @@ AUTH_SCHEME=OAuth
 ```text
 ORG_HEADER=X-Cloud-Org-Id
 ```
+
+Подробная инструкция, откуда брать `FORMS_TOKEN`, `ORG_ID`, `ORG_HEADER`, `AUTH_SCHEME` и `FORMS_PUBLIC_API`, лежит в `docs/env_variables.md`.
 
 Краткие заметки по заголовкам API лежат в `docs/yandex_forms_api_notes.md`.
 
