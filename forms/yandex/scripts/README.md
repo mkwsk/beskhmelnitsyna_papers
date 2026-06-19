@@ -43,11 +43,17 @@ python scripts/create_form.py output/compiled_form_bundle.json --output exports/
 python scripts/create_form.py output/compiled_form_bundle.json --publish --output exports/form_mapping.json
 ```
 
+С отладкой обязательных вопросов:
+
+```bash
+python scripts/create_form.py output/compiled_form_bundle.json --publish --output exports/form_mapping.json --required-debug-dir exports/required_debug
+```
+
 Скрипт требует локальные настройки доступа к API в `.env`.
 
-Для отвечаемых вопросов `required=yes` теперь передается в API в двух местах: как `required: true` и как `validation.required: true`. Это нужно, чтобы обязательные вопросы блокировали переход на следующий лист. Если API отклонит расширенное поле `validation.required`, скрипт автоматически повторит создание вопроса в старом режиме и напечатает предупреждение.
+Для отвечаемых вопросов `required=yes` сначала передается при создании вопроса как `required: true` и `validation.required: true`. После всех операций `move` скрипт дополнительно делает несколько минимальных `PATCH`-запросов с разными вариантами имени флага обязательности, потому что API может принимать лишние поля без ошибки, но не применять их к реальному вопросу.
 
-В `exports/form_mapping.json` для каждого вопроса сохраняются два признака: `required` и `strict_required`. Если у вопроса `required=true`, но `strict_required=false`, такую форму нужно проверить вручную перед рассылкой.
+В `exports/form_mapping.json` для каждого вопроса сохраняются признаки `required`, `strict_required`, `required_patch_modes`, `required_patch_rejections` и `required_returned_modes`. Если `strict_required=false`, нужно смотреть файлы из `--required-debug-dir` и проверять форму вручную перед рассылкой.
 
 ## export_answers.py
 
