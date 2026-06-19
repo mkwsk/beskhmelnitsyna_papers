@@ -7,14 +7,21 @@
 ## Базовый формат `*_items.csv`
 
 ```csv
-method_id,item_number,item_code,variable,text_a,text_b,text,required,source_note
+method_id,item_number,item_code,variable,text_a,text_b,text,scale_code,keyed_value,scoring_direction,required,source_note
 ```
 
-- `text_a` и `text_b` используются для forced choice A/B.
-- `text` используется для обычных утверждений Лайкерта.
+- `text_a` и `text_b` используются для forced-choice A/B методик.
+- `text` используется для обычных утверждений Лайкерта; для A/B методик здесь можно хранить короткий заголовок вроде `Пункт 1`.
+- `variable` должен совпадать с кодом ответа в форме и с выгрузкой Яндекс.Форм.
 - `required` показывает, должен ли пункт быть обязательным в форме.
 - `source_note` фиксирует источник текста или пометку для сверки.
 
+## Порядок
+
+- Пункты хранятся только в `methods/items/`.
+- Ключи хранятся только в `methods/keys/`.
+- Файлы-перенаправления вида `*_key.csv` в каталоге `items/` не используются.
+
 ## Устаревшие колонки
 
-В некоторых рабочих CSV могут оставаться колонки `scale_code`, `keyed_value` и `scoring_direction`. Они сохранены только как подсказки для человека и совместимости старых файлов. Новые скрипты должны брать ключи из `methods/keys/*_keys.csv`.
+В рабочих CSV могут оставаться колонки `scale_code`, `keyed_value` и `scoring_direction`. Они сохранены как подсказки для человека и совместимости старых файлов. Новые скрипты должны брать ключи из `methods/keys/*_keys.csv`.
