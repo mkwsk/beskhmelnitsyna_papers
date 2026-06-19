@@ -45,6 +45,10 @@ python scripts/create_form.py output/compiled_form_bundle.json --publish --outpu
 
 Скрипт требует локальные настройки доступа к API в `.env`.
 
+Для отвечаемых вопросов `required=yes` теперь передается в API в двух местах: как `required: true` и как `validation.required: true`. Это нужно, чтобы обязательные вопросы блокировали переход на следующий лист. Если API отклонит расширенное поле `validation.required`, скрипт автоматически повторит создание вопроса в старом режиме и напечатает предупреждение.
+
+В `exports/form_mapping.json` для каждого вопроса сохраняются два признака: `required` и `strict_required`. Если у вопроса `required=true`, но `strict_required=false`, такую форму нужно проверить вручную перед рассылкой.
+
 ## export_answers.py
 
 Выгружает ответы из формы.
