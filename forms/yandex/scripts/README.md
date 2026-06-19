@@ -8,7 +8,8 @@
 2. Скомпилировать методики из `methods/` в один JSON-бандл.
 3. Проверить бандл.
 4. Создать форму из бандла.
-5. После сбора ответов посчитать шкалы по тому же бандлу.
+5. В редакторе Яндекс.Форм вручную включить обязательность для вопросов, перечисленных в `exports/form_mapping.json`.
+6. После сбора ответов посчитать шкалы по тому же бандлу.
 
 ## validate_definition.py
 
@@ -43,17 +44,11 @@ python scripts/create_form.py output/compiled_form_bundle.json --output exports/
 python scripts/create_form.py output/compiled_form_bundle.json --publish --output exports/form_mapping.json
 ```
 
-С отладкой обязательных вопросов:
-
-```bash
-python scripts/create_form.py output/compiled_form_bundle.json --publish --output exports/form_mapping.json --required-debug-dir exports/required_debug
-```
-
 Скрипт требует локальные настройки доступа к API в `.env`.
 
-Для отвечаемых вопросов `required=yes` сначала передается при создании вопроса как `required: true` и `validation.required: true`. После всех операций `move` скрипт дополнительно делает несколько минимальных `PATCH`-запросов с разными вариантами имени флага обязательности, потому что API может принимать лишние поля без ошибки, но не применять их к реальному вопросу.
+API Яндекс.Форм не позволяет надежно включить обязательность вопроса. Скрипт больше не пытается выставлять этот флаг через API и не делает проверочные `PATCH`/`GET` запросы.
 
-В `exports/form_mapping.json` для каждого вопроса сохраняются признаки `required`, `strict_required`, `required_patch_modes`, `required_patch_rejections` и `required_returned_modes`. Если `strict_required=false`, нужно смотреть файлы из `--required-debug-dir` и проверять форму вручную перед рассылкой.
+В `exports/form_mapping.json` сохраняется список `manual_actions.required_flag.fields`. Для всех вопросов из этого списка нужно вручную включить обязательность в редакторе формы перед рассылкой.
 
 ## export_answers.py
 
