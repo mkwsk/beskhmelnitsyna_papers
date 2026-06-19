@@ -11,8 +11,31 @@ ALLOWED_PAYLOAD_KEYS = {
 }
 
 
+class CliError(Exception):
+    """User-facing command line error without a Python traceback."""
+
+
+
+def require_file(path: Path, description: str) -> None:
+    if not path.exists():
+        raise CliError(f"{description} not found: {path}")
+    if not path.is_file():
+        raise CliError(f"{description} is not a file: {path}")
+
+
+
 def load_json(path: Path) -> Dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+    require_file(path, "form definition or compiled bundle")
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except json.JSONDecodeError as error:
+        raise CliError(
+            f"Input file is not valid JSON: {path}\n"
+            f"{error.msg} at line {error.lineno}, column {error.colno}"
+        ) from error
+    except OSError as error:
+        raise CliError(f"Cannot read input file: {path}\n{error}") from error
+
 
 
 def validate_payload(code: str, payload: Dict[str, Any], errors: List[str]) -> None:
@@ -23,6 +46,7 @@ def validate_payload(code: str, payload: Dict[str, Any], errors: List[str]) -> N
     extra = set(payload) - ALLOWED_PAYLOAD_KEYS
     if extra:
         errors.append(f"{code}: unknown payload keys: {sorted(extra)}")
+
 
 
 def validate_form_definition(data: Dict[str, Any]) -> List[str]:
@@ -46,6 +70,7 @@ def validate_form_definition(data: Dict[str, Any]) -> List[str]:
     return errors
 
 
+
 def validate_bundle(data: Dict[str, Any]) -> List[str]:
     errors: List[str] = []
     if data.get("schema_version") != "vkr-yandex-forms-bundle-v1":
@@ -67,6 +92,7 @@ def validate_bundle(data: Dict[str, Any]) -> List[str]:
     return errors
 
 
+
 def validate(path: Path) -> List[str]:
     data = load_json(path)
     schema = data.get("schema_version")
@@ -77,11 +103,16 @@ def validate(path: Path) -> List[str]:
     return [f"Unknown schema_version: {schema}"]
 
 
+
 def main() -> int:
     if len(sys.argv) != 2:
         print("Usage: python scripts/validate_definition.py <form_definition_or_bundle.json>")
         return 2
-    errors = validate(Path(sys.argv[1]))
+    try:
+        errors = validate(Path(sys.argv[1]))
+    except CliError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
     if errors:
         print("Definition has errors:")
         for error in errors:
