@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-06-19 - пояснение по `survey_id`
+
+- В `forms/yandex/scripts/README.md` добавлен раздел "Где брать `survey_id`".
+- Описаны основные источники `survey_id`: вывод `create_form.py`, файл `exports/form_mapping.json` и URL формы в интерфейсе Яндекс.Форм.
+- Добавлена команда для быстрого чтения `survey_id` из `exports/form_mapping.json` через Python.
+- Уточнен типовой порядок работы: после создания формы нужно сохранить `survey_id`.
+
 ## 2026-06-19 - документация по скриптам Яндекс.Форм
 
 - Добавлен файл `forms/yandex/scripts/README.md`.
