@@ -10,12 +10,18 @@
 
 ## Формат `*_keys.csv`
 
+Основной формат ключей - одна строка на вычисляемую шкалу:
+
 ```csv
-method_id,scale_code,scale_title,item_number,item_code,variable,response_format,scoring_direction,keyed_value,score_if_match,reverse_min,reverse_max,weight,normalize_multiplier,scoring_status,source_note
+method_id,scale_code,scale_title,direct_items,reverse_items,keyed_items,response_format,reverse_min,reverse_max,normalize_multiplier,score_expression,scoring_status,source_note
 ```
 
-`scoring_direction` принимает значения: `direct`, `reverse`, `keyed`, `derived`, `external_key_required`.
-
-`scoring_status` принимает значения: `complete`, `complete_key_without_item_texts`, `external_key_required`.
+- `direct_items` - номера прямых пунктов через пробел;
+- `reverse_items` - номера обратных пунктов через пробел;
+- `keyed_items` - пары вида `1b 11a` для forced choice A/B;
+- `reverse_min` и `reverse_max` - диапазон реверса для шкал Лайкерта;
+- `normalize_multiplier` - множитель нормирования, если шкалы нужно привести к общему диапазону;
+- `score_expression` - краткое текстовое правило расчета;
+- `scoring_status` - `complete`, `complete_key_without_item_texts` или `external_key_required`.
 
 Для скриптов канонический ключ находится в `key_file`. Колонки с ключом в `items.csv` считаются устаревшими подсказками и не должны быть единственным источником подсчета.
