@@ -1,0 +1,32 @@
+{
+  "schema_version": "methods-manifest-v1",
+  "description": "Список методик, которые компилятор добавляет к нетестовой части формы из form_definition/vkr_main_form.json.",
+  "methods_root": "../../methods",
+  "methods": [
+    {
+      "id": "samoal_lazukin_kalina",
+      "source": "06_samoal.md",
+      "include_in_form": true,
+      "answerable_items_per_page": 25
+    },
+    {
+      "id": "gse_schwarzer_jerusalem_ru",
+      "source": "01_gse_schwarzer_jerusalem_ru.md",
+      "include_in_form": true
+    },
+    {
+      "id": "core_self_evaluation_scale_ru",
+      "source": "04_core_self_evaluation_scale_ru.md",
+      "include_in_form": true
+    },
+    {
+      "id": "rosenberg_self_esteem_scale_ru",
+      "source": "03_rosenberg_self_esteem_scale.md",
+      "include_in_form": true
+    }
+  ],
+  "items_dir": "items",
+  "keys_dir": "keys",
+  "include_methods_without_item_texts": true,
+  "placeholder_prefix": "TODO"
+}
