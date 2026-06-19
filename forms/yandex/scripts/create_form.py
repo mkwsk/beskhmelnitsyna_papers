@@ -3,13 +3,31 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
-from yf_client import YandexFormsClient
+from yf_client import YandexFormsClient, YandexFormsError
+
+TRUTHY = {"1", "true", "yes", "y", "да"}
+FALSY = {"0", "false", "no", "n", "нет"}
 
 
 def load_json(path: Path) -> Dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+def bool_flag(value: Any, *, default: bool = False) -> bool:
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return bool(value)
+    normalized = str(value).strip().lower()
+    if normalized in TRUTHY:
+        return True
+    if normalized in FALSY:
+        return False
+    return default
 
 
 def is_answerable(question: Dict[str, Any]) -> bool:
@@ -17,11 +35,52 @@ def is_answerable(question: Dict[str, Any]) -> bool:
     return question.get("kind") != "comment" and payload.get("type") != "comment"
 
 
-def prepare_payload(question: Dict[str, Any]) -> Dict[str, Any]:
+def required_value(question: Dict[str, Any]) -> bool:
+    return bool_flag(question.get("required"), default=True)
+
+
+def prepare_payload(question: Dict[str, Any], *, strict_required: bool = True) -> Dict[str, Any]:
     payload = dict(question["payload"])
-    if is_answerable(question):
-        payload["required"] = bool(question.get("required", True))
+    if not is_answerable(question):
+        return payload
+
+    required = required_value(question)
+    payload["required"] = required
+
+    if strict_required:
+        validation = payload.get("validation")
+        if not isinstance(validation, dict):
+            validation = {}
+        validation["required"] = required
+        payload["validation"] = validation
+
     return payload
+
+
+def legacy_required_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
+    fallback = dict(payload)
+    fallback.pop("validation", None)
+    return fallback
+
+
+def add_question(
+    client: YandexFormsClient,
+    survey_id: str,
+    question: Dict[str, Any],
+) -> Tuple[int, Dict[str, Any]]:
+    payload = prepare_payload(question, strict_required=True)
+    try:
+        return client.add_question(survey_id, payload), payload
+    except YandexFormsError as error:
+        if not is_answerable(question) or "validation" not in payload:
+            raise
+        fallback = legacy_required_payload(payload)
+        print(
+            "WARNING: API rejected validation.required for "
+            f"{question.get('code')}. Retrying with legacy required only. "
+            f"Original error: {error}"
+        )
+        return client.add_question(survey_id, fallback), fallback
 
 
 def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int:
@@ -44,8 +103,7 @@ def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int
 
     created = []
     for question in questions:
-        payload = prepare_payload(question)
-        yandex_question_id = client.add_question(survey_id, payload)
+        yandex_question_id, payload = add_question(client, survey_id, question)
         print(f"Added {question.get('code')} -> {yandex_question_id}")
         created.append({
             "code": question.get("code"),
@@ -55,6 +113,7 @@ def create_from_bundle(bundle_path: Path, *, publish: bool, output: Path) -> int
             "method_id": question.get("method_id"),
             "payload": payload,
             "required": bool(payload.get("required", False)),
+            "strict_required": bool((payload.get("validation") or {}).get("required", False)) if isinstance(payload.get("validation"), dict) else False,
             "scoring": question.get("scoring"),
         })
 
