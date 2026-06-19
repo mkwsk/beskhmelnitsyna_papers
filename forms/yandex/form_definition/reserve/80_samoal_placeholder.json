@@ -1,0 +1,2621 @@
+{
+  "section_id": "samoal",
+  "title": "САМОАЛ",
+  "page": 7,
+  "method_meta": {
+    "items_count": 100,
+    "status": "reserve",
+    "full_items_stored": false
+  },
+  "questions": [
+    {
+      "qid": "samoal_header",
+      "kind": "comment",
+      "payload": {
+        "type": "comment",
+        "label": "Резервный блок. САМОАЛ. Полные пункты не внесены; подключать только после отдельного решения.",
+        "header": true
+      }
+    },
+    {
+      "qid": "samoal_q001",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 1] Вставить пункт 1 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q002",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 2] Вставить пункт 2 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q003",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 3] Вставить пункт 3 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q004",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 4] Вставить пункт 4 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q005",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 5] Вставить пункт 5 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q006",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 6] Вставить пункт 6 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q007",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 7] Вставить пункт 7 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q008",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 8] Вставить пункт 8 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q009",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 9] Вставить пункт 9 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q010",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 10] Вставить пункт 10 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q011",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 11] Вставить пункт 11 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q012",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 12] Вставить пункт 12 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q013",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 13] Вставить пункт 13 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q014",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 14] Вставить пункт 14 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q015",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 15] Вставить пункт 15 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q016",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 16] Вставить пункт 16 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q017",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 17] Вставить пункт 17 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q018",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 18] Вставить пункт 18 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q019",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 19] Вставить пункт 19 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q020",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 20] Вставить пункт 20 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q021",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 21] Вставить пункт 21 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q022",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 22] Вставить пункт 22 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q023",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 23] Вставить пункт 23 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q024",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 24] Вставить пункт 24 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q025",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 25] Вставить пункт 25 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q026",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 26] Вставить пункт 26 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q027",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 27] Вставить пункт 27 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q028",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 28] Вставить пункт 28 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q029",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 29] Вставить пункт 29 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q030",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 30] Вставить пункт 30 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q031",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 31] Вставить пункт 31 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q032",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 32] Вставить пункт 32 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q033",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 33] Вставить пункт 33 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q034",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 34] Вставить пункт 34 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q035",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 35] Вставить пункт 35 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q036",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 36] Вставить пункт 36 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q037",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 37] Вставить пункт 37 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q038",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 38] Вставить пункт 38 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q039",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 39] Вставить пункт 39 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q040",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 40] Вставить пункт 40 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q041",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 41] Вставить пункт 41 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q042",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 42] Вставить пункт 42 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q043",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 43] Вставить пункт 43 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q044",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 44] Вставить пункт 44 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q045",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 45] Вставить пункт 45 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q046",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 46] Вставить пункт 46 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q047",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 47] Вставить пункт 47 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q048",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 48] Вставить пункт 48 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q049",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 49] Вставить пункт 49 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q050",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 50] Вставить пункт 50 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q051",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 51] Вставить пункт 51 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q052",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 52] Вставить пункт 52 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q053",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 53] Вставить пункт 53 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q054",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 54] Вставить пункт 54 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q055",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 55] Вставить пункт 55 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q056",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 56] Вставить пункт 56 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q057",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 57] Вставить пункт 57 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q058",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 58] Вставить пункт 58 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q059",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 59] Вставить пункт 59 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q060",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 60] Вставить пункт 60 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q061",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 61] Вставить пункт 61 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q062",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 62] Вставить пункт 62 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q063",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 63] Вставить пункт 63 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q064",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 64] Вставить пункт 64 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q065",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 65] Вставить пункт 65 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q066",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 66] Вставить пункт 66 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q067",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 67] Вставить пункт 67 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q068",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 68] Вставить пункт 68 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q069",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 69] Вставить пункт 69 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q070",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 70] Вставить пункт 70 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q071",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 71] Вставить пункт 71 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q072",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 72] Вставить пункт 72 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q073",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 73] Вставить пункт 73 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q074",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 74] Вставить пункт 74 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q075",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 75] Вставить пункт 75 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q076",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 76] Вставить пункт 76 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q077",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 77] Вставить пункт 77 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q078",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 78] Вставить пункт 78 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q079",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 79] Вставить пункт 79 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q080",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 80] Вставить пункт 80 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q081",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 81] Вставить пункт 81 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q082",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 82] Вставить пункт 82 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q083",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 83] Вставить пункт 83 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q084",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 84] Вставить пункт 84 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q085",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 85] Вставить пункт 85 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q086",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 86] Вставить пункт 86 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q087",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 87] Вставить пункт 87 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q088",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 88] Вставить пункт 88 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q089",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 89] Вставить пункт 89 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q090",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 90] Вставить пункт 90 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q091",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 91] Вставить пункт 91 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q092",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 92] Вставить пункт 92 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q093",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 93] Вставить пункт 93 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q094",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 94] Вставить пункт 94 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q095",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 95] Вставить пункт 95 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q096",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 96] Вставить пункт 96 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q097",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 97] Вставить пункт 97 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q098",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 98] Вставить пункт 98 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q099",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 99] Вставить пункт 99 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    },
+    {
+      "qid": "samoal_q100",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO САМОАЛ 100] Вставить пункт 100 из выбранного источника",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "A"
+          },
+          {
+            "label": "B"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "A": null,
+          "B": null
+        }
+      }
+    }
+  ]
+}

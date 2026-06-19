@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1",
+  "name": "ВКР: самооценка и профессиональная самоактуализация женщин-предпринимателей",
+  "description": "Заготовка формы для загрузки через API Яндекс Форм. Тексты пунктов методик с неясным статусом распространения заменены TODO-плейсхолдерами.",
+  "survey_payload": {
+    "name": "Исследование самооценки и профессиональной самоактуализации женщин-предпринимателей",
+    "texts": {
+      "submit": "Отправить ответы",
+      "title": "Спасибо за участие!",
+      "subtitle": "Ваши ответы приняты. Благодарим Вас за вклад в исследование."
+    }
+  },
+  "section_files": [
+    "sections/00_welcome.json",
+    "sections/01_screening.json",
+    "sections/02_demographics.json",
+    "sections/10_gse_schwarzer_jerusalem_ru.json",
+    "sections/20_rosenberg_self_esteem_scale_ru.json",
+    "sections/30_gavrilova_professional_self_realization.json",
+    "sections/99_finish.json"
+  ],
+  "reserve_section_files": [
+    "reserve/40_pgis_ii_ru.json",
+    "reserve/50_core_self_evaluation_scale_ru.json",
+    "reserve/60_sisa_placeholder.json",
+    "reserve/70_sat_placeholder.json",
+    "reserve/80_samoal_placeholder.json"
+  ],
+  "notes": [
+    "Перед публикацией заменить TODO-плейсхолдеры на точные формулировки из выбранных источников.",
+    "После загрузки через API проверить в интерфейсе Форм обязательность вопросов и внешний вид страниц.",
+    "reserve_section_files не загружаются create_form.py по умолчанию. Их можно подключить вручную в section_files."
+  ]
+}

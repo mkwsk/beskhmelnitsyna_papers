@@ -1,0 +1,367 @@
+{
+  "section_id": "gse_schwarzer_jerusalem_ru",
+  "title": "Шкала общей самоэффективности",
+  "page": 4,
+  "method_meta": {
+    "short_title": "GSE",
+    "items_count": 10,
+    "source_to_fill_items": "Шварцер Р., Ерусалем М., Ромек В. Русская версия шкалы общей самоэффективности Р. Шварцера и М. Ерусалема // Иностранная психология. 1996. № 7. С. 71-77.",
+    "full_items_stored": false
+  },
+  "questions": [
+    {
+      "qid": "gse_header",
+      "kind": "comment",
+      "payload": {
+        "type": "comment",
+        "label": "Методика 1. Шкала общей самоэффективности.\n\nОцените, насколько каждое утверждение соответствует Вам. Выберите один вариант ответа для каждого пункта.",
+        "header": true
+      }
+    },
+    {
+      "qid": "gse_q01",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 01] Вставить точную формулировку пункта 1 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q02",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 02] Вставить точную формулировку пункта 2 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q03",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 03] Вставить точную формулировку пункта 3 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q04",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 04] Вставить точную формулировку пункта 4 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q05",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 05] Вставить точную формулировку пункта 5 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q06",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 06] Вставить точную формулировку пункта 6 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q07",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 07] Вставить точную формулировку пункта 7 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q08",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 08] Вставить точную формулировку пункта 8 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q09",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 09] Вставить точную формулировку пункта 9 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    },
+    {
+      "qid": "gse_q10",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO GSE 10] Вставить точную формулировку пункта 10 из выбранного источника русской адаптации",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "неверно"
+          },
+          {
+            "label": "скорее неверно"
+          },
+          {
+            "label": "скорее верно"
+          },
+          {
+            "label": "совершенно верно"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "options": {
+          "неверно": 1,
+          "скорее неверно": 2,
+          "скорее верно": 3,
+          "совершенно верно": 4
+        }
+      }
+    }
+  ],
+  "scoring": {
+    "total": "sum(gse_q01:gse_q10)",
+    "range": "10-40",
+    "reverse_items": []
+  }
+}

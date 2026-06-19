@@ -1,0 +1,341 @@
+{
+  "section_id": "rosenberg_self_esteem_scale_ru",
+  "title": "Шкала самооценки Розенберга",
+  "page": 5,
+  "method_meta": {
+    "short_title": "RSES",
+    "items_count": 10,
+    "source_to_fill_items": "Выбрать конкретную русскоязычную адаптацию / проверенный источник перед публикацией.",
+    "full_items_stored": false
+  },
+  "questions": [
+    {
+      "qid": "rses_header",
+      "kind": "comment",
+      "payload": {
+        "type": "comment",
+        "label": "Методика 2. Шкала самооценки.\n\nОцените степень согласия с каждым утверждением. Выберите один вариант ответа для каждого пункта.",
+        "header": true
+      }
+    },
+    {
+      "qid": "rses_q01",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 01] Вставить точную формулировку пункта 1 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q02",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 02] Вставить точную формулировку пункта 2 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "reverse",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q03",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 03] Вставить точную формулировку пункта 3 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q04",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 04] Вставить точную формулировку пункта 4 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q05",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 05] Вставить точную формулировку пункта 5 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "reverse",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q06",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 06] Вставить точную формулировку пункта 6 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "reverse",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q07",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 07] Вставить точную формулировку пункта 7 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q08",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 08] Вставить точную формулировку пункта 8 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "reverse",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q09",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 09] Вставить точную формулировку пункта 9 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "reverse",
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "qid": "rses_q10",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": true,
+      "payload": {
+        "type": "enum",
+        "label": "[TODO RSES 10] Вставить точную формулировку пункта 10 из выбранной русской версии",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Полностью не согласна"
+          },
+          {
+            "label": "Не согласна"
+          },
+          {
+            "label": "Согласна"
+          },
+          {
+            "label": "Полностью согласна"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "direct",
+        "min": 1,
+        "max": 4
+      }
+    }
+  ],
+  "scoring": {
+    "total": "sum(scored_rses_q01:scored_rses_q10)",
+    "range": "10-40",
+    "direct_items": [
+      1,
+      3,
+      4,
+      7,
+      10
+    ],
+    "reverse_items": [
+      2,
+      5,
+      6,
+      8,
+      9
+    ],
+    "reverse_formula": "5 - raw_answer"
+  }
+}

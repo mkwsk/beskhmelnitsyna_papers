@@ -1,0 +1,130 @@
+{
+  "section_id": "screening",
+  "title": "Критерии участия",
+  "page": 2,
+  "questions": [
+    {
+      "qid": "screening_header",
+      "kind": "comment",
+      "payload": {
+        "type": "comment",
+        "label": "Пожалуйста, ответьте на несколько вопросов, чтобы подтвердить соответствие критериям исследования.",
+        "header": true
+      }
+    },
+    {
+      "qid": "scr_gender",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": false,
+      "payload": {
+        "type": "enum",
+        "label": "Ваш пол",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Женщина"
+          },
+          {
+            "label": "Другое / предпочитаю не указывать"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "screening",
+        "accepted": [
+          "Женщина"
+        ]
+      }
+    },
+    {
+      "qid": "scr_age",
+      "kind": "question",
+      "required": true,
+      "payload": {
+        "type": "integer",
+        "label": "Ваш возраст, полных лет",
+        "placeholder": "Например: 42"
+      }
+    },
+    {
+      "qid": "scr_entrepreneur",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": false,
+      "payload": {
+        "type": "enum",
+        "label": "Вы занимаетесь предпринимательской деятельностью?",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Да"
+          },
+          {
+            "label": "Нет"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "screening",
+        "accepted": [
+          "Да"
+        ]
+      }
+    },
+    {
+      "qid": "scr_registered_business",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": false,
+      "payload": {
+        "type": "enum",
+        "label": "Есть ли у Вас зарегистрированный бизнес / самозанятость / ИП / участие в управлении компанией?",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Да"
+          },
+          {
+            "label": "Нет"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "screening",
+        "accepted": [
+          "Да"
+        ]
+      }
+    },
+    {
+      "qid": "scr_active_management",
+      "kind": "question",
+      "required": true,
+      "placeholder_item_text": false,
+      "payload": {
+        "type": "enum",
+        "label": "Принимаете ли Вы активное участие в управлении делом?",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Да"
+          },
+          {
+            "label": "Нет"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "screening",
+        "accepted": [
+          "Да"
+        ]
+      }
+    }
+  ],
+  "manual_logic_notes": [
+    "В интерфейсе Яндекс Форм можно настроить ветвление: если consent != Да или критерии не выполнены, переводить респондента к завершающему сообщению.",
+    "Возрастной диапазон уточнить по финальному решению куратора: в текущем введении указан 25-65, в раннем приглашении встречался 40-60."
+  ]
+}

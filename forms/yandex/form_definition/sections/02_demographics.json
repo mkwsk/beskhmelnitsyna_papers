@@ -1,0 +1,113 @@
+{
+  "section_id": "demographics",
+  "title": "Социально-демографические данные",
+  "page": 3,
+  "questions": [
+    {
+      "qid": "demographics_header",
+      "kind": "comment",
+      "payload": {
+        "type": "comment",
+        "label": "Далее несколько общих вопросов о Вас и Вашем предпринимательском опыте. Эти данные нужны только для статистического анализа.",
+        "header": true
+      }
+    },
+    {
+      "qid": "demo_city",
+      "kind": "question",
+      "required": false,
+      "payload": {
+        "type": "string",
+        "label": "Город / регион проживания",
+        "placeholder": "Например: Москва",
+        "multiline": false
+      }
+    },
+    {
+      "qid": "demo_education",
+      "kind": "question",
+      "required": false,
+      "placeholder_item_text": false,
+      "payload": {
+        "type": "enum",
+        "label": "Ваш уровень образования",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Среднее профессиональное"
+          },
+          {
+            "label": "Высшее"
+          },
+          {
+            "label": "Несколько высших / магистратура"
+          },
+          {
+            "label": "Кандидатская / ученая степень"
+          },
+          {
+            "label": "Другое"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "nominal"
+      }
+    },
+    {
+      "qid": "demo_business_field",
+      "kind": "question",
+      "required": false,
+      "payload": {
+        "type": "string",
+        "label": "Сфера предпринимательской деятельности",
+        "placeholder": "Например: торговля, услуги, образование",
+        "multiline": false
+      }
+    },
+    {
+      "qid": "demo_business_experience",
+      "kind": "question",
+      "required": false,
+      "payload": {
+        "type": "integer",
+        "label": "Стаж предпринимательской деятельности, полных лет",
+        "placeholder": "Например: 7"
+      }
+    },
+    {
+      "qid": "demo_business_size",
+      "kind": "question",
+      "required": false,
+      "placeholder_item_text": false,
+      "payload": {
+        "type": "enum",
+        "label": "Примерный размер бизнеса",
+        "widget": "radio",
+        "items": [
+          {
+            "label": "Самозанятость / работаю одна"
+          },
+          {
+            "label": "1-5 сотрудников"
+          },
+          {
+            "label": "6-15 сотрудников"
+          },
+          {
+            "label": "16-50 сотрудников"
+          },
+          {
+            "label": "Более 50 сотрудников"
+          },
+          {
+            "label": "Затрудняюсь ответить"
+          }
+        ]
+      },
+      "scoring": {
+        "type": "nominal"
+      }
+    }
+  ]
+}

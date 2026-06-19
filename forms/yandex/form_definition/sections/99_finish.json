@@ -1,0 +1,16 @@
+{
+  "section_id": "finish",
+  "title": "Завершение",
+  "page": 7,
+  "questions": [
+    {
+      "qid": "finish_header",
+      "kind": "comment",
+      "payload": {
+        "type": "comment",
+        "label": "На этом основная часть анкеты завершена.\n\nПожалуйста, нажмите кнопку отправки формы. Спасибо за Ваше время и участие в исследовании!",
+        "header": true
+      }
+    }
+  ]
+}
