@@ -29,8 +29,8 @@ scale_count: 3
 response_format: "likert_1_5"
 estimated_time_min: "2-4"
 license_status: "open"
-full_items_stored: false
-items_text_policy: "source_required"
+full_items_stored: true
+items_text_policy: "stored_in_items_csv"
 items_file: "items/core_self_evaluation_scale_ru_items.csv"
 key_file: "keys/core_self_evaluation_scale_ru_keys.csv"
 scoring_status: "complete"
@@ -48,7 +48,7 @@ scale_codes:
 source_primary: "Judge et al. The Core Self-Evaluations Scale, 2003."
 source_secondary:
   - "Маничев С.А., Лепехин Н.Н., Ильина О.Н., 2022."
-notes_for_vkr: "Широкий интегральный показатель."
+notes_for_vkr: "Широкий интегральный показатель. Полный текст 10 пунктов хранится в items/core_self_evaluation_scale_ru_items.csv."
 ---
 
 # Шкала базового самооценивания Core Self-Evaluation Scale, CSEs(Ru)
