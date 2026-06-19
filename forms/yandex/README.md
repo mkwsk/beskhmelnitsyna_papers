@@ -1,10 +1,30 @@
 # Заготовка Яндекс.Форм для ВКР
 
-Папка содержит JSON-заготовку формы и Python-скрипты для работы с API Яндекс Форм.
+Эта директория содержит JSON-заготовку формы и Python-скрипты для работы с API Яндекс Форм.
 
-Главная форма: `form_definition/vkr_main_form.json`.
+PowerShell-скриптов и `.cmd`-оберток в текущей версии нет. Рабочий интерфейс управления - Python-скрипты из папки `scripts/`.
 
-Секции формы лежат отдельно в `form_definition/sections`:
+## Состав директории
+
+```text
+forms/yandex/
+├── form_definition/
+│   ├── vkr_main_form.json       # основная форма
+│   ├── sections/                # секции основной формы
+│   └── reserve/                 # резервные методики
+├── scripts/                     # Python-скрипты управления
+├── docs/                        # заметки по API
+├── exports/                     # локальные выгрузки, не хранить в Git
+├── .env.example                 # пример настроек API
+├── requirements.txt             # зависимости Python
+└── README.md                    # этот файл
+```
+
+## Основная форма
+
+Главный файл: `form_definition/vkr_main_form.json`.
+
+Секции основной формы лежат в `form_definition/sections/`:
 
 - `00_welcome.json` - приветствие и информированное согласие;
 - `01_screening.json` - критерии участия;
@@ -14,68 +34,104 @@
 - `30_gavrilova_professional_self_realization.json` - методика Гавриловой;
 - `99_finish.json` - завершающий экран.
 
-Резервные методики лежат в `form_definition/reserve` и по умолчанию не загружаются.
+Резервные методики лежат в `form_definition/reserve/` и по умолчанию не загружаются в основную форму.
 
-## Важное ограничение
+## Важное ограничение по пунктам методик
 
-Точные формулировки пунктов методик с неясным статусом распространения не внесены в JSON. Вместо них стоят TODO-плейсхолдеры. Перед реальной публикацией формы нужно заменить TODO на точные пункты из выбранных первоисточников и проверить правовой статус использования.
+Точные формулировки пунктов методик с неясным статусом распространения не внесены в JSON. Вместо них стоят `TODO`-плейсхолдеры.
 
-## Установка
+Перед публикацией формы нужно:
+
+1. заменить все `TODO` на точные пункты из выбранных первоисточников;
+2. проверить правовой статус использования методик;
+3. открыть форму в интерфейсе Яндекс.Форм и проверить страницы, шкалы и обязательность вопросов.
+
+## Подготовка Python
+
+Текущая версия предполагает, что команда `python` уже доступна в среде запуска. Встроенный/portable Python в репозиторий пока не добавлен.
+
+Создание окружения:
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+```
+
+Установка зависимостей на Linux / macOS:
+
+```bash
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+Установка зависимостей на Windows через `cmd.exe`:
+
+```bat
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Если позже в репозиторий будет добавлен переносимый Python, команды можно будет заменить на запуск конкретного `python.exe` из папки репозитория.
+
+## Настройка `.env`
+
+Скопировать пример:
+
+Windows `cmd.exe`:
+
+```bat
+copy .env.example .env
+```
+
+Linux / macOS:
+
+```bash
 cp .env.example .env
 ```
 
-Заполни `.env`:
+Заполнить `.env`:
 
 ```text
 FORMS_TOKEN=...
 ORG_ID=...
 ORG_HEADER=X-Org-Id
+AUTH_SCHEME=OAuth
 ```
 
-Для организации Yandex Cloud можно использовать:
+Для организации Yandex Cloud вместо `X-Org-Id` может использоваться:
 
 ```text
 ORG_HEADER=X-Cloud-Org-Id
 ```
 
-## Проверка заготовки
+Краткие заметки по заголовкам API лежат в `docs/yandex_forms_api_notes.md`.
+
+## Проверка JSON
 
 ```bash
 python scripts/validate_definition.py form_definition/vkr_main_form.json
 ```
 
+Проверка должна завершиться без ошибок. Если есть `TODO`, это не техническая ошибка JSON, но это блокер перед реальной публикацией.
+
 ## Создание формы через API
 
-Черновик без публикации:
+Создать черновик без публикации:
 
 ```bash
 python scripts/create_form.py form_definition/vkr_main_form.json --output exports/form_mapping.json
 ```
 
-С публикацией:
+Создать и сразу опубликовать:
 
 ```bash
 python scripts/create_form.py form_definition/vkr_main_form.json --publish --output exports/form_mapping.json
 ```
 
-После загрузки обязательно открой форму в интерфейсе Яндекс.Форм и проверь:
+После загрузки обязательно открыть форму в Яндекс.Формах вручную и проверить:
 
 1. порядок страниц;
 2. обязательность вопросов;
-3. ветвление для несогласия / неподходящих критериев;
-4. отсутствие TODO-плейсхолдеров;
+3. ветвление для несогласия и неподходящих критериев;
+4. отсутствие `TODO`-плейсхолдеров;
 5. корректность текстов и шкал.
-
-## Выгрузка ответов
-
-```bash
-python scripts/export_answers.py <survey_id> --json exports/answers.json --csv exports/answers.csv
-```
 
 ## Публикация и снятие с публикации
 
@@ -83,6 +139,20 @@ python scripts/export_answers.py <survey_id> --json exports/answers.json --csv e
 python scripts/publish_form.py <survey_id> publish
 python scripts/publish_form.py <survey_id> unpublish
 ```
+
+## Выгрузка ответов
+
+```bash
+python scripts/export_answers.py <survey_id> --json exports/answers.json --csv exports/answers.csv
+```
+
+## Подсчет баллов по выгрузке
+
+```bash
+python scripts/score_export_template.py exports/answers.csv exports/answers_scored.csv
+```
+
+Скрипт подсчета является шаблоном. Перед использованием его нужно сверить с финальными ключами методик и с тем, как именно Яндекс.Формы выгружают названия колонок.
 
 ## Структура JSON-секции
 
@@ -93,4 +163,4 @@ python scripts/publish_form.py <survey_id> unpublish
 - `required` - локальная пометка для контроля, в API сейчас не отправляется;
 - `scoring` - локальные правила подсчета, в API сейчас не отправляются.
 
-Скрипт `create_form.py` отправляет в API только `payload`, чтобы не передать лишние поля.
+Скрипт `create_form.py` отправляет в API только `payload`, чтобы не передать лишние локальные поля.
