@@ -1,0 +1,11 @@
+method_id,item_number,item_code,variable,text_a,text_b,text,scale_code,keyed_value,scoring_direction,required,source_note
+core_self_evaluation_scale_ru,1,q01,cse_q01,,,,positive,,direct,yes,source_required
+core_self_evaluation_scale_ru,2,q02,cse_q02,,,,reversed,,reverse,yes,source_required
+core_self_evaluation_scale_ru,3,q03,cse_q03,,,,positive,,direct,yes,source_required
+core_self_evaluation_scale_ru,4,q04,cse_q04,,,,reversed,,reverse,yes,source_required
+core_self_evaluation_scale_ru,5,q05,cse_q05,,,,positive,,direct,yes,source_required
+core_self_evaluation_scale_ru,6,q06,cse_q06,,,,reversed,,reverse,yes,source_required
+core_self_evaluation_scale_ru,7,q07,cse_q07,,,,positive,,direct,yes,source_required
+core_self_evaluation_scale_ru,8,q08,cse_q08,,,,reversed,,reverse,yes,source_required
+core_self_evaluation_scale_ru,9,q09,cse_q09,,,,positive,,direct,yes,source_required
+core_self_evaluation_scale_ru,10,q10,cse_q10,,,,reversed,,reverse,yes,source_required
