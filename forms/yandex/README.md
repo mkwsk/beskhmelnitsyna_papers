@@ -4,38 +4,33 @@
 
 PowerShell-скриптов и `.cmd`-оберток в текущей версии нет. Рабочий интерфейс управления - Python-скрипты из папки `scripts/`.
 
-## Состав директории
-
-```text
-forms/yandex/
-├── form_definition/
-│   ├── vkr_main_form.json       # основная форма
-│   ├── sections/                # секции основной формы
-│   └── reserve/                 # резервные методики
-├── scripts/                     # Python-скрипты управления
-│   └── README.md                # описание каждого скрипта и примеры запуска
-├── docs/                        # заметки по API и настройке окружения
-├── exports/                     # локальные выгрузки, не хранить в Git
-├── .env.example                 # пример настроек API
-├── requirements.txt             # зависимости Python
-└── README.md                    # этот файл
-```
-
 ## Основная форма
 
 Главный файл: `form_definition/vkr_main_form.json`.
 
-Секции основной формы лежат в `form_definition/sections/`:
+Актуальная батарея тестов в основной форме:
 
-- `00_welcome.json` - приветствие и информированное согласие;
-- `01_screening.json` - критерии участия;
-- `02_demographics.json` - социально-демографический блок;
-- `10_gse_schwarzer_jerusalem_ru.json` - GSE;
-- `20_rosenberg_self_esteem_scale_ru.json` - RSES;
-- `30_gavrilova_professional_self_realization.json` - методика Гавриловой;
-- `99_finish.json` - завершающий экран.
+| Порядок | Блок | Файл секции |
+|---:|---|---|
+| 1 | Самоактуализация - САМОАЛ, Лазукин-Калина | `reserve/80_samoal_placeholder.json` |
+| 2 | Самоэффективность - GSE Шварцера-Ерусалема, адаптация Ромека | `sections/10_gse_schwarzer_jerusalem_ru.json` |
+| 3 | Самооценивание - CSEs(Ru), Шкала базового самооценивания | `reserve/50_core_self_evaluation_scale_ru.json` |
+| 4 | Самоуважение / самооценка - Шкала Розенберга | `sections/20_rosenberg_self_esteem_scale_ru.json` |
 
-Резервные методики лежат в `form_definition/reserve/` и по умолчанию не загружаются в основную форму.
+Полный порядок секций, которые реально загружаются скриптом `create_form.py`, задается только полем `section_files` в `form_definition/vkr_main_form.json`.
+
+Сейчас там указаны:
+
+- `sections/00_welcome.json` - приветствие и информированное согласие;
+- `sections/01_screening.json` - критерии участия;
+- `sections/02_demographics.json` - социально-демографический блок;
+- `reserve/80_samoal_placeholder.json` - САМОАЛ;
+- `sections/10_gse_schwarzer_jerusalem_ru.json` - GSE;
+- `reserve/50_core_self_evaluation_scale_ru.json` - CSEs(Ru);
+- `sections/20_rosenberg_self_esteem_scale_ru.json` - RSES;
+- `sections/99_finish.json` - завершающий экран.
+
+В папке `sections/` могут оставаться дополнительные JSON-файлы от прежней версии батареи. Они не попадают в форму, если не перечислены в `section_files`.
 
 ## Важное ограничение по пунктам методик
 
@@ -57,34 +52,24 @@ forms/yandex/
 python -m venv .venv
 ```
 
-Установка зависимостей на Linux / macOS:
-
-```bash
-.venv/bin/python -m pip install -r requirements.txt
-```
-
 Установка зависимостей на Windows через `cmd.exe`:
 
 ```bat
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Если позже в репозиторий будет добавлен переносимый Python, команды можно будет заменить на запуск конкретного `python.exe` из папки репозитория.
+Установка зависимостей на Linux / macOS:
+
+```bash
+.venv/bin/python -m pip install -r requirements.txt
+```
 
 ## Настройка `.env`
 
 Скопировать пример:
 
-Windows `cmd.exe`:
-
 ```bat
 copy .env.example .env
-```
-
-Linux / macOS:
-
-```bash
-cp .env.example .env
 ```
 
 Заполнить `.env`:
@@ -97,15 +82,7 @@ AUTH_SCHEME=OAuth
 FORMS_PUBLIC_API=https://api.forms.yandex.net/v1
 ```
 
-Для организации Yandex Cloud вместо `X-Org-Id` может использоваться:
-
-```text
-ORG_HEADER=X-Cloud-Org-Id
-```
-
 Подробная инструкция, откуда брать `FORMS_TOKEN`, `ORG_ID`, `ORG_HEADER`, `AUTH_SCHEME` и `FORMS_PUBLIC_API`, лежит в `docs/env_variables.md`.
-
-Краткие заметки по заголовкам API лежат в `docs/yandex_forms_api_notes.md`.
 
 ## Скрипты
 
@@ -132,8 +109,6 @@ python scripts/validate_definition.py form_definition/vkr_main_form.json
 
 ## Создание формы через API
 
-Создать черновик без публикации:
-
 ```bash
 python scripts/create_form.py form_definition/vkr_main_form.json --output exports/form_mapping.json
 ```
@@ -144,13 +119,7 @@ python scripts/create_form.py form_definition/vkr_main_form.json --output export
 python scripts/create_form.py form_definition/vkr_main_form.json --publish --output exports/form_mapping.json
 ```
 
-После загрузки обязательно открыть форму в Яндекс.Формах вручную и проверить:
-
-1. порядок страниц;
-2. обязательность вопросов;
-3. ветвление для несогласия и неподходящих критериев;
-4. отсутствие `TODO`-плейсхолдеров;
-5. корректность текстов и шкал.
+После загрузки обязательно открыть форму в Яндекс.Формах вручную и проверить порядок страниц, обязательность вопросов, ветвление, отсутствие `TODO`-плейсхолдеров и корректность шкал.
 
 ## Публикация и снятие с публикации
 
@@ -172,14 +141,3 @@ python scripts/score_export_template.py exports/answers.csv exports/answers_scor
 ```
 
 Скрипт подсчета является шаблоном. Перед использованием его нужно сверить с финальными ключами методик и с тем, как именно Яндекс.Формы выгружают названия колонок.
-
-## Структура JSON-секции
-
-Каждая секция содержит массив `questions`. Для каждого вопроса есть:
-
-- `qid` - локальный код переменной для базы;
-- `payload` - то, что отправляется в API Яндекс Форм;
-- `required` - локальная пометка для контроля, в API сейчас не отправляется;
-- `scoring` - локальные правила подсчета, в API сейчас не отправляются.
-
-Скрипт `create_form.py` отправляет в API только `payload`, чтобы не передать лишние локальные поля.
