@@ -28,6 +28,8 @@ def validate(path: Path) -> list[str]:
             errors.append("screening must be a list")
         if not isinstance(data.get("demographics"), list):
             errors.append("demographics must be a list")
+        if "participant_information" in data and not isinstance(data.get("participant_information"), dict):
+            errors.append("participant_information must be an object")
         return errors
     if schema == "vkr-yandex-forms-bundle-v1":
         questions = data.get("api", {}).get("questions")
