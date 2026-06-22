@@ -7,8 +7,9 @@
 3. Гаврилова Е.А. Психодиагностическая методика "Тип и уровень профессиональной самореализации": разработка, описание и психометрия // Вестник ТвГУ. Серия "Педагогика и психология". 2015. С. 19-34.
 4. Шварцер Р., Ерусалем М., Ромек В. Русская версия шкалы общей самоэффективности Р. Шварцера и М. Ерусалема // Иностранная психология. 1996. № 7. С. 71-77.
 5. Rosenberg M. Society and the Adolescent Self-image. Princeton, NJ: Princeton University Press, 1965.
-6. Jones A., Crandall R. Validation of a Short Index of Self-Actualization // Personality and Social Psychology Bulletin. 1986.
-7. Nartova-Bochaver S.K. et al. Russian validation of the Authenticity Scale. 2021.
-8. Материалы по русскоязычной модификации PGIS-II.
-9. Материалы Dip-Psi по САМОАЛ.
-10. Материалы Psylab и HR-Portal по САТ.
+6. Русскоязычная валидационная публикация по шкале самооценки Розенберга, упомянутая в аудите ключей как источник сверки направлений прямых и обратных пунктов. Точное библиографическое описание нужно закрепить перед финальной версией ВКР.
+7. Jones A., Crandall R. Validation of a Short Index of Self-Actualization // Personality and Social Psychology Bulletin. 1986.
+8. Nartova-Bochaver S.K. et al. Russian validation of the Authenticity Scale. 2021.
+9. Материалы по русскоязычной модификации PGIS-II.
+10. Материалы Dip-Psi по САМОАЛ.
+11. Материалы Psylab и HR-Portal по САТ.
