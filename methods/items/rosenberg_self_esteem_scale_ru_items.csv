@@ -1,11 +1,11 @@
 method_id,item_number,item_code,variable,text_a,text_b,text,scale_code,keyed_value,scoring_direction,required,source_note
-rosenberg_self_esteem_scale_ru,1,q01,rses_q01,,,В целом я удовлетворен(а) собой.,total,,direct,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,2,q02,rses_q02,,,"Временами я думаю, что я ни на что не годен(на).",total,,reverse,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,3,q03,rses_q03,,,"Я чувствую, что у меня есть ряд хороших качеств.",total,,direct,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,4,q04,rses_q04,,,Я способен(на) делать дела не хуже большинства людей.,total,,direct,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,5,q05,rses_q05,,,"Мне кажется, что мне особенно нечем гордиться.",total,,reverse,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,6,q06,rses_q06,,,Иногда я чувствую себя бесполезным(ой).,total,,reverse,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,7,q07,rses_q07,,,"Я чувствую, что я достойный человек, по крайней мере не менее, чем другие.",total,,direct,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,8,q08,rses_q08,,,Мне бы хотелось больше уважать себя.,total,,reverse,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,9,q09,rses_q09,,,В целом я склонен(на) считать себя неудачником.,total,,reverse,yes,StatBlank: Шкала самоуважения Розенберга
-rosenberg_self_esteem_scale_ru,10,q10,rses_q10,,,Я отношусь к себе положительно.,total,,direct,yes,StatBlank: Шкала самоуважения Розенберга
+rosenberg_self_esteem_scale_ru,1,q01,rses_q01,,,В целом я удовлетворен(а) собой.,total,,direct,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,2,q02,rses_q02,,,"Временами я думаю, что я ни на что не годен(на).",total,,reverse,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,3,q03,rses_q03,,,"Я чувствую, что у меня есть ряд хороших качеств.",total,,direct,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,4,q04,rses_q04,,,Я способен(на) делать дела не хуже большинства людей.,total,,direct,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,5,q05,rses_q05,,,"Мне кажется, что мне особенно нечем гордиться.",total,,reverse,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,6,q06,rses_q06,,,Иногда я чувствую себя бесполезным(ой).,total,,reverse,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,7,q07,rses_q07,,,"Я чувствую, что я достойный человек, по крайней мере не менее, чем другие.",total,,direct,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,8,q08,rses_q08,,,Мне бы хотелось больше уважать себя.,total,,reverse,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,9,q09,rses_q09,,,В целом я склонен(на) считать себя неудачником.,total,,reverse,yes,"StatBlank working text; key direction checked by audit"
+rosenberg_self_esteem_scale_ru,10,q10,rses_q10,,,Я отношусь к себе положительно.,total,,direct,yes,"StatBlank working text; key direction checked by audit"
