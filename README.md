@@ -20,6 +20,17 @@ PowerShell-оберток в текущей версии нет. Скрипты 
 
 Главный JSON формы: [`forms/yandex/form_definition/vkr_main_form.json`](forms/yandex/form_definition/vkr_main_form.json).
 
+## Как устроен архив тестов
+
+Отдельного сжатого архива тестов (`.zip`, `.7z`, `.tar`) в репозитории сейчас нет. Под архивом тестов здесь понимается логический markdown/CSV-архив:
+
+- карточки методик: `methods/*.md`;
+- пункты методик: `methods/items/*_items.csv`;
+- ключи подсчета: `methods/keys/*_keys.csv`;
+- подключение активной батареи: `forms/yandex/methods_manifest.json`.
+
+Канонический источник ключа для автоматического подсчета - поле `key_file` в карточке методики. Колонки `scoring_direction` и `keyed_value` в `items.csv` используются как вспомогательные подсказки и не должны заменять CSV-ключи.
+
 ## Структура репозитория
 
 ```text
@@ -42,7 +53,8 @@ PowerShell-оберток в текущей версии нет. Скрипты 
 - [`methods/metodiki_vkr_katalog_full.md`](methods/metodiki_vkr_katalog_full.md) - полный объединенный каталог;
 - [`methods/template.md`](methods/template.md) - шаблон карточки методики;
 - [`methods/91_decision_for_supervisor.md`](methods/91_decision_for_supervisor.md) - краткое решение по батарее;
-- [`methods/92_sources.md`](methods/92_sources.md) - список основных источников.
+- [`methods/92_sources.md`](methods/92_sources.md) - список основных источников;
+- [`methods/93_key_audit_notes.md`](methods/93_key_audit_notes.md) - заметки по аудиту ключей.
 
 ## Блок `forms/yandex/`
 
@@ -54,11 +66,12 @@ PowerShell-оберток в текущей версии нет. Скрипты 
 
 Python-скрипты лежат в [`forms/yandex/scripts/`](forms/yandex/scripts/):
 
-- `validate_definition.py` - проверка JSON-определения формы;
+- `validate_definition.py` - проверка JSON-определения формы и скомпилированного бандла;
+- `compile_form_json.py` - сборка нетестовой части формы и методик в единый JSON-бандл;
 - `create_form.py` - создание формы через API;
 - `publish_form.py` - публикация и снятие с публикации;
-- `export_answers.py` - выгрузка ответов;
-- `score_export_template.py` - шаблон подсчета баллов по выгрузке.
+- `export_answers.py` / `export_research_results.py` - выгрузка ответов;
+- `interpret_results.py` / `score_export_template.py` - подсчет баллов по выгрузке.
 
 ## Быстрый запуск скриптов
 
@@ -85,16 +98,18 @@ copy .env.example .env
 
 Заполнить `.env` токеном и идентификатором организации. Подробная инструкция по переменным лежит в [`forms/yandex/docs/env_variables.md`](forms/yandex/docs/env_variables.md), краткие заметки по API - в [`forms/yandex/docs/yandex_forms_api_notes.md`](forms/yandex/docs/yandex_forms_api_notes.md).
 
-Проверить JSON формы:
+Проверить JSON формы и собрать бандл:
 
 ```bash
 python scripts/validate_definition.py form_definition/vkr_main_form.json
+python scripts/compile_form_json.py --out output/compiled_form_bundle.json
+python scripts/validate_definition.py output/compiled_form_bundle.json
 ```
 
 Создать черновик формы:
 
 ```bash
-python scripts/create_form.py form_definition/vkr_main_form.json --output exports/form_mapping.json
+python scripts/create_form.py output/compiled_form_bundle.json --output exports/form_mapping.json
 ```
 
 ## Важные ограничения
