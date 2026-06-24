@@ -104,6 +104,8 @@ python scripts/publish_form.py <survey_id> unpublish
 python scripts/export_research_results.py
 ```
 
+Эта команда уже делает полный расчет. После нее отдельно запускать `interpret_results.py` обычно не нужно.
+
 Можно указать ID формы явно:
 
 ```bash
@@ -131,14 +133,20 @@ scoring_report.json
 
 Считает шкалы по уже имеющейся таблице ответов.
 
-Нормализованная CSV-таблица, где колонки уже называются локальными кодами:
+Если `export_research_results.py` уже был запущен, для статистики обычно достаточно файла:
+
+```text
+exports/research_results/stat_dataset.csv
+```
+
+Повторный расчет по нормализованной CSV-таблице:
 
 ```bash
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --answers exports/research_results/answers_by_code.csv \
-  --out output/interpreted_results.csv \
-  --report output/scoring_report.json
+  --out output/stat_dataset.csv \
+  --scores-only
 ```
 
 Ручная выгрузка из интерфейса Яндекс.Форм:
@@ -147,7 +155,7 @@ python scripts/interpret_results.py \
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --mapping exports/form_mapping.json \
-  --answers exports/manual_answers.csv \
+  --answers exports/yandex_manual_export.csv \
   --out output/interpreted_results.csv \
   --report output/scoring_report.json
 ```
@@ -158,10 +166,12 @@ python scripts/interpret_results.py \
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --mapping exports/form_mapping.json \
-  --answers exports/manual_answers.csv \
+  --answers exports/yandex_manual_export.csv \
   --out output/stat_dataset.csv \
   --scores-only
 ```
+
+`exports/yandex_manual_export.csv` - пример имени файла. Его нужно заменить на реальное имя ручной выгрузки. Если такого файла нет, команда закономерно завершится ошибкой `Answers file not found`.
 
 Полезные флаги:
 
