@@ -139,6 +139,8 @@ python scripts/export_research_results.py
 
 По умолчанию скрипт берет `survey_id` из `exports/form_mapping.json`, структуру формы из `output/compiled_form_bundle.json`, выгружает ответы через API, нормализует колонки до локальных кодов и считает шкалы по ключам из бандла.
 
+Эта команда уже делает полный расчет. После нее отдельно запускать `interpret_results.py` обычно не нужно.
+
 Результаты сохраняются в `exports/research_results/`:
 
 ```text
@@ -152,25 +154,27 @@ scoring_report.json
 
 `interpreted_results.csv` содержит сырые ответы и рассчитанные шкалы. `stat_dataset.csv` удобнее для дальнейшей статистики: из него убраны сырые ответы на пункты методик, но оставлены социально-демографические поля и рассчитанные показатели.
 
-### 8. Посчитать шкалы по уже имеющейся таблице
+### 8. Повторно посчитать шкалы по уже нормализованной CSV
 
-Если ответы уже есть в CSV:
+Этот шаг нужен только если нужно пересчитать шкалы без повторной выгрузки из API:
 
 ```bash
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --answers exports/research_results/answers_by_code.csv \
-  --out output/interpreted_results.csv \
-  --report output/scoring_report.json
+  --out output/stat_dataset.csv \
+  --scores-only
 ```
 
-Если CSV выгружен вручную из интерфейса Яндекс.Форм и колонки не совпадают с локальными кодами, добавить mapping:
+### 9. Посчитать шкалы по ручной CSV-выгрузке
+
+Если CSV выгружен вручную из интерфейса Яндекс.Форм и колонки не совпадают с локальными кодами, положить файл в `exports/`, например `exports/yandex_manual_export.csv`, и добавить mapping:
 
 ```bash
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --mapping exports/form_mapping.json \
-  --answers exports/manual_answers.csv \
+  --answers exports/yandex_manual_export.csv \
   --out output/interpreted_results.csv \
   --report output/scoring_report.json
 ```
@@ -181,10 +185,12 @@ python scripts/interpret_results.py \
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --mapping exports/form_mapping.json \
-  --answers exports/manual_answers.csv \
+  --answers exports/yandex_manual_export.csv \
   --out output/stat_dataset.csv \
   --scores-only
 ```
+
+`exports/yandex_manual_export.csv` - это пример имени файла. Его нужно заменить на реальное имя ручной выгрузки.
 
 ## Какие шкалы появляются в таблице
 
