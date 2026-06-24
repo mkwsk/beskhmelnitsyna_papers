@@ -11,11 +11,18 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-DIVIDER = "──────────────── ✦ ────────────────"
-
 
 class CliError(Exception):
-    pass
+    """User-facing command line error without a Python traceback."""
+
+
+PLACEHOLDER_PATTERNS = (
+    "TODO",
+    "PLACEHOLDER",
+    "ВСТАВИТЬ ТОЧН",
+    "ДОБАВИТЬ ТЕКСТ",
+    "...",
+)
 
 
 def read_json(path: Path, name: str) -> dict[str, Any]:
@@ -45,6 +52,7 @@ def front_matter(path: Path) -> dict[str, Any]:
         return {}
     try:
         import yaml  # type: ignore
+
         return yaml.safe_load(match.group(1)) or {}
     except Exception:
         data: dict[str, Any] = {}
@@ -53,6 +61,20 @@ def front_matter(path: Path) -> dict[str, Any]:
                 key, value = line.split(":", 1)
                 data[key.strip()] = value.strip().strip('"')
         return data
+
+
+def has_placeholder(text: str | None) -> bool:
+    value = str(text or "").strip()
+    if not value:
+        return False
+    upper = value.upper()
+    return any(pattern in upper for pattern in PLACEHOLDER_PATTERNS)
+
+
+def clean_required(value: Any, default: str = "yes") -> str:
+    if value in (None, ""):
+        return default
+    return str(value)
 
 
 def expand_items(rows: list[dict[str, str]]) -> list[dict[str, str]]:
@@ -68,14 +90,15 @@ def expand_items(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                 "item_code": f"q{n:03d}",
                 "variable": f"{prefix}{n:03d}",
                 "text": "",
-                "text_a": "TODO A",
-                "text_b": "TODO B",
+                "text_a": "",
+                "text_b": "",
                 "scale_code": "total",
                 "scoring_direction": "direct",
                 "required": "yes",
             }
             for n in range(start, end + 1)
         ]
+
     result = []
     for row in rows:
         result.append(
@@ -89,7 +112,7 @@ def expand_items(rows: list[dict[str, str]]) -> list[dict[str, str]]:
                 "scale_code": row.get("scale_code") or row.get("scale") or row.get("Шкала") or "total",
                 "keyed_value": row.get("keyed_value") or "",
                 "scoring_direction": row.get("scoring_direction") or row.get("key") or row.get("Тип ключа") or "direct",
-                "required": row.get("required") or row.get("Обязательный") or "yes",
+                "required": clean_required(row.get("required") or row.get("Обязательный")),
             }
         )
     return result
@@ -99,7 +122,13 @@ def response_options(meta: dict[str, Any]) -> list[dict[str, Any]]:
     if meta.get("response_options"):
         return list(meta["response_options"])
     if meta.get("response_format") == "likert_1_5":
-        labels = ["полностью не согласна", "скорее не согласна", "затрудняюсь ответить", "скорее согласна", "полностью согласна"]
+        labels = [
+            "полностью не согласна",
+            "скорее не согласна",
+            "затрудняюсь ответить",
+            "скорее согласна",
+            "полностью согласна",
+        ]
         return [{"value": i + 1, "label": label, "score_direct": i + 1} for i, label in enumerate(labels)]
     if meta.get("response_format") == "forced_choice_ab":
         return [{"value": "A", "label": "A"}, {"value": "B", "label": "B"}]
@@ -125,53 +154,91 @@ def page_text(section: dict[str, Any]) -> str:
 
 
 def comment(code: str, text: str, page: int, header: bool = True, kind: str = "comment") -> dict[str, Any]:
+    if not text.strip():
+        raise CliError(f"{code}: empty comment text")
+    if has_placeholder(text):
+        raise CliError(f"{code}: placeholder text is not allowed in the compiled form")
     return {"code": code, "page": page, "kind": kind, "payload": {"type": "comment", "label": text, "header": header}}
 
 
 def field_question(field: dict[str, Any], page: int) -> dict[str, Any]:
     payload = {"type": field.get("type", "string"), "label": field.get("label", field.get("code", ""))}
+    if has_placeholder(payload["label"]):
+        raise CliError(f"{field.get('code')}: placeholder text is not allowed")
     for key in ("placeholder", "widget", "items", "multiline", "rows", "columns", "data_source"):
         if key in field:
             payload[key] = field[key]
     return {"code": field.get("code"), "page": page, "kind": "question", "required": bool(field.get("required", True)), "payload": payload}
 
 
+def is_forced_choice(method: dict[str, Any]) -> bool:
+    values = {str(option.get("value", "")).strip().lower() for option in method.get("response_options") or []}
+    return {"a", "b"}.issubset(values)
+
+
 def method_question(method: dict[str, Any], row: dict[str, str], page: int) -> dict[str, Any]:
+    method_id = str(method["id"])
+    item_number = str(row.get("item_number") or "").strip()
+    code = row.get("variable") or f"{method_id}_{row.get('item_code', '')}"
+    forced_choice = is_forced_choice(method)
+
     options = []
     for option in method["response_options"]:
         value = option.get("value")
         label = str(option.get("label", option.get("value")))
-        if value == "A" and row.get("text_a"):
+        if value == "A":
+            if not row.get("text_a"):
+                raise CliError(f"{method_id}:{code}: missing text_a for forced-choice option A")
             label = f"A. {row['text_a']}"
-        if value == "B" and row.get("text_b"):
+        if value == "B":
+            if not row.get("text_b"):
+                raise CliError(f"{method_id}:{code}: missing text_b for forced-choice option B")
             label = f"B. {row['text_b']}"
+        if has_placeholder(label):
+            raise CliError(f"{method_id}:{code}: placeholder option text is not allowed")
         options.append({"label": label})
-    code = row.get("variable") or f"{method['id']}_{row.get('item_code', '')}"
-    text = row.get("text") or f"TODO: добавить текст пункта {row.get('item_number')} методики {method.get('short_title') or method.get('id')}"
+
+    text = str(row.get("text") or "").strip()
+    if not text and forced_choice:
+        text = f"Пункт {item_number}" if item_number else str(code)
+    if not text:
+        raise CliError(f"{method_id}:{code}: missing item text")
+    if has_placeholder(text):
+        raise CliError(f"{method_id}:{code}: placeholder item text is not allowed")
+
     return {
         "code": code,
         "page": page,
         "kind": "question",
         "required": str(row.get("required", "yes")).lower() not in {"no", "false", "0"},
-        "method_id": method["id"],
+        "method_id": method_id,
         "payload": {"type": "enum", "label": text, "widget": "radio", "items": options},
-        "scoring": {"scale_code": row.get("scale_code") or "total", "direction": row.get("scoring_direction") or "direct", "keyed_value": row.get("keyed_value") or None},
+        "scoring": {
+            "scale_code": row.get("scale_code") or "total",
+            "direction": row.get("scoring_direction") or "direct",
+            "keyed_value": row.get("keyed_value") or None,
+        },
     }
 
 
 def build_questions(definition: dict[str, Any], methods: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[str]]:
     questions, warnings, page = [], [], 1
+
     if page_text(definition.get("intro", {})):
         questions.append(comment("intro_header", page_text(definition.get("intro", {})), page))
+
     for field in definition.get("screening", []):
         questions.append(field_question(field, page))
+
     info = definition.get("participant_information") or definition.get("information")
     if info:
         page += 1
         questions.append(comment("participant_information_header", page_text(info), page))
+
     page += 1
-    questions += [comment("demographics_separator", DIVIDER, page, False, "separator"), comment("demographics_header", "Социально-демографические данные", page)]
+    questions.append(comment("demographics_header", "Социально-демографические данные", page))
     questions += [field_question(field, page) for field in definition.get("demographics", [])]
+
     for method in methods:
         if not method.get("include_in_form"):
             continue
@@ -179,22 +246,23 @@ def build_questions(definition: dict[str, Any], methods: list[dict[str, Any]]) -
         if not items:
             warnings.append(f"{method.get('id')}: не найдены пункты")
             continue
+
         page += 1
         title = method.get("short_title") or method.get("title") or method.get("id")
-        questions += [comment(f"{method['id']}_separator", DIVIDER, page, False, "separator"), comment(f"{method['id']}_header", f"{title}\n\nВыберите один вариант ответа для каждого пункта.", page)]
+        questions.append(comment(f"{method['id']}_header", f"{title}\n\nВыберите один вариант ответа для каждого пункта.", page))
         split, count, part = int(method.get("answerable_items_per_page") or 0), 0, 1
+
         for row in items:
             if split and count >= split:
                 page, count, part = page + 1, 0, part + 1
-                questions += [comment(f"{method['id']}_part_{part:02d}_separator", DIVIDER, page, False, "separator"), comment(f"{method['id']}_part_{part:02d}_header", f"{title}. Продолжение, часть {part}.", page)]
-            question = method_question(method, row, page)
-            if "TODO" in question["payload"].get("label", ""):
-                warnings.append(f"{method['id']}:{question['code']}: нет полного текста пункта")
-            questions.append(question)
+                questions.append(comment(f"{method['id']}_part_{part:02d}_header", f"{title}. Продолжение, часть {part}.", page))
+            questions.append(method_question(method, row, page))
             count += 1
+
     page += 1
     if page_text(definition.get("closing", {})):
-        questions += [comment("closing_separator", DIVIDER, page, False, "separator"), comment("closing_header", page_text(definition.get("closing", {})), page)]
+        questions.append(comment("closing_header", page_text(definition.get("closing", {})), page))
+
     return questions, warnings
 
 
@@ -245,7 +313,7 @@ def main() -> int:
             manifest = read_json(args.manifest, "methods manifest")
             methods_root = (args.manifest.parent / manifest.get("methods_root", "../../methods")).resolve()
         bundle = compile_bundle(args.definition, args.manifest, args.out, methods_root)
-        print(f"Compiled {len(bundle['api']['questions'])} questions into {args.out}")
+        print(f"Compiled {len(bundle['api']['questions'])} form elements into {args.out}")
         for warning in bundle.get("warnings", []):
             print(f"WARNING: {warning}")
         return 0
