@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-from pathlib import Path
 from typing import Any, Dict, Iterable, Optional
 
 import requests
@@ -60,7 +59,7 @@ class YandexFormsClient:
         self._request("POST", f"/surveys/{survey_id}/publish/", expected=(200,))
 
     def unpublish(self, survey_id: str) -> None:
-        self._request("POST", f"/surveys/{survey_id}/unpublish", expected=(200,))
+        self._request("POST", f"/surveys/{survey_id}/unpublish/", expected=(200,))
 
     def fetch_answers_page(self, survey_id: str, *, page_size: int = 50, next_path: Optional[str] = None) -> Dict[str, Any]:
         if next_path:
