@@ -5,7 +5,7 @@ import csv
 import json
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Dict, Iterable, List
 from urllib.parse import urlparse
 
 from yf_client import YandexFormsClient, YandexFormsError
@@ -201,14 +201,21 @@ def write_codebook(path: Path, columns: List[Dict[str, Any]], field_codes: List[
     write_csv(path, rows, ["order", "variable", "column_id", "column_text"])
 
 
-def write_interpreted(bundle: Dict[str, Any], rows: List[Dict[str, Any]], out_path: Path) -> None:
-    from interpret_results import method_map, question_map, score_row, write_csv as write_scored_csv
+def write_interpreted(bundle: Dict[str, Any], rows: List[Dict[str, Any]], out_dir: Path) -> None:
+    from interpret_results import score_rows, scores_only_rows, scoring_report, write_csv as write_scored_csv
 
-    questions = question_map(bundle)
-    methods = method_map(bundle)
-    scored = [score_row(row, questions, methods) for row in rows]
-    write_scored_csv(out_path, scored)
-    print(f"Interpreted CSV saved to {out_path}")
+    scored = score_rows(bundle, rows)
+    interpreted_path = out_dir / "interpreted_results.csv"
+    stat_path = out_dir / "stat_dataset.csv"
+    report_path = out_dir / "scoring_report.json"
+
+    write_scored_csv(interpreted_path, scored)
+    write_scored_csv(stat_path, scores_only_rows(scored, bundle))
+    write_json(report_path, scoring_report(scored, bundle))
+
+    print(f"Interpreted CSV saved to {interpreted_path}")
+    print(f"Statistics dataset saved to {stat_path}")
+    print(f"Scoring report saved to {report_path}")
 
 
 def resolve_survey_id(args: argparse.Namespace, mapping: Dict[str, Any]) -> str:
@@ -245,17 +252,18 @@ def main() -> int:
         raw_path = args.out_dir / "answers_raw.json"
         csv_path = args.out_dir / "answers_by_code.csv"
         codebook_path = args.out_dir / "codebook.csv"
-        interpreted_path = args.out_dir / "interpreted_results.csv"
 
         write_json(raw_path, export_data)
         write_csv(csv_path, rows, field_codes)
         write_codebook(codebook_path, columns, field_codes)
+
         print(f"Raw JSON saved to {raw_path}")
         print(f"Answers CSV saved to {csv_path}")
         print(f"Codebook saved to {codebook_path}")
 
         if not args.no_interpret:
-            write_interpreted(bundle, rows, interpreted_path)
+            write_interpreted(bundle, rows, args.out_dir)
+
         print(f"Exported {len(rows)} answers")
         return 0
     except (CliError, YandexFormsError) as error:
