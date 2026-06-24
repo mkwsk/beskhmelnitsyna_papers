@@ -135,6 +135,8 @@ python scripts/export_research_results.py
 
 По умолчанию скрипт берет `survey_id` из `exports/form_mapping.json`, выгружает ответы через API и сохраняет результаты в `exports/research_results/`.
 
+Эта команда уже делает полный расчет. После нее отдельно запускать `interpret_results.py` обычно не нужно.
+
 Выходные файлы:
 
 ```text
@@ -146,15 +148,33 @@ stat_dataset.csv          # база для статистики без сыры
 scoring_report.json       # контроль полноты и список рассчитанных шкал
 ```
 
-### 8. Посчитать шкалы по ручной CSV-выгрузке
+Для дальнейшей статистики брать:
 
-Если ответы выгружены не через API-скрипт, а вручную из интерфейса Яндекс.Форм:
+```text
+exports/research_results/stat_dataset.csv
+```
+
+### 8. Повторно посчитать шкалы по уже нормализованной CSV
+
+Этот шаг нужен только если нужно пересчитать шкалы без повторной выгрузки из API:
+
+```bash
+python scripts/interpret_results.py \
+  --bundle output/compiled_form_bundle.json \
+  --answers exports/research_results/answers_by_code.csv \
+  --out output/stat_dataset.csv \
+  --scores-only
+```
+
+### 9. Посчитать шкалы по ручной CSV-выгрузке
+
+Если ответы выгружены не через API-скрипт, а вручную из интерфейса Яндекс.Форм, сначала положить CSV-файл в `exports/`, например `exports/yandex_manual_export.csv`. Потом выполнить:
 
 ```bash
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --mapping exports/form_mapping.json \
-  --answers exports/manual_answers.csv \
+  --answers exports/yandex_manual_export.csv \
   --out output/interpreted_results.csv \
   --report output/scoring_report.json
 ```
@@ -165,10 +185,12 @@ python scripts/interpret_results.py \
 python scripts/interpret_results.py \
   --bundle output/compiled_form_bundle.json \
   --mapping exports/form_mapping.json \
-  --answers exports/manual_answers.csv \
+  --answers exports/yandex_manual_export.csv \
   --out output/stat_dataset.csv \
   --scores-only
 ```
+
+`exports/yandex_manual_export.csv` - это пример имени файла. Его нужно заменить на реальное имя ручной выгрузки.
 
 ## Основные инструкции
 
