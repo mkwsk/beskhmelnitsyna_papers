@@ -24,9 +24,5 @@
       "source": "03_rosenberg_self_esteem_scale.md",
       "include_in_form": true
     }
-  ],
-  "items_dir": "items",
-  "keys_dir": "keys",
-  "include_methods_without_item_texts": true,
-  "placeholder_prefix": "TODO"
+  ]
 }
