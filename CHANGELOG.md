@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## 2026-06-24 - очистка пайплайна Яндекс.Форм
+
+- Очищен пайплайн Яндекс.Форм: удалены устаревшие ручные JSON-секции методик и старые скрипты подсчета/выгрузки.
+- `compile_form_json.py` больше не добавляет декоративные разделители в форму и не пропускает placeholder-тексты в итоговый бандл.
+- `validate_definition.py` теперь проверяет пустые подписи, пустые варианты ответов и следы `TODO`.
+- `interpret_results.py` стал основным скриптом подсчета шкал по выгрузке ответов:
+  - поддерживает `exports/form_mapping.json`;
+  - умеет формировать отчет `scoring_report.json`;
+  - умеет режим `--scores-only`;
+  - добавляет поля контроля полноты `*_answered_count` и `*_complete`;
+  - сокращает длинные префиксы шкал до удобных `samoal_`, `gse_`, `cse_`, `rses_`, `gav_`.
+- `export_research_results.py` теперь после выгрузки формирует:
+  - `answers_raw.json`;
+  - `answers_by_code.csv`;
+  - `codebook.csv`;
+  - `interpreted_results.csv`;
+  - `stat_dataset.csv`;
+  - `scoring_report.json`.
+- Обновлены инструкции: корневой `README.md`, `forms/yandex/README.md`, `forms/yandex/scripts/README.md`.
+- Удалены устаревшие файлы:
+  - `forms/yandex/scripts/export_answers.py`;
+  - `forms/yandex/scripts/score_export_template.py`;
+  - `forms/yandex/scripts/score_responses.py`;
+  - `forms/yandex/docs/results_scoring.md`;
+  - старые файлы `forms/yandex/form_definition/sections/*.json`;
+  - старые файлы `forms/yandex/form_definition/reserve/*.json`.
+
 ## 2026-06-19 - оформление формы по образцу
 
 - Обновлен `forms/yandex/form_definition/vkr_main_form.json`: добавлены короткое название формы, `section_layout`, визуальные разделители и пояснения к разметке.
