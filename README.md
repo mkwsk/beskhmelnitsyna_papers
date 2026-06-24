@@ -2,119 +2,185 @@
 
 Рабочий репозиторий для материалов магистерской ВКР по теме взаимосвязи самооценки с уровнем профессиональной самоактуализации женщин-предпринимателей.
 
-Сейчас репозиторий содержит два основных блока:
+Репозиторий сейчас состоит из двух основных блоков:
 
-- `methods/` - каталог психодиагностических методик, источники и решение по батарее;
-- `forms/yandex/` - заготовка Яндекс.Формы и Python-скрипты для работы с API.
+- `methods/` - каталог методик, пункты, ключи и источники.
+- `forms/yandex/` - нетестовая часть анкеты, сборка формы для Яндекс.Форм, загрузка через API и обработка ответов.
 
-PowerShell-оберток в текущей версии нет. Скрипты управления формой написаны на Python.
+## Актуальная батарея формы
 
-## Актуальная батарея тестов
+Методики не хранятся внутри `forms/yandex/form_definition/vkr_main_form.json`. Активный набор задается в `forms/yandex/methods_manifest.json`.
 
-В основной форме сейчас используется такая батарея:
+Сейчас в манифесте подключены:
 
-1. Самоактуализация - САМОАЛ, адаптация А.В. Лазукина и Н.Ф. Калиной.
-2. Самоэффективность - Шкала общей самоэффективности Шварцера-Ерусалема, адаптация В.Г. Ромека.
-3. Самооценивание - CSEs(Ru), Шкала базового самооценивания.
-4. Самоуважение / самооценка - Шкала Розенберга.
+1. САМОАЛ.
+2. GSE Шварцера-Ерусалема.
+3. CSEs(Ru).
+4. Шкала самооценки Розенберга.
 
-Главный JSON формы: [`forms/yandex/form_definition/vkr_main_form.json`](forms/yandex/form_definition/vkr_main_form.json).
+Главный JSON нетестовой части формы: [`forms/yandex/form_definition/vkr_main_form.json`](forms/yandex/form_definition/vkr_main_form.json).
 
-## Как устроен архив тестов
+## Как устроены данные методик
 
-Отдельного сжатого архива тестов (`.zip`, `.7z`, `.tar`) в репозитории сейчас нет. Под архивом тестов здесь понимается логический markdown/CSV-архив:
+Под архивом тестов в этом репозитории понимается логический markdown/CSV-архив:
 
 - карточки методик: `methods/*.md`;
 - пункты методик: `methods/items/*_items.csv`;
 - ключи подсчета: `methods/keys/*_keys.csv`;
-- подключение активной батареи: `forms/yandex/methods_manifest.json`.
+- активное подключение к форме: `forms/yandex/methods_manifest.json`.
 
-Канонический источник ключа для автоматического подсчета - поле `key_file` в карточке методики. Колонки `scoring_direction` и `keyed_value` в `items.csv` используются как вспомогательные подсказки и не должны заменять CSV-ключи.
+Канонический источник ключа для автоматического подсчета - поле `key_file` в карточке методики. Колонки в `items.csv` используются как описание пунктов и вспомогательная информация, но не должны заменять CSV-ключи.
 
 ## Структура репозитория
 
 ```text
 .
-├── methods/                 # карточки методик, каталог, источники
+├── methods/                 # карточки методик, пункты, ключи, источники
 ├── forms/
-│   └── yandex/              # JSON формы и Python-скрипты для API Яндекс Форм
+│   └── yandex/              # форма, API-скрипты, инструкции
 ├── CHANGELOG.md             # история изменений
-├── .gitignore               # исключения для Git
+├── .gitignore               # локальные файлы и выгрузки
 └── README.md                # этот файл
 ```
 
-## Блок `methods/`
+## Полный пайплайн
 
-Основной вход в каталог: [`methods/README.md`](methods/README.md).
+Команды ниже выполняются из каталога `forms/yandex`.
 
-Полезные файлы:
+### 1. Подготовить окружение
 
-- [`methods/00_index.md`](methods/00_index.md) - быстрый навигатор по методикам;
-- [`methods/metodiki_vkr_katalog_full.md`](methods/metodiki_vkr_katalog_full.md) - полный объединенный каталог;
-- [`methods/template.md`](methods/template.md) - шаблон карточки методики;
-- [`methods/91_decision_for_supervisor.md`](methods/91_decision_for_supervisor.md) - краткое решение по батарее;
-- [`methods/92_sources.md`](methods/92_sources.md) - список основных источников;
-- [`methods/93_key_audit_notes.md`](methods/93_key_audit_notes.md) - заметки по аудиту ключей.
-
-## Блок `forms/yandex/`
-
-Основная инструкция: [`forms/yandex/README.md`](forms/yandex/README.md).
-
-Главный файл формы: [`forms/yandex/form_definition/vkr_main_form.json`](forms/yandex/form_definition/vkr_main_form.json).
-
-Секции формы лежат в [`forms/yandex/form_definition/sections/`](forms/yandex/form_definition/sections/), часть подключенных блоков может лежать в [`forms/yandex/form_definition/reserve/`](forms/yandex/form_definition/reserve/). В форму попадают только секции, перечисленные в поле `section_files` главного JSON.
-
-Python-скрипты лежат в [`forms/yandex/scripts/`](forms/yandex/scripts/):
-
-- `validate_definition.py` - проверка JSON-определения формы и скомпилированного бандла;
-- `compile_form_json.py` - сборка нетестовой части формы и методик в единый JSON-бандл;
-- `create_form.py` - создание формы через API;
-- `publish_form.py` - публикация и снятие с публикации;
-- `export_answers.py` / `export_research_results.py` - выгрузка ответов;
-- `interpret_results.py` / `score_export_template.py` - подсчет баллов по выгрузке.
-
-## Быстрый запуск скриптов
-
-Перейти в папку формы:
+Linux/macOS:
 
 ```bash
 cd forms/yandex
-```
-
-Создать окружение и установить зависимости:
-
-```bash
 python -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
+cp .env.example .env
 ```
 
-На Windows в `cmd.exe`:
+Windows cmd.exe:
 
 ```bat
+cd forms\yandex
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 copy .env.example .env
 ```
 
-Заполнить `.env` токеном и идентификатором организации. Подробная инструкция по переменным лежит в [`forms/yandex/docs/env_variables.md`](forms/yandex/docs/env_variables.md), краткие заметки по API - в [`forms/yandex/docs/yandex_forms_api_notes.md`](forms/yandex/docs/yandex_forms_api_notes.md).
+После этого заполнить `.env`. Подробности: [`forms/yandex/docs/env_variables.md`](forms/yandex/docs/env_variables.md).
 
-Проверить JSON формы и собрать бандл:
+### 2. Проверить исходное описание формы
 
 ```bash
 python scripts/validate_definition.py form_definition/vkr_main_form.json
+```
+
+### 3. Собрать полный JSON-бандл формы
+
+```bash
 python scripts/compile_form_json.py --out output/compiled_form_bundle.json
+```
+
+Бандл собирается из:
+
+- `form_definition/vkr_main_form.json` - приветствие, информация об исследовании, социологические вопросы, благодарность;
+- `methods_manifest.json` - список активных методик;
+- `../../methods/*.md`, `../../methods/items/*.csv`, `../../methods/keys/*.csv` - карточки, пункты и ключи методик.
+
+Компилятор больше не вставляет декоративные разделители и не пропускает `TODO` в итоговую форму. Если в активной методике не хватает текста пункта, сборка должна завершиться ошибкой.
+
+### 4. Проверить собранный бандл
+
+```bash
 python scripts/validate_definition.py output/compiled_form_bundle.json
 ```
 
-Создать черновик формы:
+Валидатор проверяет дубли кодов, пустые подписи, пустые варианты ответов и следы placeholder-текста.
+
+### 5. Создать форму в Яндекс.Формах
+
+Черновик:
 
 ```bash
 python scripts/create_form.py output/compiled_form_bundle.json --output exports/form_mapping.json
 ```
 
+Сразу с публикацией:
+
+```bash
+python scripts/create_form.py output/compiled_form_bundle.json --publish --output exports/form_mapping.json
+```
+
+`exports/form_mapping.json` сохраняет соответствие между локальными кодами вопросов и ID вопросов в Яндекс.Формах. Этот файл нужен для нормализации выгрузки ответов.
+
+Важно: API Яндекс.Форм не позволяет надежно выставлять флаг "Обязательный". После создания формы нужно вручную открыть редактор Яндекс.Форм и включить обязательность для нужных вопросов.
+
+### 6. Ручная проверка перед сбором данных
+
+В редакторе Яндекс.Форм проверить:
+
+- порядок страниц;
+- тексты приветствия, информации об исследовании и благодарности;
+- все пункты методик;
+- отсутствие `TODO`, пустых вопросов и декоративного мусора;
+- обязательность вопросов;
+- публичный доступ к форме;
+- отправку тестового ответа.
+
+### 7. Выгрузить ответы и посчитать шкалы
+
+```bash
+python scripts/export_research_results.py
+```
+
+По умолчанию скрипт берет `survey_id` из `exports/form_mapping.json`, выгружает ответы через API и сохраняет результаты в `exports/research_results/`.
+
+Выходные файлы:
+
+```text
+answers_raw.json          # сырая выгрузка API
+answers_by_code.csv       # ответы, переименованные в локальные коды переменных
+codebook.csv              # соответствие колонок выгрузки и локальных переменных
+interpreted_results.csv   # ответы плюс рассчитанные шкалы
+stat_dataset.csv          # база для статистики без сырых пунктов методик
+scoring_report.json       # контроль полноты и список рассчитанных шкал
+```
+
+### 8. Посчитать шкалы по ручной CSV-выгрузке
+
+Если ответы выгружены не через API-скрипт, а вручную из интерфейса Яндекс.Форм:
+
+```bash
+python scripts/interpret_results.py \
+  --bundle output/compiled_form_bundle.json \
+  --mapping exports/form_mapping.json \
+  --answers exports/manual_answers.csv \
+  --out output/interpreted_results.csv \
+  --report output/scoring_report.json
+```
+
+Для базы только под статистику:
+
+```bash
+python scripts/interpret_results.py \
+  --bundle output/compiled_form_bundle.json \
+  --mapping exports/form_mapping.json \
+  --answers exports/manual_answers.csv \
+  --out output/stat_dataset.csv \
+  --scores-only
+```
+
+## Основные инструкции
+
+- Методики: [`methods/README.md`](methods/README.md).
+- Яндекс.Формы: [`forms/yandex/README.md`](forms/yandex/README.md).
+- Скрипты Яндекс.Форм: [`forms/yandex/scripts/README.md`](forms/yandex/scripts/README.md).
+- Переменные окружения: [`forms/yandex/docs/env_variables.md`](forms/yandex/docs/env_variables.md).
+- Заметки по API: [`forms/yandex/docs/yandex_forms_api_notes.md`](forms/yandex/docs/yandex_forms_api_notes.md).
+
 ## Важные ограничения
 
-1. В JSON-заготовке часть пунктов методик оставлена как `TODO`. Перед публикацией формы нужно вставить точные формулировки из выбранных первоисточников.
-2. Перед реальным сбором данных нужно вручную проверить форму в интерфейсе Яндекс.Форм.
-3. `.env`, выгрузки ответов и локальное виртуальное окружение не должны попадать в Git.
-4. Встроенный/portable интерпретатор Python пока не добавлен в репозиторий. Текущие команды предполагают, что команда `python` уже доступна в среде запуска.
+1. `.env`, локальные выгрузки, `exports/`, `output/` и `.venv/` не должны попадать в Git.
+2. Перед реальным сбором данных форму обязательно нужно проверить вручную в интерфейсе Яндекс.Форм.
+3. Автоматический подсчет зависит от корректности `methods/keys/*_keys.csv`.
+4. Если меняется батарея методик, сначала обновить `methods_manifest.json`, затем заново собрать бандл и создать новую форму.
