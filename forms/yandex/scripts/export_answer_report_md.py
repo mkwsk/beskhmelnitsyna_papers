@@ -20,34 +20,19 @@ from interpret_results import score_rows
 from yf_client import YandexFormsClient, YandexFormsError
 
 
-META_FIELDS = {
-    "answer_id": "ID ответа",
-    "created": "Дата и время отправки",
-}
-
+META_FIELDS = {"answer_id": "ID ответа", "created": "Дата и время отправки"}
 
 METHOD_INTERPRETATIONS = {
-    "gse_schwarzer_jerusalem_ru": "Чем выше балл, тем более выражена общая самоэффективность: субъективная уверенность в способности справляться с трудностями.",
-    "rosenberg_self_esteem_scale_ru": "Чем выше балл, тем более выражена глобальная самооценка / самоуважение. Для ВКР показатель лучше использовать как непрерывный балл.",
-    "core_self_evaluation_scale_ru": "Чем выше балл, тем более выражено позитивное базовое самооценивание как интегральный личностный ресурс.",
-    "samoal_lazukin_kalina": "Чем выше балл, тем сильнее выражен соответствующий аспект самоактуализации. Для ВКР лучше интерпретировать профиль шкал, а не ставить клинические ярлыки.",
+    "gse_schwarzer_jerusalem_ru": "Чем выше балл, тем более выражена общая самоэффективность.",
+    "rosenberg_self_esteem_scale_ru": "Чем выше балл, тем более выражена глобальная самооценка / самоуважение.",
+    "core_self_evaluation_scale_ru": "Чем выше балл, тем более выражено позитивное базовое самооценивание.",
+    "samoal_lazukin_kalina": "Чем выше балл, тем сильнее выражен соответствующий аспект самоактуализации.",
     "gavrilova_professional_self_realization": "Чем выше балл, тем сильнее выражен соответствующий компонент профессиональной самореализации.",
 }
 
 
-SCALE_INTERPRETATIONS = {
-    ("core_self_evaluation_scale_ru", "positive"): "Высокий балл означает более выраженную позитивную оценку собственных возможностей.",
-    ("core_self_evaluation_scale_ru", "neg_rev"): "Шкала обратная: после реверса высокий балл означает меньшую выраженность негативного самооценивания.",
-    ("core_self_evaluation_scale_ru", "total"): "Высокий общий балл означает более выраженное позитивное базовое самооценивание.",
-    ("gavrilova_professional_self_realization", "goal"): "Высокий балл означает большую выраженность ценностно-целевого компонента: ясность и значимость профессиональных целей.",
-    ("gavrilova_professional_self_realization", "resource"): "Высокий балл означает большую выраженность ресурсного компонента: переживание наличия возможностей для профессиональной реализации.",
-    ("gavrilova_professional_self_realization", "phenomenological"): "Высокий балл означает большую выраженность феноменологического компонента: субъективное переживание профессиональной реализованности.",
-    ("gavrilova_professional_self_realization", "total"): "Высокий общий балл означает более высокий уровень профессиональной самореализации.",
-}
-
-
 class ReportError(CliError):
-    """User-facing report generation error."""
+    pass
 
 
 def safe_filename(value: str) -> str:
@@ -73,24 +58,22 @@ def value_text(value: Any) -> str:
 
 
 def table(headers: List[str], rows: Iterable[Iterable[Any]]) -> str:
-    header_line = "| " + " | ".join(md_escape(item) for item in headers) + " |"
-    sep_line = "| " + " | ".join("---" for _ in headers) + " |"
+    head = "| " + " | ".join(md_escape(item) for item in headers) + " |"
+    sep = "| " + " | ".join("---" for _ in headers) + " |"
     body = ["| " + " | ".join(md_escape(value_text(item)) for item in row) + " |" for row in rows]
-    return "\n".join([header_line, sep_line] + body)
+    return "\n".join([head, sep] + body)
 
 
 def answer_identity(answer: Dict[str, Any]) -> str:
     for key in ("id", "answer_id", "answerId", "uid"):
-        value = answer.get(key)
-        if value not in (None, ""):
-            return str(value)
+        if answer.get(key) not in (None, ""):
+            return str(answer[key])
     return ""
 
 
 def find_answer(answers: List[Dict[str, Any]], answer_id: str) -> Dict[str, Any]:
-    expected = str(answer_id)
     for answer in answers:
-        if answer_identity(answer) == expected:
+        if answer_identity(answer) == str(answer_id):
             return answer
     examples = [answer_identity(answer) for answer in answers[:10] if answer_identity(answer)]
     suffix = f" Examples: {', '.join(examples)}" if examples else ""
@@ -98,13 +81,10 @@ def find_answer(answers: List[Dict[str, Any]], answer_id: str) -> Dict[str, Any]
 
 
 def question_lookup(bundle: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-    result: Dict[str, Dict[str, Any]] = {}
+    result = {}
     for question in bundle.get("api", {}).get("questions", []):
-        if question.get("kind") != "question":
-            continue
-        code = str(question.get("code") or "")
-        if code:
-            result[code] = question
+        if question.get("kind") == "question" and question.get("code"):
+            result[str(question["code"])] = question
     return result
 
 
@@ -119,17 +99,14 @@ def demographic_rows(bundle: Dict[str, Any], row: Dict[str, Any], questions: Dic
     for field in bundle.get("form_definition", {}).get("demographics", []):
         code = str(field.get("code") or "")
         if code:
-            label = str(field.get("label") or code)
-            fields.append((code, label))
-
+            fields.append((code, str(field.get("label") or code)))
     if not fields:
         fields = [(code, question_label(questions.get(code), code)) for code in row if code.startswith("soc_")]
-
     return [(label, row.get(code, "")) for code, label in fields]
 
 
 def method_item_order(bundle: Dict[str, Any]) -> List[str]:
-    result: List[str] = []
+    result = []
     for method in bundle.get("methods") or []:
         for item in method.get("items") or []:
             code = item.get("variable") or item.get("code")
@@ -142,9 +119,8 @@ def raw_rows(bundle: Dict[str, Any], row: Dict[str, Any], questions: Dict[str, D
     ordered = ["answer_id", "created"]
     ordered.extend(str(field.get("code")) for field in bundle.get("form_definition", {}).get("demographics", []) if field.get("code"))
     ordered.extend(method_item_order(bundle))
-
     seen = set()
-    result: List[Tuple[str, str, Any]] = []
+    result = []
     for code in ordered + sorted(str(key) for key in row.keys()):
         if code in seen or code not in row:
             continue
@@ -170,10 +146,9 @@ def scales_for_method(method: Dict[str, Any]) -> List[Dict[str, Any]]:
     known = {scale_code(scale) for scale in scales}
     for key in method.get("keys") or []:
         code = str(key.get("scale_code") or "total")
-        if code in known:
-            continue
-        known.add(code)
-        scales.append({"code": code, "title": key.get("scale_title") or code})
+        if code not in known:
+            known.add(code)
+            scales.append({"code": code, "title": key.get("scale_title") or code})
     return scales
 
 
@@ -195,50 +170,12 @@ def parse_range(text: Any) -> Tuple[float, float] | None:
     return (low, high) if high > low else None
 
 
-def range_text(bounds: Tuple[float, float] | None) -> str:
-    if not bounds:
-        return ""
-    low, high = bounds
-    return f"{value_text(low)}-{value_text(high)}"
-
-
-def score_with_range(value: Any, bounds: Tuple[float, float] | None) -> str:
+def value_range(value: Any, bounds: Tuple[float, float] | None) -> str:
     text = value_text(value)
-    label = range_text(bounds)
-    if not text or not label:
+    if not text or not bounds:
         return text
-    return f"{text} ({label})"
-
-
-def range_position_comment(value: Any, range_raw: Any) -> str:
-    number = numeric(value)
-    score_range = parse_range(range_raw)
-    if number is None or not score_range:
-        return ""
-    low, high = score_range
-    part = (number - low) / (high - low)
-    if part < 0.34:
-        zone = "нижней"
-    elif part < 0.67:
-        zone = "средней"
-    else:
-        zone = "верхней"
-    return f" Значение находится в {zone} части возможного диапазона {value_text(low)}-{value_text(high)}."
-
-
-def interpretation_for(method: Dict[str, Any], scale: Dict[str, Any], value: Any, percent: Any) -> str:
-    method_id = str(method.get("id") or "")
-    code = scale_code(scale)
-    text = SCALE_INTERPRETATIONS.get((method_id, code))
-    if not text:
-        title = scale_title(method, scale)
-        base = METHOD_INTERPRETATIONS.get(method_id, "Чем выше балл, тем более выражен показатель шкалы.")
-        if method_id == "samoal_lazukin_kalina":
-            text = f"Чем выше балл, тем сильнее выражена шкала '{title}'."
-        else:
-            text = base
-    text += range_position_comment(value, scale.get("range_raw"))
-    return text
+    low, high = bounds
+    return f"{text} ({value_text(low)}-{value_text(high)})"
 
 
 def is_present(value: Any) -> bool:
@@ -258,17 +195,77 @@ def key_for_scale(method: Dict[str, Any], code: str) -> Dict[str, Any]:
     return {}
 
 
+def number_list(text: Any) -> List[int]:
+    result = []
+    for item in re.split(r"[\s,;]+", str(text or "").strip()):
+        match = re.match(r"^(\d+)", item)
+        if match:
+            result.append(int(match.group(1)))
+    return result
+
+
+def response_score_range(method: Dict[str, Any]) -> Tuple[float, float] | None:
+    values = []
+    for option in method.get("response_options") or []:
+        for field in ("score_direct", "value"):
+            number = numeric(option.get(field))
+            if number is not None:
+                values.append(number)
+                break
+    return (min(values), max(values)) if values else None
+
+
 def normalize_multiplier(method: Dict[str, Any], scale: Dict[str, Any]) -> float:
-    for value in (scale.get("normalize_multiplier"), key_for_scale(method, scale_code(scale)).get("normalize_multiplier")):
+    key = key_for_scale(method, scale_code(scale))
+    for value in (scale.get("normalize_multiplier"), key.get("normalize_multiplier")):
         number = numeric(value)
         if number is not None:
             return number
     return 1.0
 
 
-def scale_uses_normalization(method: Dict[str, Any], scale: Dict[str, Any], raw: Any, value: Any, percent: Any) -> bool:
+def expected_item_count(method: Dict[str, Any], scale: Dict[str, Any]) -> int | None:
+    key = key_for_scale(method, scale_code(scale))
+    for value in (scale.get("item_count"), key.get("item_count")):
+        number = numeric(value)
+        if number is not None:
+            return int(number)
+    keyed = number_list(key.get("keyed_items"))
+    if keyed:
+        return len(keyed)
+    direct = number_list(key.get("direct_items"))
+    reverse = number_list(key.get("reverse_items"))
+    if direct or reverse:
+        return len(direct) + len(reverse)
+    return None
+
+
+def raw_score_range(method: Dict[str, Any], scale: Dict[str, Any]) -> Tuple[float, float] | None:
+    key = key_for_scale(method, scale_code(scale))
+    explicit = parse_range(scale.get("range_raw")) or parse_range(key.get("range_raw") or key.get("score_range") or key.get("range"))
+    if explicit:
+        return explicit
+    count = expected_item_count(method, scale)
+    if count is None:
+        return None
+    if number_list(key.get("keyed_items")):
+        return 0.0, float(count)
+    per_item = response_score_range(method)
+    if per_item:
+        return per_item[0] * count, per_item[1] * count
+    return 0.0, float(count)
+
+
+def normalized_score_range(method: Dict[str, Any], scale: Dict[str, Any]) -> Tuple[float, float] | None:
+    raw = raw_score_range(method, scale)
+    if not raw:
+        return None
     multiplier = normalize_multiplier(method, scale)
-    if abs(multiplier - 1.0) > 1e-9:
+    return raw[0] * multiplier, raw[1] * multiplier
+
+
+def scale_uses_normalization(method: Dict[str, Any], scale: Dict[str, Any], raw: Any, value: Any, percent: Any) -> bool:
+    if abs(normalize_multiplier(method, scale) - 1.0) > 1e-9:
         return True
     if is_present(percent):
         return True
@@ -277,126 +274,90 @@ def scale_uses_normalization(method: Dict[str, Any], scale: Dict[str, Any], raw:
     return raw_number is not None and value_number is not None and abs(raw_number - value_number) > 1e-9
 
 
-def raw_score_range(method: Dict[str, Any], scale: Dict[str, Any]) -> Tuple[float, float] | None:
-    score_range = parse_range(scale.get("range_raw"))
-    if score_range:
-        return score_range
-    item_count = numeric(scale.get("item_count")) or numeric(key_for_scale(method, scale_code(scale)).get("item_count"))
-    if item_count is not None:
-        return 0.0, item_count
-    return None
-
-
-def normalized_score_range(method: Dict[str, Any], scale: Dict[str, Any]) -> Tuple[float, float] | None:
-    score_range = raw_score_range(method, scale)
-    if not score_range:
-        return None
-    multiplier = normalize_multiplier(method, scale)
-    return score_range[0] * multiplier, score_range[1] * multiplier
-
-
-def normalized_maximum(method: Dict[str, Any], scale: Dict[str, Any]) -> float | None:
-    score_range = normalized_score_range(method, scale)
-    if score_range:
-        return score_range[1]
-    return None
-
-
 def percent_of_maximum(method: Dict[str, Any], scale: Dict[str, Any], value: Any, existing_percent: Any) -> Any:
     if is_present(existing_percent):
         return existing_percent
     score = numeric(value)
-    maximum = normalized_maximum(method, scale)
-    if score is None or maximum in (None, 0):
+    score_range = normalized_score_range(method, scale)
+    if score is None or not score_range or score_range[1] == 0:
         return ""
-    return round(score / maximum * 100, 2)
+    return round(score / score_range[1] * 100, 2)
 
 
-def score_table_note(all_complete: bool, uses_normalization: bool) -> List[str]:
-    notes: List[str] = []
-    if all_complete:
-        notes.append("*Все шкалы методики заполнены полностью.*")
-    if uses_normalization:
-        notes.append("*В таблице используется приведенный балл: шкалы с разным числом пунктов пересчитаны к общей сопоставимой базе.*")
-    return notes
+def interpretation_for(method: Dict[str, Any], scale: Dict[str, Any]) -> str:
+    method_id = str(method.get("id") or "")
+    base = METHOD_INTERPRETATIONS.get(method_id, "Чем выше балл, тем более выражен показатель шкалы.")
+    if method_id == "samoal_lazukin_kalina":
+        return f"Чем выше балл, тем сильнее выражена шкала '{scale_title(method, scale)}'."
+    return base
 
 
 def normalization_memo() -> str:
     return (
         "> Памятка: сырой балл - это результат прямого подсчета по ключу. "
-        "Приведенный балл получается после умножения сырого балла на коэффициент нормировки, "
-        "чтобы шкалы разной длины можно было сравнивать между собой. "
+        "Приведенный балл получается после умножения сырого балла на коэффициент нормировки. "
         "Диапазон в скобках после балла показывает минимум и максимум по соответствующей шкале. "
         "`% от максимума` показывает долю приведенного балла от максимального сопоставимого значения шкалы."
     )
 
 
 def score_sections(bundle: Dict[str, Any], scored: Dict[str, Any]) -> List[str]:
-    sections: List[str] = []
+    sections = []
     for method in bundle.get("methods") or []:
         method_id = str(method.get("id") or "")
-        score_data = []
+        rows_data = []
         for scale in scales_for_method(method):
             code = scale_code(scale)
             prefix = f"{method_id}_{code}"
             value = scored.get(prefix)
             raw = scored.get(f"{prefix}_raw")
             percent = scored.get(f"{prefix}_percent")
-            answered = scored.get(f"{prefix}_answered_count")
-            complete = scored.get(f"{prefix}_complete")
             if value in (None, "") and raw in (None, ""):
                 continue
-            score_data.append(
-                {
-                    "scale": scale,
-                    "title": scale_title(method, scale),
-                    "value": value,
-                    "raw": raw,
-                    "percent": percent,
-                    "answered": answered,
-                    "complete": complete,
-                    "interpretation": interpretation_for(method, scale, value, percent),
-                }
-            )
-
-        if not score_data:
+            rows_data.append({
+                "scale": scale,
+                "title": scale_title(method, scale),
+                "value": value,
+                "raw": raw,
+                "percent": percent,
+                "answered": scored.get(f"{prefix}_answered_count"),
+                "complete": scored.get(f"{prefix}_complete"),
+            })
+        if not rows_data:
             continue
 
-        uses_normalization = any(
-            scale_uses_normalization(method, item["scale"], item["raw"], item["value"], item["percent"])
-            for item in score_data
-        )
-        all_complete = all(is_truthy(item["complete"]) for item in score_data)
-
+        uses_norm = any(scale_uses_normalization(method, item["scale"], item["raw"], item["value"], item["percent"]) for item in rows_data)
+        all_complete = all(is_truthy(item["complete"]) for item in rows_data)
         headers = ["Шкала"]
-        if uses_normalization:
-            headers += ["Сырой балл (значение; мин-макс)", "Приведенный балл (значение; мин-макс)", "% от максимума"]
-        else:
-            headers += ["Балл"]
+        headers += ["Сырой балл (значение; мин-макс)", "Приведенный балл (значение; мин-макс)", "% от максимума"] if uses_norm else ["Балл (значение; мин-макс)"]
         if not all_complete:
             headers += ["Ответов", "Полнота"]
         headers += ["Интерпретация"]
 
         rows = []
-        for item in score_data:
+        for item in rows_data:
+            scale = item["scale"]
             row = [item["title"]]
-            if uses_normalization:
+            if uses_norm:
                 row += [
-                    score_with_range(item["raw"], raw_score_range(method, item["scale"])),
-                    score_with_range(item["value"], normalized_score_range(method, item["scale"])),
-                    value_text(percent_of_maximum(method, item["scale"], item["value"], item["percent"])),
+                    value_range(item["raw"], raw_score_range(method, scale)),
+                    value_range(item["value"], normalized_score_range(method, scale)),
+                    value_text(percent_of_maximum(method, scale, item["value"], item["percent"])),
                 ]
             else:
-                row += [value_text(item["value"])]
+                row += [value_range(item["value"], normalized_score_range(method, scale))]
             if not all_complete:
                 row += [value_text(item["answered"]), value_text(item["complete"])]
-            row += [item["interpretation"]]
+            row += [interpretation_for(method, scale)]
             rows.append(row)
 
         parts = [f"### {method_title(method)}"]
-        parts.extend(score_table_note(all_complete, uses_normalization))
+        if all_complete:
+            parts.append("*Все шкалы методики заполнены полностью.*")
+        if uses_norm:
+            parts.append("*В таблице используется приведенный балл: шкалы с разным числом пунктов пересчитаны к общей сопоставимой базе.*")
         parts.append(table(headers, rows))
-        if uses_normalization:
+        if uses_norm:
             parts.append(normalization_memo())
         sections.append("\n\n".join(parts))
     return sections
@@ -405,19 +366,10 @@ def score_sections(bundle: Dict[str, Any], scored: Dict[str, Any]) -> List[str]:
 def build_markdown(bundle: Dict[str, Any], survey_id: str, answer_id: str, row: Dict[str, Any], scored: Dict[str, Any]) -> str:
     questions = question_lookup(bundle)
     generated_at = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
-
     parts = [
         f"# Отчет по ответу {md_escape(answer_id)}",
         "",
-        table(
-            ["Поле", "Значение"],
-            [
-                ["ID формы", survey_id],
-                ["ID ответа", row.get("answer_id") or answer_id],
-                ["Дата отправки", row.get("created", "")],
-                ["Отчет сформирован", generated_at],
-            ],
-        ),
+        table(["Поле", "Значение"], [["ID формы", survey_id], ["ID ответа", row.get("answer_id") or answer_id], ["Дата отправки", row.get("created", "")], ["Отчет сформирован", generated_at]]),
         "",
         "## 1. Социологические данные",
         "",
@@ -426,22 +378,9 @@ def build_markdown(bundle: Dict[str, Any], survey_id: str, answer_id: str, row: 
         "## 2. Вычисленные баллы по шкалам",
         "",
     ]
-
     sections = score_sections(bundle, scored)
-    if sections:
-        parts.append("\n\n".join(sections))
-    else:
-        parts.append("Баллы не рассчитаны. Проверьте, что в бандле есть методики, пункты и ключи обработки.")
-
-    parts.extend(
-        [
-            "",
-            "## 3. Сырые данные",
-            "",
-            table(["Код", "Вопрос / поле", "Ответ"], raw_rows(bundle, row, questions)),
-            "",
-        ]
-    )
+    parts.append("\n\n".join(sections) if sections else "Баллы не рассчитаны. Проверьте, что в бандле есть методики, пункты и ключи обработки.")
+    parts.extend(["", "## 3. Сырые данные", "", table(["Код", "Вопрос / поле", "Ответ"], raw_rows(bundle, row, questions)), ""])
     return "\n".join(parts)
 
 
@@ -458,26 +397,21 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=None, help="Output Markdown file. Default: exports/research_results/answer_reports/answer_<id>.md")
     parser.add_argument("--page-size", type=int, default=100)
     args = parser.parse_args()
-
     try:
         bundle = read_json(args.bundle)
         mapping = read_json(args.mapping, required=False)
         survey_id = resolve_survey_id(args, mapping)
-
         client = YandexFormsClient()
         export_data = fetch_all_answers(client, survey_id, page_size=args.page_size)
         answer = find_answer(export_data.get("answers") or [], args.answer_id)
-
         columns = export_data.get("columns") or []
         by_id, by_label = build_code_lookup(bundle, mapping)
         field_codes = resolve_columns(columns, by_id, by_label)
         row = answer_row(answer, field_codes)
         scored = score_rows(bundle, [row], long_names=True)[0]
-
         out_path = args.out or default_out_path(args.answer_id)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(build_markdown(bundle, survey_id, args.answer_id, row, scored), encoding="utf-8")
-
         print(f"Markdown report saved to {out_path}")
         return 0
     except (CliError, YandexFormsError) as error:
