@@ -195,6 +195,21 @@ def parse_range(text: Any) -> Tuple[float, float] | None:
     return (low, high) if high > low else None
 
 
+def range_text(bounds: Tuple[float, float] | None) -> str:
+    if not bounds:
+        return ""
+    low, high = bounds
+    return f"{value_text(low)}-{value_text(high)}"
+
+
+def score_with_range(value: Any, bounds: Tuple[float, float] | None) -> str:
+    text = value_text(value)
+    label = range_text(bounds)
+    if not text or not label:
+        return text
+    return f"{text} ({label})"
+
+
 def range_position_comment(value: Any, range_raw: Any) -> str:
     number = numeric(value)
     score_range = parse_range(range_raw)
@@ -262,11 +277,26 @@ def scale_uses_normalization(method: Dict[str, Any], scale: Dict[str, Any], raw:
     return raw_number is not None and value_number is not None and abs(raw_number - value_number) > 1e-9
 
 
-def normalized_maximum(method: Dict[str, Any], scale: Dict[str, Any]) -> float | None:
+def raw_score_range(method: Dict[str, Any], scale: Dict[str, Any]) -> Tuple[float, float] | None:
+    score_range = parse_range(scale.get("range_raw"))
+    if score_range:
+        return score_range
     item_count = numeric(scale.get("item_count")) or numeric(key_for_scale(method, scale_code(scale)).get("item_count"))
     if item_count is not None:
-        return item_count * normalize_multiplier(method, scale)
-    score_range = parse_range(scale.get("range_raw"))
+        return 0.0, item_count
+    return None
+
+
+def normalized_score_range(method: Dict[str, Any], scale: Dict[str, Any]) -> Tuple[float, float] | None:
+    score_range = raw_score_range(method, scale)
+    if not score_range:
+        return None
+    multiplier = normalize_multiplier(method, scale)
+    return score_range[0] * multiplier, score_range[1] * multiplier
+
+
+def normalized_maximum(method: Dict[str, Any], scale: Dict[str, Any]) -> float | None:
+    score_range = normalized_score_range(method, scale)
     if score_range:
         return score_range[1]
     return None
@@ -296,6 +326,7 @@ def normalization_memo() -> str:
         "> Памятка: сырой балл - это результат прямого подсчета по ключу. "
         "Приведенный балл получается после умножения сырого балла на коэффициент нормировки, "
         "чтобы шкалы разной длины можно было сравнивать между собой. "
+        "Диапазон в скобках после балла показывает минимум и максимум по соответствующей шкале. "
         "`% от максимума` показывает долю приведенного балла от максимального сопоставимого значения шкалы."
     )
 
@@ -339,7 +370,7 @@ def score_sections(bundle: Dict[str, Any], scored: Dict[str, Any]) -> List[str]:
 
         headers = ["Шкала"]
         if uses_normalization:
-            headers += ["Сырой балл", "Приведенный балл", "% от максимума"]
+            headers += ["Сырой балл (значение; мин-макс)", "Приведенный балл (значение; мин-макс)", "% от максимума"]
         else:
             headers += ["Балл"]
         if not all_complete:
@@ -351,8 +382,8 @@ def score_sections(bundle: Dict[str, Any], scored: Dict[str, Any]) -> List[str]:
             row = [item["title"]]
             if uses_normalization:
                 row += [
-                    value_text(item["raw"]),
-                    value_text(item["value"]),
+                    score_with_range(item["raw"], raw_score_range(method, item["scale"])),
+                    score_with_range(item["value"], normalized_score_range(method, item["scale"])),
                     value_text(percent_of_maximum(method, item["scale"], item["value"], item["percent"])),
                 ]
             else:
