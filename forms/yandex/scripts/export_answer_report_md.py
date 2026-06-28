@@ -222,17 +222,89 @@ def interpretation_for(method: Dict[str, Any], scale: Dict[str, Any], value: Any
             text = f"Чем выше балл, тем сильнее выражена шкала '{title}'."
         else:
             text = base
-    if percent not in (None, ""):
-        text += f" Нормированный показатель: {value_text(percent)}%."
     text += range_position_comment(value, scale.get("range_raw"))
     return text
+
+
+def is_present(value: Any) -> bool:
+    return value not in (None, "")
+
+
+def is_truthy(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    return str(value).strip().lower() in {"1", "true", "yes", "y", "да"}
+
+
+def key_for_scale(method: Dict[str, Any], code: str) -> Dict[str, Any]:
+    for key in method.get("keys") or []:
+        if str(key.get("scale_code") or "total") == code:
+            return key
+    return {}
+
+
+def normalize_multiplier(method: Dict[str, Any], scale: Dict[str, Any]) -> float:
+    for value in (scale.get("normalize_multiplier"), key_for_scale(method, scale_code(scale)).get("normalize_multiplier")):
+        number = numeric(value)
+        if number is not None:
+            return number
+    return 1.0
+
+
+def scale_uses_normalization(method: Dict[str, Any], scale: Dict[str, Any], raw: Any, value: Any, percent: Any) -> bool:
+    multiplier = normalize_multiplier(method, scale)
+    if abs(multiplier - 1.0) > 1e-9:
+        return True
+    if is_present(percent):
+        return True
+    raw_number = numeric(raw)
+    value_number = numeric(value)
+    return raw_number is not None and value_number is not None and abs(raw_number - value_number) > 1e-9
+
+
+def normalized_maximum(method: Dict[str, Any], scale: Dict[str, Any]) -> float | None:
+    item_count = numeric(scale.get("item_count")) or numeric(key_for_scale(method, scale_code(scale)).get("item_count"))
+    if item_count is not None:
+        return item_count * normalize_multiplier(method, scale)
+    score_range = parse_range(scale.get("range_raw"))
+    if score_range:
+        return score_range[1]
+    return None
+
+
+def percent_of_maximum(method: Dict[str, Any], scale: Dict[str, Any], value: Any, existing_percent: Any) -> Any:
+    if is_present(existing_percent):
+        return existing_percent
+    score = numeric(value)
+    maximum = normalized_maximum(method, scale)
+    if score is None or maximum in (None, 0):
+        return ""
+    return round(score / maximum * 100, 2)
+
+
+def score_table_note(all_complete: bool, uses_normalization: bool) -> List[str]:
+    notes: List[str] = []
+    if all_complete:
+        notes.append("*Все шкалы методики заполнены полностью.*")
+    if uses_normalization:
+        notes.append("*В таблице используется приведенный балл: шкалы с разным числом пунктов пересчитаны к общей сопоставимой базе.*")
+    return notes
+
+
+def normalization_memo() -> str:
+    return (
+        "> Памятка: сырой балл - это результат прямого подсчета по ключу. "
+        "Приведенный балл получается после умножения сырого балла на коэффициент нормировки, "
+        "чтобы шкалы разной длины можно было сравнивать между собой. "
+        "`% от максимума` показывает долю приведенного балла от максимального сопоставимого значения шкалы."
+    )
 
 
 def score_sections(bundle: Dict[str, Any], scored: Dict[str, Any]) -> List[str]:
     sections: List[str] = []
     for method in bundle.get("methods") or []:
         method_id = str(method.get("id") or "")
-        rows = []
+        score_data = []
         for scale in scales_for_method(method):
             code = scale_code(scale)
             prefix = f"{method_id}_{code}"
@@ -243,19 +315,59 @@ def score_sections(bundle: Dict[str, Any], scored: Dict[str, Any]) -> List[str]:
             complete = scored.get(f"{prefix}_complete")
             if value in (None, "") and raw in (None, ""):
                 continue
-            rows.append(
-                [
-                    scale_title(method, scale),
-                    value_text(value),
-                    value_text(raw),
-                    value_text(percent),
-                    value_text(answered),
-                    value_text(complete),
-                    interpretation_for(method, scale, value, percent),
-                ]
+            score_data.append(
+                {
+                    "scale": scale,
+                    "title": scale_title(method, scale),
+                    "value": value,
+                    "raw": raw,
+                    "percent": percent,
+                    "answered": answered,
+                    "complete": complete,
+                    "interpretation": interpretation_for(method, scale, value, percent),
+                }
             )
-        if rows:
-            sections.append(f"### {method_title(method)}\n\n" + table(["Шкала", "Балл", "Сырой балл", "%", "Ответов", "Полнота", "Интерпретация"], rows))
+
+        if not score_data:
+            continue
+
+        uses_normalization = any(
+            scale_uses_normalization(method, item["scale"], item["raw"], item["value"], item["percent"])
+            for item in score_data
+        )
+        all_complete = all(is_truthy(item["complete"]) for item in score_data)
+
+        headers = ["Шкала"]
+        if uses_normalization:
+            headers += ["Сырой балл", "Приведенный балл", "% от максимума"]
+        else:
+            headers += ["Балл"]
+        if not all_complete:
+            headers += ["Ответов", "Полнота"]
+        headers += ["Интерпретация"]
+
+        rows = []
+        for item in score_data:
+            row = [item["title"]]
+            if uses_normalization:
+                row += [
+                    value_text(item["raw"]),
+                    value_text(item["value"]),
+                    value_text(percent_of_maximum(method, item["scale"], item["value"], item["percent"])),
+                ]
+            else:
+                row += [value_text(item["value"])]
+            if not all_complete:
+                row += [value_text(item["answered"]), value_text(item["complete"])]
+            row += [item["interpretation"]]
+            rows.append(row)
+
+        parts = [f"### {method_title(method)}"]
+        parts.extend(score_table_note(all_complete, uses_normalization))
+        parts.append(table(headers, rows))
+        if uses_normalization:
+            parts.append(normalization_memo())
+        sections.append("\n\n".join(parts))
     return sections
 
 
