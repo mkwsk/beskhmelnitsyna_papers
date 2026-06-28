@@ -129,6 +129,31 @@ stat_dataset.csv
 scoring_report.json
 ```
 
+### `export_answer_report_md.py`
+
+Скачивает один ответ по ID и формирует Markdown-отчет.
+
+В отчет входят:
+
+- социологические данные;
+- вычисленные баллы по каждой шкале с краткой интерпретацией;
+- сырые ответы по всем полям.
+
+```bash
+python scripts/export_answer_report_md.py --answer-id <answer_id>
+```
+
+Можно явно указать ID формы и путь для Markdown-файла:
+
+```bash
+python scripts/export_answer_report_md.py \
+  --survey-id <survey_id> \
+  --answer-id <answer_id> \
+  --out exports/research_results/answer_reports/answer_<answer_id>.md
+```
+
+По умолчанию скрипт берет `survey_id` из `exports/form_mapping.json`, бандл из `output/compiled_form_bundle.json`, а результат сохраняет в `exports/research_results/answer_reports/answer_<answer_id>.md`.
+
 ### `interpret_results.py`
 
 Считает шкалы по уже имеющейся таблице ответов.
@@ -213,6 +238,7 @@ score_responses.py
 ```text
 export_research_results.py
 interpret_results.py
+export_answer_report_md.py
 ```
 
 ## Проверка перед созданием формы
